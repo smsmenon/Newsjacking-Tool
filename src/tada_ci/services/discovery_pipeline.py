@@ -15,6 +15,7 @@ Returns dict with top_articles, usage_stats, run_metadata
 from __future__ import annotations
 
 import logging
+import os
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
@@ -388,6 +389,21 @@ def run_discovery_pipeline(root: Any = None, sources: list[dict] | None = None, 
     all_raw = rss_articles
     articles_fetched = len(all_raw)
 
+    # Per-source funnel. A source that contributes nothing is invisible in the run log — it
+    # looks identical whether it published nothing, was blocked, or had every body fetch
+    # fail. Counting each stage separates those, which matters because the pipeline now runs
+    # from GitHub's datacenter IPs rather than a home connection.
+    source_funnel: dict[str, dict[str, int]] = {}
+
+    def _tally(stage: str, items: list) -> None:
+        for item in items:
+            name = (getattr(item, "source", None)
+                    or (item.get("source") if isinstance(item, dict) else None) or "?")
+            source_funnel.setdefault(name, {})[stage] = \
+                source_funnel.setdefault(name, {}).get(stage, 0) + 1
+
+    _tally("fetched", all_raw)
+
     # ------------------------------------------------------------------
     # 5. Normalise to dicts
     # ------------------------------------------------------------------
@@ -456,6 +472,7 @@ def run_discovery_pipeline(root: Any = None, sources: list[dict] | None = None, 
             log.info("Skipped %d URL(s) already sent in a previous digest", before - len(articles))
 
     articles_after_time_filter = len(articles)
+    _tally("fresh", articles)
 
     # ------------------------------------------------------------------
     # 6b. Keyword pre-filter — discard obvious non-supply-chain before LLM
@@ -494,6 +511,7 @@ def run_discovery_pipeline(root: Any = None, sources: list[dict] | None = None, 
     pre_filtered = [a for a in articles if _keyword_prefilter(a)]
     log.info("Keyword pre-filter: %d → %d", len(articles), len(pre_filtered))
     articles = pre_filtered
+    _tally("on_topic", articles)
 
     # ------------------------------------------------------------------
     # 6c. Fetch real article text BEFORE scoring.
@@ -530,6 +548,7 @@ def run_discovery_pipeline(root: Any = None, sources: list[dict] | None = None, 
         # than throwing the whole run away.
         if with_content:
             articles = with_content
+    _tally("body_read", articles)
 
     # ------------------------------------------------------------------
     # 7. Score articles in parallel (10 workers)
@@ -759,8 +778,12 @@ def run_discovery_pipeline(root: Any = None, sources: list[dict] | None = None, 
             "top_3_selected": top_3_selected,
             "llm_calls_made": llm_calls_made,
             "run_duration_seconds": run_duration,
-            "estimated_cost_usd": 0.0,
-            "model": "llama3.1 (local)",
+            # Reported as "llama3.1 (local)" at $0.00 regardless of what actually ran. With
+            # ANTHROPIC_API_KEY set — as it is in CI — every call went to Claude over the
+            # API and cost real money, so both fields were simply untrue.
+            "model": ("claude-haiku-4-5 (api)" if os.environ.get("ANTHROPIC_API_KEY", "").strip()
+                      else "llama3.1 (local)"),
+            "source_funnel": source_funnel,
         },
         "run_metadata": {
             "run_date": now_utc.isoformat().replace("+00:00", "Z"),
