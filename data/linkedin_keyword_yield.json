@@ -1,218 +1,218 @@
 {
   "Carolyn Healey": {
-    "fetched": 700,
-    "qualified": 23,
-    "runs": 7,
-    "tiered": 52
+    "fetched": 800,
+    "qualified": 26,
+    "runs": 8,
+    "tiered": 59
   },
   "Daniel Stanton, DBA": {
-    "fetched": 700,
+    "fetched": 800,
     "qualified": 1,
-    "runs": 7,
-    "tiered": 11
+    "runs": 8,
+    "tiered": 13
   },
   "Jeff Winter ": {
-    "fetched": 700,
-    "qualified": 6,
-    "runs": 7,
-    "tiered": 39
+    "fetched": 800,
+    "qualified": 7,
+    "runs": 8,
+    "tiered": 45
   },
   "Kai Hoberg": {
-    "fetched": 700,
+    "fetched": 800,
     "qualified": 0,
-    "runs": 7,
+    "runs": 8,
     "tiered": 1
   },
   "Knut Alicke": {
-    "fetched": 600,
+    "fetched": 700,
     "qualified": 2,
-    "runs": 6,
-    "tiered": 11
+    "runs": 7,
+    "tiered": 12
   },
   "Liz Young": {
-    "fetched": 600,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 1
-  },
-  "Lora Cecere": {
-    "fetched": 600,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 9
-  },
-  "Michael Schank": {
-    "fetched": 695,
-    "qualified": 1,
-    "runs": 7,
-    "tiered": 1
-  },
-  "SEARCH:AI agents supply chain": {
-    "fetched": 57,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 6
-  },
-  "SEARCH:AI supply chain planning": {
-    "fetched": 43,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 0
-  },
-  "SEARCH:ERP data quality": {
-    "fetched": 41,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 1
-  },
-  "SEARCH:S&OP process": {
-    "fetched": 70,
-    "qualified": 1,
-    "runs": 7,
-    "tiered": 6
-  },
-  "SEARCH:critical minerals supply chain": {
-    "fetched": 70,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 0
-  },
-  "SEARCH:demand forecast accuracy": {
-    "fetched": 47,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 5
-  },
-  "SEARCH:export controls supply chain": {
-    "fetched": 43,
-    "qualified": 1,
-    "runs": 5,
-    "tiered": 1
-  },
-  "SEARCH:freight capacity": {
-    "fetched": 60,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 0
-  },
-  "SEARCH:geopolitical risk supply chain": {
-    "fetched": 61,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 1
-  },
-  "SEARCH:inventory visibility": {
-    "fetched": 70,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 0
-  },
-  "SEARCH:landed cost visibility": {
-    "fetched": 39,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 0
-  },
-  "SEARCH:nearshoring manufacturing": {
-    "fetched": 50,
-    "qualified": 0,
-    "runs": 5,
-    "tiered": 0
-  },
-  "SEARCH:port congestion": {
-    "fetched": 59,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 0
-  },
-  "SEARCH:sanctions supply chain": {
-    "fetched": 69,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 1
-  },
-  "SEARCH:shipping chokepoint": {
-    "fetched": 70,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 2
-  },
-  "SEARCH:single source supplier risk": {
-    "fetched": 6,
-    "qualified": 0,
-    "runs": 4,
-    "tiered": 0
-  },
-  "SEARCH:supplier financial health": {
-    "fetched": 60,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 1
-  },
-  "SEARCH:supplier risk management": {
-    "fetched": 70,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 1
-  },
-  "SEARCH:supply chain AI pilot": {
-    "fetched": 12,
-    "qualified": 2,
-    "runs": 5,
-    "tiered": 2
-  },
-  "SEARCH:supply chain decoupling": {
-    "fetched": 34,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 0
-  },
-  "SEARCH:supply chain resilience": {
-    "fetched": 59,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 0
-  },
-  "SEARCH:supply chain volatility": {
-    "fetched": 60,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 1
-  },
-  "SEARCH:tariff supply chain": {
-    "fetched": 70,
-    "qualified": 0,
-    "runs": 7,
-    "tiered": 3
-  },
-  "SEARCH:trade war supply chain": {
-    "fetched": 12,
-    "qualified": 0,
-    "runs": 4,
-    "tiered": 0
-  },
-  "SEARCH:working capital inventory": {
-    "fetched": 60,
-    "qualified": 0,
-    "runs": 6,
-    "tiered": 1
-  },
-  "Sanjay Brahmawar": {
-    "fetched": 623,
-    "qualified": 1,
-    "runs": 7,
-    "tiered": 3
-  },
-  "Scott Luton": {
     "fetched": 700,
     "qualified": 0,
     "runs": 7,
-    "tiered": 21
+    "tiered": 1
   },
-  "Yossi Sheffi": {
-    "fetched": 600,
+  "Lora Cecere": {
+    "fetched": 700,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 9
+  },
+  "Michael Schank": {
+    "fetched": 794,
+    "qualified": 1,
+    "runs": 8,
+    "tiered": 1
+  },
+  "SEARCH:AI agents supply chain": {
+    "fetched": 66,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 6
+  },
+  "SEARCH:AI supply chain planning": {
+    "fetched": 46,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 0
+  },
+  "SEARCH:ERP data quality": {
+    "fetched": 47,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 1
+  },
+  "SEARCH:S&OP process": {
+    "fetched": 80,
+    "qualified": 1,
+    "runs": 8,
+    "tiered": 6
+  },
+  "SEARCH:critical minerals supply chain": {
+    "fetched": 80,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 0
+  },
+  "SEARCH:demand forecast accuracy": {
+    "fetched": 55,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 7
+  },
+  "SEARCH:export controls supply chain": {
+    "fetched": 51,
+    "qualified": 1,
+    "runs": 6,
+    "tiered": 1
+  },
+  "SEARCH:freight capacity": {
+    "fetched": 70,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 0
+  },
+  "SEARCH:geopolitical risk supply chain": {
+    "fetched": 71,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 1
+  },
+  "SEARCH:inventory visibility": {
+    "fetched": 80,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 0
+  },
+  "SEARCH:landed cost visibility": {
+    "fetched": 45,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 0
+  },
+  "SEARCH:nearshoring manufacturing": {
+    "fetched": 60,
     "qualified": 0,
     "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:port congestion": {
+    "fetched": 69,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 0
+  },
+  "SEARCH:sanctions supply chain": {
+    "fetched": 78,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 1
+  },
+  "SEARCH:shipping chokepoint": {
+    "fetched": 80,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 2
+  },
+  "SEARCH:single source supplier risk": {
+    "fetched": 7,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 0
+  },
+  "SEARCH:supplier financial health": {
+    "fetched": 70,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 1
+  },
+  "SEARCH:supplier risk management": {
+    "fetched": 80,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 2
+  },
+  "SEARCH:supply chain AI pilot": {
+    "fetched": 15,
+    "qualified": 3,
+    "runs": 6,
+    "tiered": 3
+  },
+  "SEARCH:supply chain decoupling": {
+    "fetched": 39,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 0
+  },
+  "SEARCH:supply chain resilience": {
+    "fetched": 69,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 0
+  },
+  "SEARCH:supply chain volatility": {
+    "fetched": 70,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 1
+  },
+  "SEARCH:tariff supply chain": {
+    "fetched": 80,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 3
+  },
+  "SEARCH:trade war supply chain": {
+    "fetched": 13,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 0
+  },
+  "SEARCH:working capital inventory": {
+    "fetched": 70,
+    "qualified": 0,
+    "runs": 7,
+    "tiered": 1
+  },
+  "Sanjay Brahmawar": {
+    "fetched": 712,
+    "qualified": 1,
+    "runs": 8,
+    "tiered": 3
+  },
+  "Scott Luton": {
+    "fetched": 800,
+    "qualified": 0,
+    "runs": 8,
+    "tiered": 23
+  },
+  "Yossi Sheffi": {
+    "fetched": 700,
+    "qualified": 0,
+    "runs": 7,
     "tiered": 0
   }
 }
