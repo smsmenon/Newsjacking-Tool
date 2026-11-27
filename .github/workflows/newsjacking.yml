@@ -2,10 +2,13 @@ name: Newsjacking Articles
 
 on:
   schedule:
-    # 13:00 UTC = 18:30 IST = 08:00 US Central, Monday to Friday.
-    # GitHub's scheduler is best-effort and can lag under load, so treat the time as
-    # approximate rather than exact.
-    - cron: "0 13 * * 1-5"
+    # Target: 08:00 America/Chicago, every day. GitHub cron is UTC-only and has no concept
+    # of daylight saving, so one fixed time drifts by an hour for half the year. Instead we
+    # fire at both candidate hours — 13:00 UTC (= 08:00 CDT, summer) and 14:00 UTC
+    # (= 08:00 CST, winter) — and the run step drops whichever one isn't 08:00 locally.
+    # GitHub's scheduler is best-effort and can lag under load, so treat it as approximate.
+    - cron: "0 13 * * *"
+    - cron: "0 14 * * *"
   workflow_dispatch:
     # Lets the run be triggered by hand from the GitHub website or mobile app — the point
     # being that it needs no laptop at all.
@@ -53,7 +56,14 @@ jobs:
           PYTHONIOENCODING: utf-8
           # A manual run can collect and log without mailing anyone.
           SEND_EMAIL: ${{ github.event.inputs.send_email || 'true' }}
-        run: python -m tada_ci.run_newsjacking
+        run: |
+          # Two crons fire daily; only the one that lands on 08:00 in Chicago does the work.
+          # A manual run always proceeds, whatever the hour.
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(TZ=America/Chicago date +%H)" != "08" ]; then
+            echo "Local time in Chicago is $(TZ=America/Chicago date +%H:%M), not 08:00 — this is the off-season cron. Skipping."
+            exit 0
+          fi
+          python -m tada_ci.run_newsjacking
 
       - name: Persist state caches
         # Runners are wiped after each run. Without committing these back, every run would

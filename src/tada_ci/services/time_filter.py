@@ -6,20 +6,16 @@ from email.utils import parsedate_to_datetime
 log = logging.getLogger(__name__)
 
 
-# The job runs each weekday morning, so a 24h window hands off cleanly from one run to the
-# next. Monday is the exception: the previous run was Friday morning, leaving Friday's own
-# reporting plus the weekend uncovered. 72h puts Monday's cutoff exactly on Friday's run
-# time — no gap, no re-reporting what Friday already sent.
-_WINDOW_BY_WEEKDAY = {0: 72}  # Monday → back to Friday's run
+# The job runs every morning, so a 24h window hands off cleanly from one run to the next.
+# (It previously ran weekdays only, and Monday used 72h to cover Friday's reporting plus the
+# weekend. Daily runs cover those themselves, so that exception is gone — keeping it would
+# re-trawl what Saturday and Sunday already sent.)
 _DEFAULT_WINDOW_HOURS = 24
 
 
 def get_window_hours(hours: int | None = None) -> int:
-    """Effective lookback in hours: an explicit value, else today's default."""
-    if hours is not None:
-        return hours
-    weekday = datetime.now(timezone.utc).weekday()
-    return _WINDOW_BY_WEEKDAY.get(weekday, _DEFAULT_WINDOW_HOURS)
+    """Effective lookback in hours: an explicit value, else the daily default."""
+    return _DEFAULT_WINDOW_HOURS if hours is None else hours
 
 
 def get_cutoff_datetime(hours: int | None = None) -> datetime:
