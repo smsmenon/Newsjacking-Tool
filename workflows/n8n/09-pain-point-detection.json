@@ -1,0 +1,350 @@
+{
+  "name": "09 - Pain Point Detection",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * *"
+            }
+          ]
+        }
+      },
+      "id": "daily-10am-trigger",
+      "name": "Daily at 10 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://oauth.reddit.com/r/supplychain/new",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "100" },
+            { "name": "t", "value": "day" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "TADA-Intelligence-Platform/1.0 (by /u/tada_bot)" },
+            { "name": "Authorization", "value": "Bearer {{ $env.REDDIT_ACCESS_TOKEN }}" }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "id": "reddit-supplychain",
+      "name": "Reddit: r/supplychain",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 200],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://oauth.reddit.com/r/logistics/new",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "100" },
+            { "name": "t", "value": "day" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "TADA-Intelligence-Platform/1.0" },
+            { "name": "Authorization", "value": "Bearer {{ $env.REDDIT_ACCESS_TOKEN }}" }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "id": "reddit-logistics",
+      "name": "Reddit: r/logistics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 350],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://oauth.reddit.com/r/procurement/new",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "100" },
+            { "name": "t", "value": "day" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "TADA-Intelligence-Platform/1.0" },
+            { "name": "Authorization", "value": "Bearer {{ $env.REDDIT_ACCESS_TOKEN }}" }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "id": "reddit-procurement",
+      "name": "Reddit: r/procurement",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 500],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://oauth.reddit.com/r/manufacturing+b2b+smallbusiness/new",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "100" },
+            { "name": "t", "value": "day" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "TADA-Intelligence-Platform/1.0" },
+            { "name": "Authorization", "value": "Bearer {{ $env.REDDIT_ACCESS_TOKEN }}" }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "id": "reddit-manufacturing",
+      "name": "Reddit: r/manufacturing + r/b2b",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 650],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT content, url, author, platform, published_at FROM social_posts WHERE has_pain_indicators = true AND collected_at > NOW() - INTERVAL '24 hours' ORDER BY engagement_score DESC LIMIT 50",
+        "additionalFields": {}
+      },
+      "id": "fetch-flagged-social",
+      "name": "Fetch Flagged Social Posts",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [340, 800],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all pain point sources\nconst PAIN_KEYWORDS = [\n  'struggling', 'frustrated', 'annoyed', 'problem', 'issue', 'challenge',\n  'broken', 'failing', 'terrible', 'awful', 'hate', 'annoying', 'slow',\n  'too expensive', 'overpriced', 'waste of time', 'doesnt work', \"doesn't work\",\n  'can\\'t find', 'cannot find', 'hard to', 'difficult to', 'impossible to',\n  'no visibility', 'lack of', 'missing', 'outdated', 'complicated',\n  'manual process', 'spreadsheet hell', 'nightmare', 'bottleneck', 'delay'\n];\n\nconst posts = [];\n\n// Process Reddit posts from all inputs\nfor (const input of $input.all()) {\n  const data = input.json;\n  \n  // Reddit JSON response\n  if (data.data && data.data.children) {\n    for (const child of data.data.children) {\n      const post = child.data;\n      const text = `${post.title || ''} ${post.selftext || ''}`.toLowerCase();\n      \n      const painMatches = PAIN_KEYWORDS.filter(kw => text.includes(kw));\n      \n      if (painMatches.length > 0) {\n        posts.push({\n          platform: 'reddit',\n          content: `${post.title}\\n\\n${post.selftext || ''}`.substring(0, 2000),\n          url: `https://reddit.com${post.permalink}`,\n          author: post.author,\n          subreddit: post.subreddit,\n          score: post.score || 0,\n          comments: post.num_comments || 0,\n          pain_keywords_matched: painMatches,\n          pain_intensity: painMatches.length,\n          published_at: new Date(post.created_utc * 1000).toISOString()\n        });\n      }\n    }\n  }\n  \n  // Pre-flagged social posts from DB\n  if (data.content && data.platform) {\n    const text = data.content.toLowerCase();\n    const painMatches = PAIN_KEYWORDS.filter(kw => text.includes(kw));\n    if (painMatches.length > 0) {\n      posts.push({\n        platform: data.platform,\n        content: data.content,\n        url: data.url,\n        author: data.author,\n        pain_keywords_matched: painMatches,\n        pain_intensity: painMatches.length,\n        published_at: data.published_at\n      });\n    }\n  }\n}\n\n// Sort by pain intensity\nposts.sort((a, b) => b.pain_intensity - a.pain_intensity);\n\nif (posts.length === 0) {\n  return [{ json: { status: 'no_pain_points', count: 0 } }];\n}\n\nreturn [{\n  json: {\n    posts,\n    total_posts: posts.length,\n    collected_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "aggregate-pain-sources",
+      "name": "Aggregate Pain Point Sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [580, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-pain-posts",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "no_pain_points",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ]
+        }
+      },
+      "id": "has-pain-posts-check",
+      "name": "Has Pain Points?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [780, 500]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/pain-point-detection/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": { "timeout": 180000 }
+      },
+      "id": "call-pain-agent",
+      "name": "Call Pain Point Detection Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 400],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse clustered pain points from agent\nconst response = $json;\nconst clusters = response.clusters || [];\n\nreturn clusters.map(cluster => ({\n  json: {\n    cluster_id: cluster.cluster_id || `pp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\n    category: cluster.category,\n    subcategory: cluster.subcategory || '',\n    theme: cluster.theme,\n    description: cluster.description,\n    frequency: cluster.post_count || cluster.frequency || 1,\n    severity_score: cluster.severity_score || 0.5,\n    example_quotes: JSON.stringify(cluster.example_quotes || []),\n    keywords: JSON.stringify(cluster.keywords || []),\n    sources: JSON.stringify(cluster.sources || []),\n    content_angle: cluster.content_angle || '',\n    detected_at: new Date().toISOString(),\n    week_of: new Date().toISOString().split('T')[0]\n  }\n}));"
+      },
+      "id": "parse-pain-clusters",
+      "name": "Parse Pain Point Clusters",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 400]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "pain_points",
+        "columns": "cluster_id,category,subcategory,theme,description,frequency,severity_score,example_quotes,keywords,sources,content_angle,detected_at,week_of",
+        "additionalFields": {
+          "queryBatching": "independently",
+          "onConflict": "update"
+        }
+      },
+      "id": "store-pain-points",
+      "name": "Store Pain Points",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1380, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if today is Friday for weekly report\nconst today = new Date();\nconst isFriday = today.getDay() === 5;\n\nreturn [{ json: { is_friday: isFriday, today: today.toISOString() } }];"
+      },
+      "id": "check-friday",
+      "name": "Is Friday? (Weekly Report)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1580, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "is-friday-check",
+              "leftValue": "={{ $json.is_friday }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "friday-check",
+      "name": "Is It Friday?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/pain-point-report/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { report_type: 'weekly', week_of: new Date().toISOString().split('T')[0] } }}",
+        "options": { "timeout": 120000 }
+      },
+      "id": "generate-weekly-report",
+      "name": "Generate Weekly Pain Point Report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1980, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_CONTENT_TEAM }}",
+        "text": ":bar_chart: *Weekly Pain Point Report Ready*\n>The weekly pain point analysis report has been generated.\n>Review and download at: {{ $env.TADA_DASHBOARD_URL }}/pain-points/weekly-report"
+      },
+      "id": "slack-weekly-report",
+      "name": "Slack: Weekly Report Ready",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [2180, 300],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily at 10 AM": {
+      "main": [
+        [
+          { "node": "Reddit: r/supplychain", "type": "main", "index": 0 },
+          { "node": "Reddit: r/logistics", "type": "main", "index": 0 },
+          { "node": "Reddit: r/procurement", "type": "main", "index": 0 },
+          { "node": "Reddit: r/manufacturing + r/b2b", "type": "main", "index": 0 },
+          { "node": "Fetch Flagged Social Posts", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Reddit: r/supplychain": { "main": [[{ "node": "Aggregate Pain Point Sources", "type": "main", "index": 0 }]] },
+    "Reddit: r/logistics": { "main": [[{ "node": "Aggregate Pain Point Sources", "type": "main", "index": 0 }]] },
+    "Reddit: r/procurement": { "main": [[{ "node": "Aggregate Pain Point Sources", "type": "main", "index": 0 }]] },
+    "Reddit: r/manufacturing + r/b2b": { "main": [[{ "node": "Aggregate Pain Point Sources", "type": "main", "index": 0 }]] },
+    "Fetch Flagged Social Posts": { "main": [[{ "node": "Aggregate Pain Point Sources", "type": "main", "index": 0 }]] },
+    "Aggregate Pain Point Sources": { "main": [[{ "node": "Has Pain Points?", "type": "main", "index": 0 }]] },
+    "Has Pain Points?": {
+      "main": [
+        [{ "node": "Call Pain Point Detection Agent", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Call Pain Point Detection Agent": { "main": [[{ "node": "Parse Pain Point Clusters", "type": "main", "index": 0 }]] },
+    "Parse Pain Point Clusters": { "main": [[{ "node": "Store Pain Points", "type": "main", "index": 0 }]] },
+    "Store Pain Points": { "main": [[{ "node": "Is Friday? (Weekly Report)", "type": "main", "index": 0 }]] },
+    "Is Friday? (Weekly Report)": { "main": [[{ "node": "Is It Friday?", "type": "main", "index": 0 }]] },
+    "Is It Friday?": {
+      "main": [
+        [{ "node": "Generate Weekly Pain Point Report", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Generate Weekly Pain Point Report": { "main": [[{ "node": "Slack: Weekly Report Ready", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-pain-points", "name": "pain-point-detection" },
+    { "id": "tag-ai", "name": "ai-agent" },
+    { "id": "tag-social", "name": "social-monitoring" }
+  ],
+  "id": "wf-09-pain-point-detection",
+  "active": true
+}

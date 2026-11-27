@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Palantir",
+    "domain": "palantir.com",
+    "search_terms": ["Palantir supply chain", "Palantir Foundry AIP manufacturing"],
+    "newsroom": "https://www.palantir.com/newsroom/",
+    "scope": "Supply chain, manufacturing and industrial news. Defence and government news is out of scope UNLESS it involves supply chain or logistics.",
+    "keep_even_if_off_topic": [
+      "Foundry or AIP platform announcements in any vertical — the ontology concept is the nearest thing anyone sells to TADA's Digital Duplicate",
+      "Ontology or digital-twin positioning statements — direct overlap with TADA's central claim",
+      "Commercial (non-government) expansion news — their commercial growth is the competitive threat",
+      "Defence logistics and military supply chain — military logistics IS supply chain and the techniques transfer to industrial",
+      "Manufacturing or industrial customer wins however framed, including defence manufacturers, if it is production operations",
+      "Partnerships with ERP or cloud platforms (SAP, AWS, Microsoft, NVIDIA)",
+      "Executive statements on autonomous decision-making or AI agents — contradictable by TADA's theses",
+      "Acquisitions of anything data, AI or supply-chain adjacent",
+      "Pricing or packaging changes for the commercial business",
+      "Earnings commentary ONLY where it names commercial or manufacturing traction"
+    ]
+  },
+  {
+    "name": "SAP",
+    "domain": "sap.com",
+    "search_terms": ["SAP supply chain", "SAP IBP", "SAP Business Network"],
+    "newsroom": "https://news.sap.com/",
+    "rss_url": "https://news.sap.com/feed/",
+    "scope": "Supply chain, IBP, Business Network, Ariba, EWM and manufacturing. Also anything signalling a strategic shift in how SAP positions AI, autonomy, agents or decision-making, whatever product line it is attached to. HR, CRM and finance product news is out of scope.",
+    "keep_even_if_off_topic": [
+      "Company-wide AI or agent announcements (Joule, autonomous agents) even when framed cross-portfolio rather than supply chain",
+      "S/4HANA maintenance deadline changes (2027/2030) — the forcing event behind modernisation budgets TADA sells into",
+      "Pricing or licensing model shifts such as consumption-based or AI credits",
+      "Business Technology Platform or data fabric announcements — competes with Digital Duplicate positioning",
+      "Acquisitions of any AI, data or automation company",
+      "Cloud and compute partnerships (NVIDIA, AWS, Microsoft, Databricks)",
+      "CEO, CTO or Chief AI Officer changes",
+      "Public positions on deterministic versus probabilistic AI, or agent governance",
+      "Product-org layoffs or restructuring",
+      "Analyst placements in non-supply-chain categories"
+    ]
+  },
+  {
+    "name": "o9 Solutions",
+    "domain": "o9solutions.com",
+    "search_terms": ["o9 Solutions"],
+    "newsroom": "https://o9solutions.com/news/",
+    "scope": "",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "Kinaxis",
+    "domain": "kinaxis.com",
+    "search_terms": ["Kinaxis"],
+    "newsroom": "https://www.kinaxis.com/en/press-releases",
+    "scope": "",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "Aera Technology",
+    "domain": "aeratechnology.com",
+    "search_terms": ["Aera Technology"],
+    "wp_json_url": "https://www.aeratechnology.com/wp-json/wp/v2/posts",
+    "scope": "",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "Lyric",
+    "domain": "lyric.tech",
+    "search_terms": ["Lyric supply chain decision intelligence", "\"Lyric Studio\" supply chain", "ChainBrain Lyric"],
+    "newsroom": "https://lyric.tech/blog",
+    "scope": "Supply chain decision intelligence company, legal name ChainBrain Inc., product Lyric Studio. Ignore any other company or product named Lyric — music services, lyrics sites and unrelated firms.",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "Blue Yonder",
+    "domain": "blueyonder.com",
+    "search_terms": ["Blue Yonder supply chain"],
+    "newsroom": "https://blueyonder.com/",
+    "article_url_pattern": "/media/20\\d{2}/",
+    "scope": "Ignore unrelated uses of the phrase 'blue yonder' — it appears in music, aviation and gaming contexts.",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "FourKites",
+    "domain": "fourkites.ai",
+    "search_terms": ["FourKites"],
+    "newsroom": "https://www.fourkites.ai/newsroom",
+    "article_url_pattern": "/press/",
+    "scope": "Moved from fourkites.com to fourkites.ai — watch for coverage under either domain.",
+    "keep_even_if_off_topic": []
+  },
+  {
+    "name": "Pelico",
+    "domain": "pelico.ai",
+    "search_terms": ["Pelico supply chain", "Pelico manufacturing operations"],
+    "newsroom": "https://pelico.ai/blog",
+    "article_url_pattern": "/resources/",
+    "scope": "Manufacturing supply chain operations platform, French-headquartered — watch European trade coverage as well as US. Ignore unrelated uses of the name.",
+    "keep_even_if_off_topic": []
+  }
+]

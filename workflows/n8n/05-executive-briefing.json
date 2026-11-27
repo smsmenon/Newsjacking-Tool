@@ -1,0 +1,229 @@
+{
+  "name": "05 - Executive Briefing Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * *"
+            }
+          ]
+        }
+      },
+      "id": "daily-6am-trigger",
+      "name": "Daily at 6 AM (Daily Briefing)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 250]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "monday-7am-trigger",
+      "name": "Monday at 7 AM (Weekly Briefing)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 450]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Determine briefing type based on which trigger fired\nconst isMonday = new Date().getDay() === 1;\nconst hour = new Date().getHours();\n\n// Determine time range: weekly on Monday 7AM, daily otherwise\nconst isWeekly = isMonday && hour === 7;\nconst lookbackHours = isWeekly ? 168 : 24; // 7 days or 24 hours\n\nreturn [{\n  json: {\n    briefing_type: isWeekly ? 'weekly' : 'daily',\n    lookback_hours: lookbackHours,\n    lookback_label: isWeekly ? 'last 7 days' : 'last 24 hours',\n    briefing_date: new Date().toISOString().split('T')[0],\n    triggered_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "determine-briefing-type",
+      "name": "Determine Briefing Type",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [340, 350]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT s.id, s.signal_type, s.signal_category, s.title, s.summary, s.severity, s.confidence_score, s.source_name, s.source_url, s.detected_at, s.keywords, s.affected_regions FROM signals s WHERE s.detected_at > NOW() - INTERVAL '{{ $json.lookback_hours }} hours' AND s.severity IN ('critical', 'high', 'medium') ORDER BY CASE s.severity WHEN 'critical' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 END, s.confidence_score DESC LIMIT 20",
+        "additionalFields": {}
+      },
+      "id": "fetch-top-signals",
+      "name": "Fetch Top Signals",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [540, 200],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT t.id, t.trend_name, t.trend_category, t.summary, t.momentum_score, t.direction, t.signal_count, t.first_detected, t.last_updated FROM trends t WHERE t.last_updated > NOW() - INTERVAL '{{ $json.lookback_hours }} hours' AND t.is_active = true ORDER BY t.momentum_score DESC LIMIT 10",
+        "additionalFields": {}
+      },
+      "id": "fetch-top-trends",
+      "name": "Fetch Top Trends by Momentum",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [540, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT ce.competitor_name, ce.event_type, ce.title, ce.description, ce.severity, ce.source_url, ce.detected_at FROM competitor_events ce WHERE ce.detected_at > NOW() - INTERVAL '{{ $json.lookback_hours }} hours' ORDER BY CASE ce.severity WHEN 'critical' THEN 1 WHEN 'high' THEN 2 ELSE 3 END, ce.detected_at DESC LIMIT 10",
+        "additionalFields": {}
+      },
+      "id": "fetch-competitor-events",
+      "name": "Fetch Competitor Events",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [540, 600],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all data for briefing agent\nconst briefingMeta = $('Determine Briefing Type').first().json;\nconst signals = $('Fetch Top Signals').all().map(i => i.json);\nconst trends = $('Fetch Top Trends by Momentum').all().map(i => i.json);\nconst competitorEvents = $('Fetch Competitor Events').all().map(i => i.json);\n\nreturn [{\n  json: {\n    briefing_type: briefingMeta.briefing_type,\n    briefing_date: briefingMeta.briefing_date,\n    lookback_label: briefingMeta.lookback_label,\n    data: {\n      signals,\n      trends,\n      competitor_events: competitorEvents,\n      summary_stats: {\n        total_signals: signals.length,\n        critical_signals: signals.filter(s => s.severity === 'critical').length,\n        high_signals: signals.filter(s => s.severity === 'high').length,\n        active_trends: trends.length,\n        competitor_events: competitorEvents.length\n      }\n    },\n    aggregated_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "aggregate-briefing-data",
+      "name": "Aggregate Briefing Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/executive-briefing/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": { "timeout": 180000 }
+      },
+      "id": "call-briefing-agent",
+      "name": "Call Executive Briefing Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [940, 400],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 10000
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "review_items",
+        "columns": "item_type,title,content,status,priority,created_by,created_at,metadata,briefing_type,briefing_date",
+        "additionalFields": {}
+      },
+      "id": "create-briefing-review-item",
+      "name": "Create Briefing Review Item",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1140, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_BRIEFINGS }}",
+        "blocks": "={{ JSON.stringify([\n  {\n    type: 'header',\n    text: {\n      type: 'plain_text',\n      text: $json.briefing_type === 'weekly' ? '📊 Weekly Executive Briefing Ready' : '📰 Daily Executive Briefing Ready',\n      emoji: true\n    }\n  },\n  {\n    type: 'section',\n    text: {\n      type: 'mrkdwn',\n      text: `*Date:* ${$json.briefing_date}\\n*Type:* ${$json.briefing_type.charAt(0).toUpperCase() + $json.briefing_type.slice(1)} Briefing\\n*Status:* Pending Review`\n    }\n  },\n  {\n    type: 'section',\n    fields: [\n      { type: 'mrkdwn', text: `*Signals:* ${$json.signal_count || 0}` },\n      { type: 'mrkdwn', text: `*Trends:* ${$json.trend_count || 0}` },\n      { type: 'mrkdwn', text: `*Competitor Events:* ${$json.competitor_event_count || 0}` },\n      { type: 'mrkdwn', text: `*Critical Items:* ${$json.critical_count || 0}` }\n    ]\n  },\n  {\n    type: 'actions',\n    elements: [\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'Review Briefing', emoji: true },\n        style: 'primary',\n        url: `${process.env.TADA_DASHBOARD_URL}/review-queue`\n      }\n    ]\n  }\n]) }}",
+        "text": "Executive briefing ready for review"
+      },
+      "id": "slack-briefing-notify",
+      "name": "Slack: Notify Reviewers",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1340, 400],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "briefing_history",
+        "columns": "briefing_type,briefing_date,generated_at,signal_count,trend_count,competitor_event_count,status",
+        "additionalFields": {}
+      },
+      "id": "log-briefing-history",
+      "name": "Log Briefing to History",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1540, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily at 6 AM (Daily Briefing)": { "main": [[{ "node": "Determine Briefing Type", "type": "main", "index": 0 }]] },
+    "Monday at 7 AM (Weekly Briefing)": { "main": [[{ "node": "Determine Briefing Type", "type": "main", "index": 0 }]] },
+    "Determine Briefing Type": {
+      "main": [
+        [
+          { "node": "Fetch Top Signals", "type": "main", "index": 0 },
+          { "node": "Fetch Top Trends by Momentum", "type": "main", "index": 0 },
+          { "node": "Fetch Competitor Events", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Top Signals": { "main": [[{ "node": "Aggregate Briefing Data", "type": "main", "index": 0 }]] },
+    "Fetch Top Trends by Momentum": { "main": [[{ "node": "Aggregate Briefing Data", "type": "main", "index": 0 }]] },
+    "Fetch Competitor Events": { "main": [[{ "node": "Aggregate Briefing Data", "type": "main", "index": 0 }]] },
+    "Aggregate Briefing Data": { "main": [[{ "node": "Call Executive Briefing Agent", "type": "main", "index": 0 }]] },
+    "Call Executive Briefing Agent": { "main": [[{ "node": "Create Briefing Review Item", "type": "main", "index": 0 }]] },
+    "Create Briefing Review Item": { "main": [[{ "node": "Slack: Notify Reviewers", "type": "main", "index": 0 }]] },
+    "Slack: Notify Reviewers": { "main": [[{ "node": "Log Briefing to History", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-briefing", "name": "executive-briefing" },
+    { "id": "tag-ai", "name": "ai-agent" },
+    { "id": "tag-core", "name": "core-pipeline" }
+  ],
+  "id": "wf-05-executive-briefing",
+  "active": true
+}

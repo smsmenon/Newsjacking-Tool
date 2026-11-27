@@ -1,0 +1,282 @@
+{
+  "name": "03 - Signal Detection Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "signal-detection-trigger",
+        "authentication": "headerAuth",
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook: Content Collected",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 250],
+      "webhookId": "tada-signal-detection-webhook"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "hourly-schedule",
+      "name": "Hourly Fallback Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'accepted', message: 'Signal detection triggered', timestamp: new Date().toISOString() } }}"
+      },
+      "id": "webhook-respond",
+      "name": "Respond: Accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [300, 150]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, title, url, description, raw_content, source_name, pub_date, content_hash, collected_at FROM raw_content WHERE status = 'unprocessed' AND collected_at > NOW() - INTERVAL '4 hours' ORDER BY collected_at DESC LIMIT 50",
+        "additionalFields": {}
+      },
+      "id": "fetch-unprocessed",
+      "name": "Get Unprocessed Content Batch",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [340, 350],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-content",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "isNotEmpty" }
+            }
+          ]
+        }
+      },
+      "id": "has-content-check",
+      "name": "Has Unprocessed Content?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [540, 350]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all unprocessed articles into a batch payload\nconst items = $input.all();\n\nconst contentBatch = items.map(item => ({\n  id: item.json.id,\n  title: item.json.title,\n  url: item.json.url,\n  description: item.json.description,\n  raw_content: item.json.raw_content,\n  source_name: item.json.source_name,\n  pub_date: item.json.pub_date,\n  content_hash: item.json.content_hash\n}));\n\nreturn [{\n  json: {\n    content_batch: contentBatch,\n    batch_size: contentBatch.length,\n    requested_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "aggregate-batch",
+      "name": "Aggregate Content Batch",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 250]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/signal-detection/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 120000,
+          "batching": {
+            "batch": {
+              "batchSize": 1
+            }
+          }
+        }
+      },
+      "id": "call-signal-agent",
+      "name": "Call Signal Detection Agent (FastAPI/LangGraph)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [920, 250],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse agent response and prepare signals for storage\nconst response = $json;\nconst signals = response.signals || [];\n\nif (signals.length === 0) {\n  return [{ json: { status: 'no_signals', count: 0 } }];\n}\n\nreturn signals.map(signal => ({\n  json: {\n    content_id: signal.content_id,\n    signal_type: signal.signal_type,\n    signal_category: signal.signal_category || 'general',\n    title: signal.title,\n    summary: signal.summary,\n    severity: signal.severity || 'medium',\n    confidence_score: signal.confidence_score || 0.7,\n    keywords: JSON.stringify(signal.keywords || []),\n    entities: JSON.stringify(signal.entities || {}),\n    affected_regions: JSON.stringify(signal.affected_regions || []),\n    source_url: signal.source_url,\n    source_name: signal.source_name,\n    detected_at: new Date().toISOString(),\n    is_critical: signal.severity === 'critical',\n    metadata: JSON.stringify(signal.metadata || {})\n  }\n}));"
+      },
+      "id": "parse-signals",
+      "name": "Parse Detected Signals",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 250]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "signals",
+        "columns": "content_id,signal_type,signal_category,title,summary,severity,confidence_score,keywords,entities,affected_regions,source_url,source_name,detected_at,is_critical,metadata",
+        "additionalFields": {
+          "queryBatching": "independently"
+        }
+      },
+      "id": "store-signals",
+      "name": "Store Detected Signals",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1320, 250],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "is-critical",
+              "leftValue": "={{ $json.is_critical }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "check-critical",
+      "name": "Is Critical Signal?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1520, 250]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.N8N_BASE_URL }}/webhook/alert-system-trigger",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.N8N_WEBHOOK_SECRET }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { signal_id: $json.id, severity: $json.severity, title: $json.title, summary: $json.summary, signal_type: $json.signal_type, source_url: $json.source_url, triggered_at: new Date().toISOString() } }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "trigger-alert",
+      "name": "Trigger Alert Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1720, 150]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE raw_content SET status = 'processed', processed_at = NOW() WHERE id = ANY(SELECT DISTINCT content_id::int FROM signals WHERE detected_at > NOW() - INTERVAL '10 minutes')",
+        "additionalFields": {}
+      },
+      "id": "mark-processed",
+      "name": "Mark Content as Processed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1720, 350],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE raw_content SET status = 'processed_no_signal', processed_at = NOW() WHERE status = 'unprocessed' AND collected_at < NOW() - INTERVAL '6 hours'",
+        "additionalFields": {}
+      },
+      "id": "mark-old-processed",
+      "name": "Mark Old Content as Processed",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [540, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook: Content Collected": {
+      "main": [
+        [
+          { "node": "Respond: Accepted", "type": "main", "index": 0 },
+          { "node": "Get Unprocessed Content Batch", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Hourly Fallback Schedule": {
+      "main": [[{ "node": "Get Unprocessed Content Batch", "type": "main", "index": 0 }]]
+    },
+    "Get Unprocessed Content Batch": {
+      "main": [[{ "node": "Has Unprocessed Content?", "type": "main", "index": 0 }]]
+    },
+    "Has Unprocessed Content?": {
+      "main": [
+        [{ "node": "Aggregate Content Batch", "type": "main", "index": 0 }],
+        [{ "node": "Mark Old Content as Processed", "type": "main", "index": 0 }]
+      ]
+    },
+    "Aggregate Content Batch": { "main": [[{ "node": "Call Signal Detection Agent (FastAPI/LangGraph)", "type": "main", "index": 0 }]] },
+    "Call Signal Detection Agent (FastAPI/LangGraph)": { "main": [[{ "node": "Parse Detected Signals", "type": "main", "index": 0 }]] },
+    "Parse Detected Signals": { "main": [[{ "node": "Store Detected Signals", "type": "main", "index": 0 }]] },
+    "Store Detected Signals": { "main": [[{ "node": "Is Critical Signal?", "type": "main", "index": 0 }]] },
+    "Is Critical Signal?": {
+      "main": [
+        [{ "node": "Trigger Alert Workflow", "type": "main", "index": 0 }],
+        [{ "node": "Mark Content as Processed", "type": "main", "index": 0 }]
+      ]
+    },
+    "Trigger Alert Workflow": { "main": [[{ "node": "Mark Content as Processed", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "saveDataErrorExecution": "all",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-signals", "name": "signal-detection" },
+    { "id": "tag-ai", "name": "ai-agent" },
+    { "id": "tag-core", "name": "core-pipeline" }
+  ],
+  "id": "wf-03-signal-detection",
+  "active": true
+}

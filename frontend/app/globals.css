@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── shadcn/ui CSS Variables ─── */
+@layer base {
+  :root {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 96%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 47% 7%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 239 84% 67%;
+    --primary-foreground: 222 47% 5%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 96%;
+
+    --muted: 217 33% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 189 94% 43%;
+    --accent-foreground: 222 47% 5%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 239 84% 67%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-2xl font-semibold tracking-tight; }
+  h3 { @apply text-xl font-semibold; }
+  h4 { @apply text-lg font-medium; }
+}
+
+/* ─── Custom Scrollbar ─── */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.surface.muted') transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.surface.muted');
+    border-radius: 3px;
+  }
+
+  /* Score bar animations */
+  .score-bar {
+    @apply h-1.5 rounded-full bg-surface-muted overflow-hidden;
+  }
+
+  .score-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+
+  /* Card hover */
+  .card-hover {
+    @apply transition-all duration-200 hover:border-brand-500/50 hover:shadow-glow-brand;
+  }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    @apply animate-shimmer bg-gradient-to-r from-surface-elevated via-surface-muted to-surface-elevated bg-[length:200%_100%];
+  }
+
+  /* Signal type badges */
+  .badge-risk        { @apply bg-signal-risk/20 text-signal-risk border border-signal-risk/30; }
+  .badge-opportunity { @apply bg-signal-opportunity/20 text-signal-opportunity border border-signal-opportunity/30; }
+  .badge-trend       { @apply bg-signal-trend/20 text-signal-trend border border-signal-trend/30; }
+  .badge-threat      { @apply bg-signal-threat/20 text-signal-threat border border-signal-threat/30; }
+  .badge-emerging    { @apply bg-signal-emerging/20 text-signal-emerging border border-signal-emerging/30; }
+
+  /* Urgency badges */
+  .urgency-critical { @apply text-urgency-critical; }
+  .urgency-high     { @apply text-urgency-high; }
+  .urgency-medium   { @apply text-urgency-medium; }
+  .urgency-low      { @apply text-urgency-low; }
+}
+
+/* ─── React Flow overrides ─── */
+.react-flow__background {
+  background-color: theme('colors.surface.DEFAULT') !important;
+}
+
+.react-flow__controls {
+  @apply border border-surface-border bg-surface-elevated rounded-lg overflow-hidden;
+}
+
+.react-flow__controls-button {
+  @apply bg-surface-elevated border-surface-border text-muted-foreground hover:bg-surface-muted hover:text-foreground !important;
+}

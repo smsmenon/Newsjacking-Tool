@@ -1,0 +1,262 @@
+{
+  "name": "06 - Alert System",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "alert-system-trigger",
+        "authentication": "headerAuth",
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "id": "alert-webhook-trigger",
+      "name": "Webhook: Alert Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [100, 400],
+      "webhookId": "tada-alert-system-webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'accepted', alert_id: $json.signal_id, timestamp: new Date().toISOString() } }}"
+      },
+      "id": "webhook-respond-alert",
+      "name": "Respond: Alert Accepted",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [300, 200]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id FROM alerts WHERE topic_key = '{{ $json.signal_type }}_{{ $json.signal_id }}' AND sent_at > NOW() - INTERVAL '4 hours' LIMIT 1",
+        "additionalFields": {}
+      },
+      "id": "check-dedup",
+      "name": "Check Alert Deduplication (4hr window)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 450],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "not-duplicate",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "isEmpty" }
+            }
+          ]
+        }
+      },
+      "id": "is-duplicate-check",
+      "name": "Is Duplicate Alert?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [500, 450]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "critical-severity",
+                    "leftValue": "={{ $json.severity }}",
+                    "rightValue": "critical",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "critical"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "high-severity",
+                    "leftValue": "={{ $json.severity }}",
+                    "rightValue": "high",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "high"
+            },
+            {
+              "conditions": {
+                "conditions": [
+                  {
+                    "id": "medium-severity",
+                    "leftValue": "={{ $json.severity }}",
+                    "rightValue": "medium",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "medium"
+            }
+          ],
+          "fallbackOutput": "none"
+        },
+        "options": {}
+      },
+      "id": "route-by-severity",
+      "name": "Route by Alert Severity",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [700, 450]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_CRITICAL_ALERTS }}",
+        "blocks": "={{ JSON.stringify([\n  {\n    type: 'header',\n    text: {\n      type: 'plain_text',\n      text: '🚨 CRITICAL INTELLIGENCE ALERT',\n      emoji: true\n    }\n  },\n  {\n    type: 'section',\n    text: {\n      type: 'mrkdwn',\n      text: `*${$json.title}*\\n\\n${$json.summary}`\n    }\n  },\n  {\n    type: 'section',\n    fields: [\n      { type: 'mrkdwn', text: `*Type:* ${$json.signal_type}` },\n      { type: 'mrkdwn', text: `*Severity:* CRITICAL 🔴` },\n      { type: 'mrkdwn', text: `*Source:* ${$json.source_name || 'Unknown'}` },\n      { type: 'mrkdwn', text: `*Detected:* ${new Date($json.triggered_at).toLocaleString()}` }\n    ]\n  },\n  {\n    type: 'actions',\n    elements: [\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'View Full Signal', emoji: true },\n        style: 'danger',\n        url: `${process.env.TADA_DASHBOARD_URL}/signals/${$json.signal_id}`\n      },\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'View Source', emoji: true },\n        url: $json.source_url\n      }\n    ]\n  }\n]) }}",
+        "text": "CRITICAL: {{ $json.title }}"
+      },
+      "id": "slack-critical",
+      "name": "Slack: Critical Alert Channel",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [920, 200],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_ALERTS }}",
+        "blocks": "={{ JSON.stringify([\n  {\n    type: 'header',\n    text: {\n      type: 'plain_text',\n      text: '⚠️ HIGH PRIORITY INTELLIGENCE ALERT',\n      emoji: true\n    }\n  },\n  {\n    type: 'section',\n    text: {\n      type: 'mrkdwn',\n      text: `*${$json.title}*\\n\\n${$json.summary}`\n    }\n  },\n  {\n    type: 'section',\n    fields: [\n      { type: 'mrkdwn', text: `*Type:* ${$json.signal_type}` },\n      { type: 'mrkdwn', text: `*Severity:* HIGH 🟠` },\n      { type: 'mrkdwn', text: `*Source:* ${$json.source_name || 'Unknown'}` }\n    ]\n  },\n  {\n    type: 'actions',\n    elements: [\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'View Signal', emoji: true },\n        style: 'primary',\n        url: `${process.env.TADA_DASHBOARD_URL}/signals/${$json.signal_id}`\n      }\n    ]\n  }\n]) }}",
+        "text": "HIGH: {{ $json.title }}"
+      },
+      "id": "slack-high",
+      "name": "Slack: High Priority Alert Channel",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [920, 400],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_INTEL }}",
+        "text": ":information_source: *Medium Priority Signal*\n>*{{ $json.title }}*\n>{{ $json.summary }}\n>Type: {{ $json.signal_type }} | <{{ $json.source_url }}|View Source> | <{{ $env.TADA_DASHBOARD_URL }}/signals/{{ $json.signal_id }}|View Signal>"
+      },
+      "id": "slack-medium",
+      "name": "Slack: Medium Priority Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [920, 600],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "{{ $env.ALERT_FROM_EMAIL }}",
+        "toEmail": "{{ $env.LEADERSHIP_EMAIL_LIST }}",
+        "subject": "🚨 CRITICAL Intelligence Alert: {{ $json.title }}",
+        "emailFormat": "html",
+        "html": "<h2 style='color:#dc2626'>🚨 CRITICAL Intelligence Alert</h2><h3>{{ $json.title }}</h3><p>{{ $json.summary }}</p><hr><table><tr><td><strong>Signal Type:</strong></td><td>{{ $json.signal_type }}</td></tr><tr><td><strong>Severity:</strong></td><td>CRITICAL</td></tr><tr><td><strong>Source:</strong></td><td><a href='{{ $json.source_url }}'>{{ $json.source_name }}</a></td></tr><tr><td><strong>Detected:</strong></td><td>{{ $json.triggered_at }}</td></tr></table><br><a href='{{ $env.TADA_DASHBOARD_URL }}/signals/{{ $json.signal_id }}' style='background:#dc2626;color:white;padding:10px 20px;text-decoration:none;border-radius:4px'>View Full Signal</a><p style='color:#6b7280;font-size:12px'>This is an automated alert from the TADA Intelligence Platform.</p>"
+      },
+      "id": "email-critical",
+      "name": "Email Leadership: Critical Alert",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1120, 200],
+      "credentials": {
+        "smtp": {
+          "id": "smtp-tada",
+          "name": "TADA SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "alerts",
+        "columns": "signal_id,signal_type,title,severity,topic_key,channels_notified,sent_at,metadata",
+        "additionalFields": {}
+      },
+      "id": "log-alert",
+      "name": "Log Alert to Database",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1140, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook: Alert Trigger": {
+      "main": [
+        [
+          { "node": "Respond: Alert Accepted", "type": "main", "index": 0 },
+          { "node": "Check Alert Deduplication (4hr window)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Check Alert Deduplication (4hr window)": { "main": [[{ "node": "Is Duplicate Alert?", "type": "main", "index": 0 }]] },
+    "Is Duplicate Alert?": {
+      "main": [
+        [{ "node": "Route by Alert Severity", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Route by Alert Severity": {
+      "critical": [[{ "node": "Slack: Critical Alert Channel", "type": "main", "index": 0 }]],
+      "high": [[{ "node": "Slack: High Priority Alert Channel", "type": "main", "index": 0 }]],
+      "medium": [[{ "node": "Slack: Medium Priority Alert", "type": "main", "index": 0 }]]
+    },
+    "Slack: Critical Alert Channel": { "main": [[{ "node": "Email Leadership: Critical Alert", "type": "main", "index": 0 }]] },
+    "Email Leadership: Critical Alert": { "main": [[{ "node": "Log Alert to Database", "type": "main", "index": 0 }]] },
+    "Slack: High Priority Alert Channel": { "main": [[{ "node": "Log Alert to Database", "type": "main", "index": 0 }]] },
+    "Slack: Medium Priority Alert": { "main": [[{ "node": "Log Alert to Database", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-alerts", "name": "alerts" },
+    { "id": "tag-core", "name": "core-pipeline" }
+  ],
+  "id": "wf-06-alert-system",
+  "active": true
+}

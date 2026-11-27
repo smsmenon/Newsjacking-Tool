@@ -1,0 +1,210 @@
+{
+  "name": "07 - Content Calendar Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "monday-8am-trigger",
+      "name": "Every Monday at 8 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT s.id, s.signal_type, s.signal_category, s.title, s.summary, s.severity, s.confidence_score, s.keywords, s.detected_at FROM signals s WHERE s.detected_at > NOW() - INTERVAL '7 days' AND s.confidence_score >= 0.6 ORDER BY s.confidence_score DESC, s.detected_at DESC LIMIT 30",
+        "additionalFields": {}
+      },
+      "id": "fetch-weekly-signals",
+      "name": "Fetch Top Signals (Last 7 Days)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 200],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT t.trend_name, t.trend_category, t.summary, t.momentum_score, t.direction, t.signal_count FROM trends t WHERE t.is_active = true AND t.momentum_score >= 0.5 ORDER BY t.momentum_score DESC LIMIT 15",
+        "additionalFields": {}
+      },
+      "id": "fetch-trending-topics",
+      "name": "Fetch Trending Topics",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT ci.id, ci.title, ci.content_type, ci.target_persona, ci.key_angle, ci.signal_ids, ci.priority_score, ci.created_at FROM content_ideas ci WHERE ci.status = 'approved' AND ci.scheduled_date IS NULL ORDER BY ci.priority_score DESC LIMIT 20",
+        "additionalFields": {}
+      },
+      "id": "fetch-approved-ideas",
+      "name": "Fetch Approved Content Ideas",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 600],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all data for content strategy agent\nconst signals = $('Fetch Top Signals (Last 7 Days)').all().map(i => i.json);\nconst trends = $('Fetch Trending Topics').all().map(i => i.json);\nconst approvedIdeas = $('Fetch Approved Content Ideas').all().map(i => i.json);\n\nconst weekStart = new Date();\nweekStart.setDate(weekStart.getDate() + 1); // Tomorrow (Tuesday if run Monday)\nconst weekEnd = new Date(weekStart);\nweekEnd.setDate(weekEnd.getDate() + 6);\n\nreturn [{\n  json: {\n    week_start: weekStart.toISOString().split('T')[0],\n    week_end: weekEnd.toISOString().split('T')[0],\n    data: {\n      signals,\n      trends,\n      approved_content_ideas: approvedIdeas,\n      context: {\n        total_signals: signals.length,\n        total_trends: trends.length,\n        ideas_in_queue: approvedIdeas.length,\n        top_signal_categories: [...new Set(signals.map(s => s.signal_category))].slice(0, 5)\n      }\n    },\n    generation_request: 'weekly_content_calendar',\n    requested_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "aggregate-content-data",
+      "name": "Aggregate Content Strategy Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [540, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/content-strategy/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": { "timeout": 180000 }
+      },
+      "id": "call-content-agent",
+      "name": "Call Content Strategy Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [740, 400],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 10000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse content calendar from agent response\nconst response = $json;\nconst calendar = response.calendar || {};\nconst weeklyThemes = response.weekly_themes || [];\nconst contentPieces = response.content_pieces || [];\n\nreturn [{\n  json: {\n    week_start: response.week_start || $('Aggregate Content Strategy Data').first().json.week_start,\n    week_end: response.week_end || $('Aggregate Content Strategy Data').first().json.week_end,\n    weekly_themes: weeklyThemes,\n    content_pieces: contentPieces,\n    total_pieces: contentPieces.length,\n    calendar_summary: response.calendar_summary || '',\n    generated_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "parse-calendar",
+      "name": "Parse Content Calendar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 400]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "content_calendars",
+        "columns": "week_start,week_end,weekly_themes,total_pieces,calendar_summary,status,generated_at",
+        "additionalFields": {}
+      },
+      "id": "store-calendar",
+      "name": "Store Content Calendar",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1140, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "review_items",
+        "columns": "item_type,title,content,status,priority,created_by,created_at,metadata",
+        "additionalFields": {}
+      },
+      "id": "create-calendar-review",
+      "name": "Create Calendar Review Item",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1340, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_CONTENT_TEAM }}",
+        "blocks": "={{ JSON.stringify([\n  {\n    type: 'header',\n    text: { type: 'plain_text', text: '📅 Weekly Content Calendar Ready', emoji: true }\n  },\n  {\n    type: 'section',\n    text: {\n      type: 'mrkdwn',\n      text: `*Week of {{ $json.week_start }} to {{ $json.week_end }}*\\n\\n{{ $json.calendar_summary }}`\n    }\n  },\n  {\n    type: 'section',\n    fields: [\n      { type: 'mrkdwn', text: `*Content Pieces Planned:* {{ $json.total_pieces }}` },\n      { type: 'mrkdwn', text: `*Status:* Pending Review` }\n    ]\n  },\n  {\n    type: 'actions',\n    elements: [\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'Review Calendar', emoji: true },\n        style: 'primary',\n        url: `${process.env.TADA_DASHBOARD_URL}/content-calendar`\n      }\n    ]\n  }\n]) }}",
+        "text": "Weekly content calendar ready for review"
+      },
+      "id": "slack-content-team",
+      "name": "Slack: Notify Content Team",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1540, 400],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday at 8 AM": {
+      "main": [
+        [
+          { "node": "Fetch Top Signals (Last 7 Days)", "type": "main", "index": 0 },
+          { "node": "Fetch Trending Topics", "type": "main", "index": 0 },
+          { "node": "Fetch Approved Content Ideas", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Top Signals (Last 7 Days)": { "main": [[{ "node": "Aggregate Content Strategy Data", "type": "main", "index": 0 }]] },
+    "Fetch Trending Topics": { "main": [[{ "node": "Aggregate Content Strategy Data", "type": "main", "index": 0 }]] },
+    "Fetch Approved Content Ideas": { "main": [[{ "node": "Aggregate Content Strategy Data", "type": "main", "index": 0 }]] },
+    "Aggregate Content Strategy Data": { "main": [[{ "node": "Call Content Strategy Agent", "type": "main", "index": 0 }]] },
+    "Call Content Strategy Agent": { "main": [[{ "node": "Parse Content Calendar", "type": "main", "index": 0 }]] },
+    "Parse Content Calendar": { "main": [[{ "node": "Store Content Calendar", "type": "main", "index": 0 }]] },
+    "Store Content Calendar": { "main": [[{ "node": "Create Calendar Review Item", "type": "main", "index": 0 }]] },
+    "Create Calendar Review Item": { "main": [[{ "node": "Slack: Notify Content Team", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-content", "name": "content-calendar" },
+    { "id": "tag-ai", "name": "ai-agent" }
+  ],
+  "id": "wf-07-content-calendar",
+  "active": true
+}

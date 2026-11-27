@@ -1,0 +1,192 @@
+[
+  {
+    "id": "110f0d09-8caf-4f37-9b53-0576576fdae2",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:19Z"
+  },
+  {
+    "id": "88a7cef1-0dd1-40a3-aeb3-39796daf05d2",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "under_review",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "under_review from dashboard",
+    "created_at": "2026-06-15T14:43:21Z"
+  },
+  {
+    "id": "c09ddee0-f6e1-405f-8a71-1f7fce908adf",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/enterprise-ai-decision-automation",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:26Z"
+  },
+  {
+    "id": "b77a7ed8-1843-4987-bbac-8471feb450c6",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/capacity-schedule-pressure",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:28Z"
+  },
+  {
+    "id": "8b322ca7-981c-4487-ae59-6c7a02553572",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:42Z"
+  },
+  {
+    "id": "1b5b1f76-dc1d-4437-9b5c-9636c9712810",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/enterprise-ai-decision-automation",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:43Z"
+  },
+  {
+    "id": "31f574b6-2c86-45f0-9a7e-2eb050402548",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/capacity-schedule-pressure",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:43:45Z"
+  },
+  {
+    "id": "b62909c9-1c8b-45f2-bc07-592de117e56e",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:48:24Z"
+  },
+  {
+    "id": "4f95d157-e16b-4130-ace3-98fd440d2022",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/enterprise-ai-decision-automation",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:48:25Z"
+  },
+  {
+    "id": "2574f314-2d97-4bb9-a5aa-0b7fc3846477",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/capacity-schedule-pressure",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:48:27Z"
+  },
+  {
+    "id": "d5df14a0-3524-4603-b3e1-72cc11e470e5",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/enterprise-ai-decision-automation",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:49:14Z"
+  },
+  {
+    "id": "070f6104-9923-4ea8-bf34-3305c9420837",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/capacity-schedule-pressure",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:49:15Z"
+  },
+  {
+    "id": "8545a938-2ba6-43d6-8dec-f764ac9fad9c",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/enterprise-ai-decision-automation",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:54:27Z"
+  },
+  {
+    "id": "bc283f29-1446-45d3-96d3-aa7c25c8345d",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T14:54:28Z"
+  },
+  {
+    "id": "7c31db03-2cb1-4046-908b-33f4325c39c0",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-15T18:07:25Z"
+  },
+  {
+    "id": "09444d76-ffbc-4d1e-8845-fe66464519a6",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://example.com/supplier-networks-tariffs",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "local-reviewer@tada.example",
+    "comments": "approved from dashboard",
+    "created_at": "2026-06-16T03:38:04Z"
+  },
+  {
+    "id": "99dcbb55-cc5c-487a-8bd5-79fdcbb71f9c",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://venturebeat.com/technology/anthropic-blocks-all-public-access-to-claude-fable-5-mythos-5-following-us-government-order-what-enterprises-should-do",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "analyst@tada.example",
+    "comments": "approved via dashboard",
+    "created_at": "2026-06-16T15:12:50Z"
+  },
+  {
+    "id": "5e07d966-1804-45b2-8ceb-8f5959146f39",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://venturebeat.com/technology/anthropic-blocks-all-public-access-to-claude-fable-5-mythos-5-following-us-government-order-what-enterprises-should-do",
+    "from_status": "draft",
+    "to_status": "rejected",
+    "reviewer": "analyst@tada.example",
+    "comments": "rejected via dashboard",
+    "created_at": "2026-06-16T15:12:52Z"
+  },
+  {
+    "id": "3a49fd50-8615-4ff5-b9c8-89d7c5c0e5e4",
+    "entity_type": "content_opportunity",
+    "entity_id": "https://venturebeat.com/technology/anthropic-blocks-all-public-access-to-claude-fable-5-mythos-5-following-us-government-order-what-enterprises-should-do",
+    "from_status": "draft",
+    "to_status": "approved",
+    "reviewer": "analyst@tada.example",
+    "comments": "approved via dashboard",
+    "created_at": "2026-06-16T15:14:43Z"
+  }
+]

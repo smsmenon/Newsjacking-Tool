@@ -1,0 +1,76 @@
+{
+  "name": "TADA Daily Intelligence Sweep",
+  "nodes": [
+    {
+      "name": "Daily Cron",
+      "type": "n8n-nodes-base.cron",
+      "parameters": {
+        "triggerTimes": [{ "hour": 6, "minute": 0 }]
+      }
+    },
+    {
+      "name": "Load Active Sources",
+      "type": "n8n-nodes-base.postgres",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select * from sources where is_active = true"
+      }
+    },
+    {
+      "name": "Fetch RSS or API",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$json.rss_url || $json.url}}",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Normalize And Hash",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "return items.map(item => ({ json: { ...item.json, normalized: true } }));"
+      }
+    },
+    {
+      "name": "Upsert Article",
+      "type": "n8n-nodes-base.postgres",
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "insert into articles (...) values (...) on conflict (canonical_url) do nothing"
+      }
+    },
+    {
+      "name": "Run Processing API",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tada.example/internal/process-article"
+      }
+    },
+    {
+      "name": "Generate Daily Digest",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tada.example/reports/daily"
+      }
+    },
+    {
+      "name": "Notify Reviewers",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "channel": "#market-intelligence-review",
+        "text": "Daily TADA intelligence digest is ready for review."
+      }
+    }
+  ],
+  "connections": {
+    "Daily Cron": { "main": [[{ "node": "Load Active Sources", "type": "main", "index": 0 }]] },
+    "Load Active Sources": { "main": [[{ "node": "Fetch RSS or API", "type": "main", "index": 0 }]] },
+    "Fetch RSS or API": { "main": [[{ "node": "Normalize And Hash", "type": "main", "index": 0 }]] },
+    "Normalize And Hash": { "main": [[{ "node": "Upsert Article", "type": "main", "index": 0 }]] },
+    "Upsert Article": { "main": [[{ "node": "Run Processing API", "type": "main", "index": 0 }]] },
+    "Run Processing API": { "main": [[{ "node": "Generate Daily Digest", "type": "main", "index": 0 }]] },
+    "Generate Daily Digest": { "main": [[{ "node": "Notify Reviewers", "type": "main", "index": 0 }]] }
+  }
+}

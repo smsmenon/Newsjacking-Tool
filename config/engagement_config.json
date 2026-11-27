@@ -1,0 +1,8 @@
+{
+  "linkedin": {
+    "min_likes": 50,
+    "min_comments": 10,
+    "max_age_hours": 24
+  },
+  "note": "Tunable engagement thresholds for LinkedIn posts. Increase to be more selective, decrease to cast wider net."
+}

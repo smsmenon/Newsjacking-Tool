@@ -1,0 +1,5553 @@
+{
+  "Customers & Partners": [
+    {
+      "name": "Caterpillar",
+      "revenue": "$70.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 9,
+          "sessions": 10,
+          "views": 16
+        },
+        "Mar 2026": {
+          "users": 8,
+          "sessions": 12,
+          "views": 18
+        },
+        "Apr 2026": {
+          "users": 5,
+          "sessions": 6,
+          "views": 17
+        },
+        "May 2026": {
+          "users": 4,
+          "sessions": 5,
+          "views": 6
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "Crystal Sunley (Rivas)",
+          "title": "Senior Digital Program Manager",
+          "email": "sunley_crystal@cat.com",
+          "linkedin": "https://www.linkedin.com/in/crystal-sunley-rivas-4448b128",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Tiffany Britt, MBA",
+          "title": "Global Technology Manager",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/tiffanybritt",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Jarrod Stock",
+          "title": "Senior Market Research Consultant",
+          "email": "jpaulstock@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/jarrod-stock-590a9b32",
+          "pageViewed": "https://www.tadanow.com/company/company-about"
+        }
+      ]
+    },
+    {
+      "name": "GE Healthcare",
+      "revenue": "$21.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 4,
+          "sessions": 5,
+          "views": 11
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 4,
+          "sessions": 5,
+          "views": 6
+        },
+        "May 2026": {
+          "users": 5,
+          "sessions": 5,
+          "views": 6
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": [
+        {
+          "name": "Allison Beglen (Stuck)",
+          "title": "Director - Global Ecommerce Product Management",
+          "email": "allisonestuck@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/allison-stuck",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Steve Darner",
+          "title": "Senior Technician at GE Healthcare",
+          "email": "steve_darner@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/steve-darner-425a3862",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Valerie Serafin",
+          "title": "Senior Neurology Account Manager/Northeast Field Sales Trainer",
+          "email": "valerie.serafin@gehealthcare.com",
+          "linkedin": "https://www.linkedin.com/in/valerie-serafin-84045413",
+          "pageViewed": "https://www.tadanow.com/blog/tada-recognized-in-2021-gartner-cool-vendors-in-data-management"
+        }
+      ]
+    },
+    {
+      "name": "OSF Healthcare System",
+      "revenue": "$4.6B",
+      "months": {
+        "Feb 2026": {
+          "users": 8,
+          "sessions": 12,
+          "views": 28
+        },
+        "Mar 2026": {
+          "users": 6,
+          "sessions": 6,
+          "views": 14
+        },
+        "Apr 2026": {
+          "users": 5,
+          "sessions": 7,
+          "views": 19
+        },
+        "May 2026": {
+          "users": 6,
+          "sessions": 8,
+          "views": 10
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 4
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "Angela Aldred",
+          "title": "Budgeting & Procurement Analyst",
+          "email": "angela.aldred@osfhealthcare.org",
+          "linkedin": "https://www.linkedin.com/in/angela-aldred-8823738",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Kelsi Christine",
+          "title": "Registered Nurse",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/kelsi-christine-2755462b4",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Christine Cunningham",
+          "title": "Records Examiner/Analyst",
+          "email": "christine.cunningham84@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/christine-cunningham-1734a013",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Bethany Franciskovich",
+          "title": "Project Assistant, Performance Improvement",
+          "email": "bethany.harper@osfhealthcare.org",
+          "linkedin": "https://www.linkedin.com/in/bethany-harper94",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Oshkosh",
+      "revenue": "$11.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 4
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 3
+        },
+        "Jun 2026": {
+          "users": 4,
+          "sessions": 5,
+          "views": 5
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Michael Conger",
+          "title": "Senior Technical Support Specialist",
+          "email": "congermm@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/michael-conger-0512492a",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Cummins Inc.",
+      "revenue": "$36.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Leelakrishnan N. Parthiban",
+          "title": "Site Quality Leader",
+          "email": "leelakrishnan.parthiban@cummins.com",
+          "linkedin": "https://www.linkedin.com/in/leelakrishnan",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Steelscape",
+      "revenue": "~$0.19B",
+      "months": {
+        "Mar 2026": {
+          "users": 5,
+          "sessions": 6,
+          "views": 10
+        }
+      },
+      "contacts": [
+        {
+          "name": "Edgar Tomlin",
+          "title": "",
+          "email": "edgar.tomlin@steelscape.com",
+          "linkedin": "https://www.linkedin.com/in/edgar-tomlin-7429b26",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "The Wheel Group",
+      "revenue": "$0.25B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 8
+        }
+      },
+      "contacts": [
+        {
+          "name": "Wade Kawasaki",
+          "title": "Chief Executive Officer",
+          "email": "wadek@thewheelgroup.com",
+          "linkedin": "https://www.linkedin.com/in/wadek",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Pointcore",
+      "revenue": "0.9 B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 7
+        }
+      },
+      "contacts": [
+        {
+          "name": "Jami McClain",
+          "title": "Brand Manager",
+          "email": "jami.l.mcclain@pointcore.com",
+          "linkedin": "https://www.linkedin.com/in/jamimcclain14",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Terra Morton",
+          "title": "IT Project Manager",
+          "email": "terralynn06@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/terra-morton-444b0771",
+          "pageViewed": ""
+        }
+      ]
+    },
+    {
+      "name": "Oshkosh Defense",
+      "revenue": "$10.1",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Stephanie Schreiber",
+          "title": "Environmental Lead",
+          "email": "sschreiber@defense.oshkoshcorp.com",
+          "linkedin": "https://www.linkedin.com/in/stephanie-schreiber-b0a06ba0",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    }
+  ],
+  "Defense Manufacturers - 1B+": [
+    {
+      "name": "Boeing",
+      "revenue": "$94.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        },
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Collins Aerospace",
+      "revenue": "$30.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "General Dynamics Mission Systems, Inc.",
+      "revenue": "$5.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "National Aeronautics and Space Administration",
+      "revenue": "~$25.4B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Moog Inc",
+      "revenue": "$3.5B – $3.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Lockheed Martin",
+      "revenue": "$71.0",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Kyler Mullins",
+          "title": "Project Engineer",
+          "email": "kyler.p.mullins@lmco.com",
+          "linkedin": "https://www.linkedin.com/in/kylermullins",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "KBR Inc.",
+      "revenue": "$7.4",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Cecilia De La Fuente",
+          "title": "Senior Manager - Treasury",
+          "email": "cecilia.delafuente@kbr.com",
+          "linkedin": "https://www.linkedin.com/in/cecilia-de-la-fuente-ctp-36608015",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    }
+  ],
+  "Data Center Mfg - 1B+": [
+    {
+      "name": "Intel Corporation",
+      "revenue": "$57.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 5
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Lam Research Corporation",
+      "revenue": "$21.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "NVIDIA Corporation",
+      "revenue": "$253.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "TSMC",
+      "revenue": "$121.9B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "STMicroelectronics",
+      "revenue": "$13.5B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Teradyne Inc",
+      "revenue": "$4.46B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Panduit",
+      "revenue": "$1.0B – $1.3B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Texas Instruments",
+      "revenue": "$15.5B – $17.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Trimble Inc",
+      "revenue": "$3.6B – $3.9B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "3M",
+      "revenue": "$24.6",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Amanda Dauphinais",
+          "title": "Global Vice President, Auto Care, Packaging & Expressions",
+          "email": "adauphinais@3m.com",
+          "linkedin": "https://www.linkedin.com/in/adauphinais",
+          "pageViewed": "https://www.tadanow.com/contact-us-microapps"
+        }
+      ]
+    },
+    {
+      "name": "Parker Hannifin",
+      "revenue": "$19.9",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Jorge Camarillo",
+          "title": "Quality Engineer",
+          "email": "jorge.camarillo@parker.com",
+          "linkedin": "https://www.linkedin.com/in/jorge-camarillo-12136a26a",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Grainger",
+      "revenue": "$16.5",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Patrick Donlon",
+          "title": "Branch Team Lead",
+          "email": "amydonlon@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/patrick-donlon-5100b3229",
+          "pageViewed": "https://www.tadanow.com/video/tada-products-explained"
+        }
+      ]
+    },
+    {
+      "name": "Parker Lord",
+      "revenue": "$1.1",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Michelle Grabowski",
+          "title": "Customer Experience Manager",
+          "email": "michelle_grabowski@lord.com",
+          "linkedin": "https://www.linkedin.com/in/michelle-grabowski-a71633109",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    }
+  ],
+  "Manufacturing - 1B+": [
+    {
+      "name": "Abbott",
+      "revenue": "$41.9B - $43.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 3
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "AbbVie Inc",
+      "revenue": "$61.16B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Acuity Brands, Inc",
+      "revenue": "$4.3B - $4.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Adient",
+      "revenue": "$14.5B – $15.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Aed Essentials",
+      "revenue": "$11.2B - $12.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Agrinautics, Inc.",
+      "revenue": "$13.5B - $14.2B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Akzo Nobel",
+      "revenue": "~$55.0B - $65.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "AlphaKOR Group",
+      "revenue": "$0.05",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 7
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 5,
+          "views": 10
+        },
+        "Jul 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Amcor",
+      "revenue": "$8.6B - $9.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "American Honda Motor Co., Inc.",
+      "revenue": "$20.0B - $21.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Apple Inc.",
+      "revenue": "$416.1B - $430.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 6,
+          "views": 15
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Applied Industrial Technologies, Inc.",
+      "revenue": "$4.5B - $4.8B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ascension",
+      "revenue": "$13.0B - $14.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Avery Dennison Corporation",
+      "revenue": "$8.6B – $9.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Axalta",
+      "revenue": "$5.2B - $5.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Boehringer Ingelheim International GmbH",
+      "revenue": "~$28.0B - $30.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "BP p.l.c.",
+      "revenue": "$190.0B - $210.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Candy Khan",
+          "title": "Director, DC",
+          "email": "candy.khan@bp.com",
+          "linkedin": "https://www.linkedin.com/in/candy-khan-284464181",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Bracco",
+      "revenue": "$21.0B - $23.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Bradfield's, Inc.",
+      "revenue": "$12.0B - $14.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Bristol Myers Squibb",
+      "revenue": "$46.0B - $48.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Canadian Tire Corporation",
+      "revenue": "~$2.1B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Cargill",
+      "revenue": "$164.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 4,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Carter Machinery",
+      "revenue": "~$0.8B - $1.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 8
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "ChemTreat, Inc",
+      "revenue": "~$0.8B - $1.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Chevron Phillips Chemical Company",
+      "revenue": "$12.0B – $14.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Children's Minnesota",
+      "revenue": "~$11.0B - $13.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Clarios",
+      "revenue": "~$9.5B - $10.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Clayton Homes",
+      "revenue": "$12.3B - $12.8B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "CNH Industrial",
+      "revenue": "~$1.2B - $1.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 8
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "COACH",
+      "revenue": "~$5.0B - $6.7B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Colgate-Palmolive Company",
+      "revenue": "$20.0B - $21.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Coloring Book Solutions",
+      "revenue": "~$1.8B - $2.2B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "CoorsTek, Inc.",
+      "revenue": "$42.0B - $45.0B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Crocs",
+      "revenue": "$4.0B - $4.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 4,
+          "sessions": 4,
+          "views": 4
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Crown Holdings, Inc",
+      "revenue": "$11.8B - $12.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "CSL",
+      "revenue": "$15.0B - $16.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Daimler Truck Holding",
+      "revenue": "$58.0B - $62.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Dana Limited",
+      "revenue": "$10.5B - $11.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "John Bessen",
+          "title": "Senior Buyer",
+          "email": "john.bessen@dana.com",
+          "linkedin": "https://www.linkedin.com/in/john-bessen-00086172",
+          "pageViewed": "1"
+        },
+        {
+          "name": "John essen",
+          "title": "Senior uyer",
+          "email": "john.essen@dana.com",
+          "linkedin": "https://www.linkedin.com/in/john-essen-00086172",
+          "pageViewed": ""
+        }
+      ]
+    },
+    {
+      "name": "Donaldson Company, Inc",
+      "revenue": "$3.5B - $3.7B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 6,
+          "views": 12
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Dow",
+      "revenue": "$4.0B - $4.5B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Eaton",
+      "revenue": "$15.2B - $16.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Element Solutions Inc",
+      "revenue": "$2.4B - $2.6B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Embraco",
+      "revenue": "~$1.2B - $1.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Endo International plc",
+      "revenue": "$195.0B - $215.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Endologix LLC",
+      "revenue": "$7.0B - $8.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "enVu, LLC",
+      "revenue": "$14.5B - $15.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Estee Lauder Companies",
+      "revenue": "$19.0B - $20.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ferrero Asia Limited",
+      "revenue": "~$1.5B - $2.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Foxconn",
+      "revenue": "$195.0B – $215.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "GE Appliances",
+      "revenue": "~$9.0B - $10.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "L. Srinivasan",
+          "title": "Senior Manager - Digital Engineering",
+          "email": "l.srinivasan@geappliances.com",
+          "linkedin": "https://www.linkedin.com/in/lsvasan",
+          "pageViewed": "https://www.tadanow.com/company/company-leadership"
+        }
+      ]
+    },
+    {
+      "name": "General Electric",
+      "revenue": "$38.0B - $42.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 4
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "General Mills Inc",
+      "revenue": "$19.8B - $20.3B",
+      "months": {
+        "Mar 2026": {
+          "users": 6,
+          "sessions": 11,
+          "views": 17
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "General Motors",
+      "revenue": "$175.0B - $182.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Global Hemp, Inc",
+      "revenue": "~$4.0B - $4.8B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Goodyear Tire & Rubber",
+      "revenue": "$2.8B - $3.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "H-E-B",
+      "revenue": "$43.0B - $46.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Heatcraft Worldwide Refrigeration",
+      "revenue": "$18.5B - $19.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hillenbrand, Inc",
+      "revenue": "$2.8B – $3.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Holcim",
+      "revenue": "$6.0B - $6.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hologic",
+      "revenue": "$4.0B - $4.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Honeywell",
+      "revenue": "$38.5B - $40.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Huntsman International LLC",
+      "revenue": "$8.2B - $8.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hutchinson Industries, Inc",
+      "revenue": "$16.0B - $16.8B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "ICON plc",
+      "revenue": "~$1.2B - $1.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Infineum",
+      "revenue": "~$0.9B - $1.2B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "International Paper",
+      "revenue": "$18.5B – $19.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Inteva Products",
+      "revenue": "~$2.0B - $2.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Johns Hopkins Medicine",
+      "revenue": "~$10.5B - $11.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Johnson Controls",
+      "revenue": "$27.0B - $28.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Jubilant",
+      "revenue": "$5.3B - $5.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Julian Electric Inc.",
+      "revenue": "$4.3B - $4.7B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "KEG",
+      "revenue": "~$3.5B - $4.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Kenvue",
+      "revenue": "$15.4B - $15.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Kohl's",
+      "revenue": "$16.5B - $17.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Konecranes",
+      "revenue": "$4.3B – $4.7B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Kress Corporation",
+      "revenue": "$14.2B - $15.0B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "KUKA",
+      "revenue": "$4.0B – $4.5B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Lennox International Inc",
+      "revenue": "$5.0B - $5.3B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 3
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "Veronica Russ",
+          "title": "Senior Manager, Corporate Audit",
+          "email": "veronica.russ@lennoxintl.com",
+          "linkedin": "https://www.linkedin.com/in/vcruss",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Lowe's",
+      "revenue": "$83.0B - $86.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Macy's",
+      "revenue": "$23.0B - $24.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "MAHLE GmbH",
+      "revenue": "$13.0B – $14.2B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Mars",
+      "revenue": "$50.0B - $53.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Maxxis International",
+      "revenue": "~$3.5B - $4.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "MD Anderson Cancer Center",
+      "revenue": "~$6.5B - $7.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Medtronic",
+      "revenue": "$32.5B - $34.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Metso",
+      "revenue": "~$5.2B - $5.7B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Micropulse",
+      "revenue": "$3.5B - $3.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Milton CAT",
+      "revenue": "$0.72",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Moffitt Cancer Center",
+      "revenue": "~$1.8B - $2.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Moog Inc",
+      "revenue": "$2.6B - $2.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Motorola Mobility LLC",
+      "revenue": "~$7.5B - $9.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Mustang Cat",
+      "revenue": "~$0.8B - $1.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Natera",
+      "revenue": "$1.6B - $1.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "National Aeronautics and Space Administration",
+      "revenue": "~$25.4B (Budget)",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nestle",
+      "revenue": "$100.0B - $105.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "New York Jewelers",
+      "revenue": "~$0.8B - $1.1B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 7,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nidec",
+      "revenue": "~$3.1B - $3.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nissan Motor Corporation",
+      "revenue": "$80.0B - $85.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "No More Tears Inc",
+      "revenue": "~$2.5B - $3.0B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nordson",
+      "revenue": "$2.6B – $2.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Scott Martel",
+          "title": "Vice President, Power Systems",
+          "email": "scott_martel@miltoncat.com",
+          "linkedin": "https://www.linkedin.com/in/scott-martel-a9314729",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Northwestern Medicine",
+      "revenue": "~$6.5B - $7.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 4,
+          "sessions": 4,
+          "views": 4
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Oregon Tool, Inc",
+      "revenue": "~$1.0B - $1.3B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Panasonic",
+      "revenue": "$55.0B – $60.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Panduit",
+      "revenue": "$4.1B - $4.3B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Parker-Hannifin Corp",
+      "revenue": "$19.8B - $20.8B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Jorge Camarillo",
+          "title": "Quality Engineer",
+          "email": "jorge.camarillo@parker.com",
+          "linkedin": "https://www.linkedin.com/in/jorge-camarillo-12136a26a",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "PepsiCo",
+      "revenue": "$91.5B - $95.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "PetSmart",
+      "revenue": "~$3.5B - $4.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Pfizer Inc",
+      "revenue": "$58.0B - $62.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Piedmont",
+      "revenue": "$6.5",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Plural",
+      "revenue": "~$3.0B - $3.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Powell Electronics",
+      "revenue": "$6.0B - $6.4B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Pratt Industries",
+      "revenue": "~$0.8B - $1.1B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Procter & Gamble",
+      "revenue": "$84.0B - $87.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Providence",
+      "revenue": "~$28.0B - $30.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Reckitt Benckiser Group PLC",
+      "revenue": "$18.0B - $19.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Steph Brogno",
+          "title": "Reckitt",
+          "email": "stephanie.brogno@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/stephaniebrogno",
+          "pageViewed": "1"
+        },
+        {
+          "name": "Steph rogno",
+          "title": "Role unspecified",
+          "email": "stephanie.rogno@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/stephanierogno",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Regal Rexnord Corporation",
+      "revenue": "$5.8",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Rich Products Corporation",
+      "revenue": "$5.0B - $5.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Lauren Lopez",
+          "title": "Associate Marketing Manager",
+          "email": "laumel427@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/lauren-lopez-1641b411",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "S.H. Chooi Fasteners",
+      "revenue": "$6.8B - $7.3B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Samsung",
+      "revenue": "$15.2B - $16.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Sanofi",
+      "revenue": "$52.0B - $56.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Sea-Land Chemical Company",
+      "revenue": "$5.2B - $5.6B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Selds, Inc.",
+      "revenue": "$15.5B - $17.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Sensata Technologies, Inc",
+      "revenue": "$4.0B - $4.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Sam Naumowicz",
+          "title": "Chief Engineer",
+          "email": "sam.naumowicz@sensata.com",
+          "linkedin": "https://www.linkedin.com/in/sam-naumowicz-09a39283",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Signify",
+      "revenue": "$6.8B – $7.3B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Southeastern Grocers",
+      "revenue": "~$8.5B - $9.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 3
+        },
+        "Jul 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Stanley Black & Decker",
+      "revenue": "$15.2B – $16.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Staples",
+      "revenue": "~$8.5B - $9.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Starkey Hearing",
+      "revenue": "~$0.8B - $1.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Stepan Company",
+      "revenue": "$2.2B - $2.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 4,
+          "sessions": 11,
+          "views": 16
+        },
+        "Mar 2026": {
+          "users": 3,
+          "sessions": 8,
+          "views": 9
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 2,
+          "sessions": 5,
+          "views": 8
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 7,
+          "views": 16
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Steris",
+      "revenue": "$5.2B - $5.6B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Stryker",
+      "revenue": "$21.5B - $23.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 11
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Connor Moriarty",
+          "title": "OnSite Specialist",
+          "email": "connor.moriarty@stryker.com",
+          "linkedin": "https://www.linkedin.com/in/connormoriarty8",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Sun Chemical",
+      "revenue": "~$1.0B - $1.3B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Superior Essex",
+      "revenue": "$23.0B - $24.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "T3 Automation",
+      "revenue": "$16.0B - $18.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Target Brands, Inc",
+      "revenue": "$106.0B - $109.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        },
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 5
+        },
+        "Apr 2026": {
+          "users": 5,
+          "sessions": 5,
+          "views": 6
+        },
+        "May 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 7
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 4
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Teleflex",
+      "revenue": "~$13.0B - $14.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Tesla, Inc.",
+      "revenue": "$97.0B - $102.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Tetra Pak",
+      "revenue": "~$13.0B – $14.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Texas Instruments",
+      "revenue": "~$6.5B - $7.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The Avon Company",
+      "revenue": "$7.0B - $7.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The Lebermuth Company",
+      "revenue": "$54.0B - $57.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The Lubrizol Corporation",
+      "revenue": "$3.6B - $3.9B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 9
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The Sherwin-Williams Company",
+      "revenue": "$23.0B – $24.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The TJX Companies, Inc",
+      "revenue": "$10.0B - $10.8B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Thermax Limited",
+      "revenue": "~$1.1B - $1.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Tiffany & Co.",
+      "revenue": "~$5.5B - $6.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "UFP Industries, Inc",
+      "revenue": "$7.0B – $7.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Under Armour",
+      "revenue": "$5.2B - $5.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Unilever",
+      "revenue": "$64.0B - $67.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 5
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Universal Renewables",
+      "revenue": "$9.8B - $10.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Varsity Spirit",
+      "revenue": "$0.4",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "VF",
+      "revenue": "$145.0B - $152.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Volkswagen of America, Inc",
+      "revenue": "~$30.0B - $35.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Wabtec Corporation",
+      "revenue": "~$0.8B - $1.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Wacker Chemical Corporation USA",
+      "revenue": "~$1.5B - $2.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Wavetronix",
+      "revenue": "~$2.4B - $2.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Wayfair LLC",
+      "revenue": "$11.8B - $12.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 4
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Wayne Lynch",
+          "title": "Broker/Owner",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/wayne-lynch-09b13237",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Wendel Printing",
+      "revenue": "~$1.2B - $1.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 13
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Whirlpool",
+      "revenue": "$16.5B - $17.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "AB InBev",
+      "revenue": "$57.7",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Andrea Stramler",
+          "title": "Innovation Manager - New Product Development, North America",
+          "email": "andreastramler@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/andrea-stramler-7413564",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "McCormick FONA",
+      "revenue": "$6.7",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Harmony Hickey",
+          "title": "Senior Project Coordinator",
+          "email": "hhickey@fona.com",
+          "linkedin": "https://www.linkedin.com/in/harmony-hickey-855448",
+          "pageViewed": "https://www.tadanow.com/industries/manufacturing/automotive"
+        }
+      ]
+    },
+    {
+      "name": "Domtar",
+      "revenue": "$5.4",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Gariel Grimes",
+          "title": "Process Control Engineer",
+          "email": "gariel.grimes@domtar.com",
+          "linkedin": "https://www.linkedin.com/in/gariel-grimes",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Solar Turbines",
+      "revenue": "$3.1",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Clarisse Santos",
+          "title": "Sr. Manager, Strategy & Growth",
+          "email": "csantos@cat.com",
+          "linkedin": "https://www.linkedin.com/in/clarissesantos",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Lozier Corporation",
+      "revenue": "$0.5",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Tim McMahon Jr",
+          "title": "Sr. Buyer",
+          "email": "tmcm3000@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/tim-mcmahon-jr-4612268",
+          "pageViewed": "https://www.tadanow.com/industries/manufacturing/automotive"
+        }
+      ]
+    }
+  ],
+  "Healthcare_MedTech - 1B+": [
+    {
+      "name": "Abbott",
+      "revenue": "$41.9B – $43.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 3
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "AbbVie Inc",
+      "revenue": "$61.16B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Advent Health Medical Group",
+      "revenue": "~$1.8B - $2.2B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Advocate Health Care",
+      "revenue": "$31.0B - $32.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 4
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ascension",
+      "revenue": "~$28.0B – $30.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 6
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "AtlantiCare",
+      "revenue": "~$1.1B - $1.3B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Banner Health",
+      "revenue": "$14.0B - $15.2B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Baptist Health",
+      "revenue": "$4.5B - $5.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "BioPlus Specialty Pharmacy",
+      "revenue": "~$1.5B - $2.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Blanchard Valley Health System",
+      "revenue": "~$0.35B - $0.42B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Boehringer Ingelheim International GmbH",
+      "revenue": "~$28.0B – $30.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Bracco",
+      "revenue": "~$1.8B – $2.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Bristol Myers Squibb",
+      "revenue": "$46.0B – $48.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Bronson Healthcare",
+      "revenue": "~$1.1B - $1.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Brown University Health",
+      "revenue": "$3.2B - $3.5B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Carle Health",
+      "revenue": "~$4.0B - $4.4B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Catholic Health",
+      "revenue": "~$3.0B - $3.4B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Children's Healthcare of Atlanta",
+      "revenue": "~$2.3B - $2.6B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Children's Hospital Colorado",
+      "revenue": "$1.8B - $2.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Kelley Dahlhauser",
+          "title": "Product Equipment Compliance Specialist/Accreditation",
+          "email": "kelley.dahlhauser@childrenscolorado.org",
+          "linkedin": "https://www.linkedin.com/in/kelley-dahlhauser-611893142",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Children's Minnesota",
+      "revenue": "~$1.2B – $1.5B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "ChristianaCare",
+      "revenue": "~$3.0B - $3.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 3
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "CHRISTUS Health",
+      "revenue": "$8.5B - $9.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Community Health Systems",
+      "revenue": "$12.2B - $12.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 5
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Cone Health",
+      "revenue": "~$2.8B - $3.1B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "CSL",
+      "revenue": "$15.0B – $16.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "DaVita Inc",
+      "revenue": "$12.3B – $12.8B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Dr. Reddy's Laboratories",
+      "revenue": "~$3.3B – $3.6B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 6,
+          "views": 12
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Edwards Lifesciences Corporation",
+      "revenue": "$5.5B – $6.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Encompass Health Corporation",
+      "revenue": "$5.2B - $5.5B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Endeavor Health",
+      "revenue": "$5.2B - $5.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Endo International plc",
+      "revenue": "~$1.8B – $2.2B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Franciscan Missionaries of Our Lady Health System",
+      "revenue": "$3.1B - $3.4B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Fresenius Medical Care",
+      "revenue": "$20.5B - $22.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Froedtert Health",
+      "revenue": "$3.5B - $3.9B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hackensack Meridian Health",
+      "revenue": "$7.2B - $7.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "HCA Healthcare",
+      "revenue": "$65.0B - $68.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "HCA Midwest Health",
+      "revenue": "~$1.8B - $2.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hillcrest Healthcare System",
+      "revenue": "~$0.9B - $1.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "HNL Lab Medicine",
+      "revenue": "~$0.20B - $0.30B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hologic",
+      "revenue": "$4.0B – $4.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Hurley Medical Center",
+      "revenue": "~$0.45B - $0.55B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "ICON plc",
+      "revenue": "$8.2B – $8.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "ICU Medical",
+      "revenue": "$2.2B - $2.4B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Jackson Health System",
+      "revenue": "$2.5B - $2.8B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Johns Hopkins Medicine",
+      "revenue": "~$10.5B – $11.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Jubilant",
+      "revenue": "~$1.2B – $1.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "LifeHealthcare",
+      "revenue": "~$0.8B - $1.1B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Mary Washington Healthcare",
+      "revenue": "~$0.9B - $1.1B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "MD Anderson Cancer Center",
+      "revenue": "~$6.5B – $7.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Medtronic",
+      "revenue": "$32.5B – $34.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 5
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Moffitt Cancer Center",
+      "revenue": "~$1.8B – $2.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Natera",
+      "revenue": "$1.6B – $1.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "NewYork-Presbyterian Hospital",
+      "revenue": "$9.5B - $10.5B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nicklaus Children's Health System",
+      "revenue": "~$0.80B - $0.95B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Northwestern Medicine",
+      "revenue": "~$6.5B – $7.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Oak Street Health",
+      "revenue": "~$3.5B - $4.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 5
+        }
+      },
+      "contacts": [
+        {
+          "name": "Parag Sachdeva",
+          "title": "Founder & President",
+          "email": "sachdevap@uis.edu",
+          "linkedin": "https://www.linkedin.com/in/parag-sachdeva",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Ochsner Health",
+      "revenue": "$6.5B - $7.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "OCLI Vision",
+      "revenue": "~$0.20B - $0.35B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Onco360 Oncology Pharmacy",
+      "revenue": "~$1.2B - $1.5B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Owensboro Health",
+      "revenue": "~$0.75B - $0.85B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Acton Acton",
+          "title": "Floor Tech",
+          "email": "a@omhs.org",
+          "linkedin": "https://www.linkedin.com/in/jd-acton-84a90aa4",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Palos Health",
+      "revenue": "~$0.45B - $0.55B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Parexel International",
+      "revenue": "~$2.5B – $3.0B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Pfizer Inc",
+      "revenue": "$58.0B – $62.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Providence",
+      "revenue": "~$28.0B – $30.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 4
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 3
+        },
+        "Jun 2026": {
+          "users": 4,
+          "sessions": 5,
+          "views": 5
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Michael Conger",
+          "title": "Senior Technical Support Specialist",
+          "email": "congermm@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/michael-conger-0512492a",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Radiology Partners",
+      "revenue": "~$2.5B - $2.9B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": [
+        {
+          "name": "Mandar Pattekar MD, MS, FACR",
+          "title": "Diagnostic Radiology.",
+          "email": "mandar.pattekar@radpartners.com",
+          "linkedin": "https://www.linkedin.com/in/mandar-pattekar-md-ms-facr-866aa645",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Sanofi",
+      "revenue": "$45.0B – $48.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "SCA Health",
+      "revenue": "~$2.5B - $3.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Springfield Clinic",
+      "revenue": "~$0.60B - $0.75B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Steris",
+      "revenue": "$5.2B – $5.6B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Stryker",
+      "revenue": "$21.5B – $23.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 3,
+          "views": 3
+        },
+        "Jul 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Connor Moriarty",
+          "title": "OnSite Specialist",
+          "email": "connor.moriarty@stryker.com",
+          "linkedin": "https://www.linkedin.com/in/connormoriarty8",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "Sunnybrook",
+      "revenue": "~$1.1B - $1.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Sutter Health",
+      "revenue": "$16.0B - $17.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Nancy Wong",
+          "title": "Staff Nurse II",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/nancy-wong-4ba4098",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "Teleflex",
+      "revenue": "$3.1B – $3.3B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Texas Children's Hospital",
+      "revenue": "$3.8B – $4.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Texoma Medical Center",
+      "revenue": "~$0.35B - $0.45B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Tower Health",
+      "revenue": "~$1.9B - $2.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "University Health",
+      "revenue": "~$2.2B - $2.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Vanderbilt University Medical Center",
+      "revenue": "$6.8B - $7.4B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Yale New Haven Hospital",
+      "revenue": "$3.8B - $4.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "BD (Becton Dickinson)",
+      "revenue": "$20.2",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Regis Danon",
+          "title": "Oncology Business Specialist",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/regisdanon",
+          "pageViewed": "https://www.tadanow.com/request-a-demo"
+        }
+      ]
+    },
+    {
+      "name": "AdventHealth",
+      "revenue": "$9.0",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Satya Mantena",
+          "title": "Senior Technical Product Manager",
+          "email": "satmantena@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/satyamantena",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "SCIEX",
+      "revenue": "$1.0",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Anna Korolev",
+          "title": "Senior Project Manager",
+          "email": "anna.korolev@sciex.com",
+          "linkedin": "https://www.linkedin.com/in/annakorolev",
+          "pageViewed": "https://www.tadanow.com/"
+        }
+      ]
+    },
+    {
+      "name": "TRIMEDX",
+      "revenue": "$0.3",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Chris Rauch",
+          "title": "Vice President, Supply Chain & Shared Services",
+          "email": "chris.rauch@trimedx.com",
+          "linkedin": "https://www.linkedin.com/in/chris-rauch",
+          "pageViewed": "https://www.tadanow.com/video/how-tada-enables-multi-enterprise-collaboration-to-reduce-supply-chain-costs"
+        }
+      ]
+    },
+    {
+      "name": "Siemens Healthineers",
+      "revenue": "$22.0",
+      "months": {},
+      "contacts": [
+        {
+          "name": "Executive Assistant",
+          "title": "cannonbets25@gmail.com",
+          "email": "https://www.linkedin.com/in/betty-cannon-ab6b2412",
+          "linkedin": "https://www.tadanow.com/",
+          "pageViewed": ""
+        }
+      ]
+    }
+  ],
+  "CPG - 1B+": [
+    {
+      "name": "Flowers Foods",
+      "revenue": "$5.26B – $5.30B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "R.J. Reynolds Tobacco Company",
+      "revenue": "~$5.40B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ulta Beauty",
+      "revenue": "$12.39B – $12.71B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 4
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ben E. Keith Foods",
+      "revenue": "~$6.80B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Ferrero Asia Limited",
+      "revenue": "~$1.5B – $2.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "PetSmart",
+      "revenue": "~$10.0B – $11.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Converse",
+      "revenue": "~$2.4B – $2.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 13
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "COACH",
+      "revenue": "~$5.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Tiffany & Co.",
+      "revenue": "~$5.5B – $6.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Southeastern Grocers",
+      "revenue": "~$8.5B – $9.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Staples",
+      "revenue": "~$8.5B – $9.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 3,
+          "sessions": 5,
+          "views": 8
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "David Stern",
+          "title": "MTP @ Stealth: AI Innovation Lead",
+          "email": "davestern@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/dsternsf",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "VF",
+      "revenue": "$10.0B – $10.8B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 9
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nestle",
+      "revenue": "$100.0B – $105.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": [
+        {
+          "name": "Sam Mathew",
+          "title": "Senior Expert - Environmental Sustainaility",
+          "email": "",
+          "linkedin": "https://www.linkedin.com/in/sam-mathew-76093515",
+          "pageViewed": "https://www.tadanow.com/company/careers"
+        }
+      ]
+    },
+    {
+      "name": "Target Brands, Inc",
+      "revenue": "$106.0B – $109.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 4,
+          "sessions": 11,
+          "views": 16
+        },
+        "Mar 2026": {
+          "users": 3,
+          "sessions": 8,
+          "views": 9
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 2,
+          "sessions": 5,
+          "views": 8
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 7,
+          "views": 16
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Wayfair LLC",
+      "revenue": "$11.8B – $12.3B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Canadian Tire Corporation",
+      "revenue": "$13.0B – $14.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Nordstrom",
+      "revenue": "$14.2B – $15.0B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Estee Lauder Companies",
+      "revenue": "$15.2B – $16.0B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Kenvue",
+      "revenue": "$15.4B – $15.8B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Home Depot",
+      "revenue": "$152.0B – $158.0B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Kohl's",
+      "revenue": "$16.5B – $17.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Cargill",
+      "revenue": "$164.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 4,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Reckitt Benckiser Group PLC",
+      "revenue": "$18.0B – $19.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "General Mills Inc",
+      "revenue": "$19.8B – $20.3B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Colgate-Palmolive Company",
+      "revenue": "$20.0B – $21.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "BJ's Wholesale Club, Inc",
+      "revenue": "$20.0B – $21.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Macy's",
+      "revenue": "$23.0B – $24.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Macy's, Inc",
+      "revenue": "$23.0B – $24.0B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Crocs",
+      "revenue": "$4.0B – $4.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "Kellie Willis",
+          "title": "",
+          "email": "kaewill24@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/kellie-willis-29a95781",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "H-E-B",
+      "revenue": "$43.0B – $46.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Rich Products Corporation",
+      "revenue": "$5.0B – $5.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 3,
+          "views": 7
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Under Armour",
+      "revenue": "$5.2B – $5.5B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Mattel",
+      "revenue": "$5.3B – $5.6B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Mars",
+      "revenue": "$50.0B – $53.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The TJX Companies, Inc",
+      "revenue": "$54.0B – $57.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Coty Inc",
+      "revenue": "$6.1B – $6.4B",
+      "months": {
+        "Jun 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Unilever",
+      "revenue": "$64.0B – $67.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "Walmart",
+      "revenue": "$680.0B – $700.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 5
+        }
+      },
+      "contacts": [
+        {
+          "name": "Shaquanna Thompson",
+          "title": "",
+          "email": "shaquanna3692@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/shaquanna-thompson-7113a3345",
+          "pageViewed": ""
+        }
+      ]
+    },
+    {
+      "name": "Lowe's",
+      "revenue": "$83.0B – $86.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Ginger Ayers",
+          "title": "Paint Department",
+          "email": "gayers13@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ginger-ayers-1a11a0124",
+          "pageViewed": ""
+        }
+      ]
+    },
+    {
+      "name": "Procter & Gamble",
+      "revenue": "$84.0B – $87.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Jorge Camarillo",
+          "title": "Quality Engineer",
+          "email": "jorge.camarillo@parker.com",
+          "linkedin": "https://www.linkedin.com/in/jorge-camarillo-12136a26a",
+          "pageViewed": "1"
+        }
+      ]
+    },
+    {
+      "name": "ADM",
+      "revenue": "$85.0B – $93.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "PepsiCo",
+      "revenue": "$91.5B – $95.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": []
+    },
+    {
+      "name": "The Avon Company",
+      "revenue": "~$1.0B – $1.3B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": []
+    }
+  ],
+  "Under $1B (250M-1B)": [
+    {
+      "name": "D'Addario & Company, Inc.",
+      "revenue": "~$0.20B – $0.30B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "EyeBuyDirect",
+      "revenue": "~$0.20B – $0.35B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "GSFSGroup",
+      "revenue": "~$0.20B – $0.35B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "Stella & Chewy's",
+      "revenue": "~$0.25B – $0.40B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "Varsity Spirit",
+      "revenue": "$0.4",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "The Tile Shop",
+      "revenue": "~$0.37B – $0.40B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "World Market",
+      "revenue": "~$0.8B – $1.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "Rodan + Fields",
+      "revenue": "~$0.8B – $1.1B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "CPG"
+    },
+    {
+      "name": "Janicki Industries",
+      "revenue": "~$0.20B – $0.35B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 4
+        }
+      },
+      "contacts": [],
+      "category": "Defense"
+    },
+    {
+      "name": "Draper",
+      "revenue": "~$0.8B – $0.9B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Defense"
+    },
+    {
+      "name": "Sos International Llc",
+      "revenue": "~$0.8B – $1.1B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Defense"
+    },
+    {
+      "name": "HNL Lab Medicine",
+      "revenue": "~$0.20B – $0.30B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "OCLI Vision",
+      "revenue": "~$0.20B – $0.35B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Blanchard Valley Health System",
+      "revenue": "~$0.35B – $0.42B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 11
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Texoma Medical Center",
+      "revenue": "~$0.35B – $0.45B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "The Stepping Stones Group, LLC",
+      "revenue": "~$0.40B – $0.60B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Hurley Medical Center",
+      "revenue": "~$0.45B – $0.55B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Palos Health",
+      "revenue": "~$0.45B – $0.55B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Children's Hospital of The King's Daughters",
+      "revenue": "~$0.50B – $0.60B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Crouse Health",
+      "revenue": "~$0.55B – $0.65B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Springfield Clinic",
+      "revenue": "~$0.60B – $0.75B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 3,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Owensboro Health",
+      "revenue": "~$0.75B – $0.85B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Nicklaus Children's Health System",
+      "revenue": "~$0.80B – $0.95B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Starkey Hearing",
+      "revenue": "~$0.8B – $1.0B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "LifeHealthcare",
+      "revenue": "~$0.8B – $1.1B",
+      "months": {
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Mary Washington Healthcare",
+      "revenue": "~$0.9B – $1.1B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 3
+        },
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 4
+        }
+      },
+      "contacts": [
+        {
+          "name": "Veronica Russ",
+          "title": "Senior Manager, Corporate Audit",
+          "email": "veronica.russ@lennoxintl.com",
+          "linkedin": "https://www.linkedin.com/in/vcruss",
+          "pageViewed": "1"
+        }
+      ],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Hillcrest Healthcare System",
+      "revenue": "~$0.9B – $1.1B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "Healthcare/MedTech"
+    },
+    {
+      "name": "Camco Manufacturing Inc.",
+      "revenue": "~$0.20B – $0.30B",
+      "months": {
+        "Feb 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Warn Industries",
+      "revenue": "~$0.20B – $0.30B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Civic Merchandising Inc",
+      "revenue": "~$0.20B – $0.35B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Giesecke & Devrient America, Inc",
+      "revenue": "~$0.30B – $0.50B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Sb Energy",
+      "revenue": "~$0.30B – $0.60B",
+      "months": {
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "AAF International",
+      "revenue": "~$0.31B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Core Molding Technologies",
+      "revenue": "~$0.32B – $0.38B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [
+        {
+          "name": "Kelley Dahlhauser",
+          "title": "Product Equipment Compliance Specialist/Accreditation",
+          "email": "kelley.dahlhauser@childrenscolorado.org",
+          "linkedin": "https://www.linkedin.com/in/kelley-dahlhauser-611893142",
+          "pageViewed": "1"
+        }
+      ],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Piedmont Plastics",
+      "revenue": "~$0.40B – $0.60B",
+      "months": {
+        "Mar 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Piedmont",
+      "revenue": "$6.5",
+      "months": {
+        "Apr 2026": {
+          "users": 2,
+          "sessions": 2,
+          "views": 2
+        },
+        "Jul 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 2
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Heatcraft Worldwide Refrigeration",
+      "revenue": "~$0.40B – $0.60B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Techniplas",
+      "revenue": "~$0.40B – $0.60B",
+      "months": {
+        "Jun 2026": {
+          "users": 3,
+          "sessions": 7,
+          "views": 12
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Carolina Cat",
+      "revenue": "~$0.5B – $0.8B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        },
+        "Jun 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Douglas Dynamics, Inc.",
+      "revenue": "~$0.60B – $0.68B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 3
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Cognex Corporation",
+      "revenue": "~$0.85B – $0.95B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "ChemTreat, Inc",
+      "revenue": "~$0.8B – $1.0B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Crane ChemPharma & Energy",
+      "revenue": "~$0.8B – $1.1B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Mustang Cat",
+      "revenue": "~$0.8B – $1.2B",
+      "months": {
+        "Feb 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Carter Machinery",
+      "revenue": "~$0.8B – $1.2B",
+      "months": {
+        "Mar 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "KAMAX",
+      "revenue": "~$0.9B – $1.2B",
+      "months": {
+        "Apr 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    },
+    {
+      "name": "Oregon Tool, Inc",
+      "revenue": "~$0.9B – $1.2B",
+      "months": {
+        "May 2026": {
+          "users": 1,
+          "sessions": 1,
+          "views": 1
+        }
+      },
+      "contacts": [],
+      "category": "Manufacturing"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tada-demo",
+      "runtimeExecutable": "C:\\Python313\\python.exe",
+      "runtimeArgs": ["-m", "tada_ci.api.server"],
+      "port": 8787,
+      "autoPort": false
+    }
+  ]
+}

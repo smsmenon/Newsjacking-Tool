@@ -1,0 +1,8 @@
+# Article body extraction. Replaced hand-rolled <article>/<main> regex, which returned
+# nothing on templates that use neither (IndustryWeek, Forbes).
+trafilatura>=2.0.0
+
+# HTTP client presenting a real browser TLS fingerprint. Several publishers' WAFs reject
+# plain urllib at the transport layer regardless of headers — Supply Chain Digital,
+# Procurement Magazine, Inbound Logistics and McKinsey all answered it 403 and this 200.
+scrapling[fetchers]>=0.5

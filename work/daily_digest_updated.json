@@ -1,0 +1,334 @@
+{
+  "generated_at": "2026-07-13T21:11:04Z",
+  "top_signals": [
+    {
+      "signal": {
+        "headline": "Why Sourcing Shifts Are Easier Said Than Done When Battling Tariffs",
+        "source": "Supply Chain Dive",
+        "date": "2026-06-15T08:00:00Z",
+        "url": "https://www.supplychaindive.com/news/tariff-sourcing-challenges-manifest-2026-brooklinen-patagonia/813259/",
+        "signal_type": "Regulatory Change",
+        "summary": "New tariff pressure and geopolitical disruption are forcing manufacturers to reassess supplier networks, inventory buffers, and transportation lanes. Leaders are evaluating nearshoring strategies, supplier risk exposure, and faster planning cycles to protect margins and improve r...",
+        "evidence": "New tariff pressure and geopolitical disruption are forcing manufacturers to reassess supplier networks, inventory buffers, and transportation lanes. Leaders are evaluating nearshoring strategies, supplier risk exposure, and faster planning cycles to protect margins and improve response time. Traditional visibility dashboards identify exposure, but teams still need decision workflows that recommend actions and coordi...",
+        "score": {
+          "supply_chain_relevance": 9.0,
+          "executive_importance": 6.9,
+          "business_impact": 9.75,
+          "technology_relevance": 4.0,
+          "tada_alignment": 8.8,
+          "final_score": 7.95
+        },
+        "keywords": [
+          "decision",
+          "inventory",
+          "leaders",
+          "planning",
+          "response",
+          "risk",
+          "supplier",
+          "tariff",
+          "transportation",
+          "visibility",
+          "workflows"
+        ],
+        "risks": [
+          "Geopolitical risk",
+          "Operational disruption",
+          "Tariff exposure"
+        ],
+        "opportunities": [
+          "Inventory optimization",
+          "Network redesign and nearshoring strategy",
+          "Supplier risk management"
+        ],
+        "is_breaking": false,
+        "is_major_analyst_report": false,
+        "surfaced": true
+      },
+      "business_impact": "Left unaddressed, this shows up as geopolitical risk, higher operating cost, and slower protection of service levels.",
+      "tada_perspective": {
+        "what_happened": "Supply Chain Dive reported a regulatory change signal: Why Sourcing Shifts Are Easier Said Than Done When Battling Tariffs.",
+        "why_it_matters": "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for inventory. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+        "potential_impact": "Left unaddressed, this shows up as geopolitical risk, higher operating cost, and slower protection of service levels.",
+        "traditional_response": "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for inventory.",
+        "tada_response": "Seeing the inventory signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+        "detect": "Track indicators related to decision, inventory, leaders, planning.",
+        "decide": "Compute the response options that are actually executable under current cost, inventory, service, and supplier constraints.",
+        "do": "Trigger a response focused on inventory optimization, executed in minutes rather than routed through another planning cycle."
+      },
+      "suggested_action": "Trigger a response focused on inventory optimization, executed in minutes rather than routed through another planning cycle.",
+      "content_opportunity": {
+        "linkedin_post": {
+          "hook": "Seeing the inventory signal in a dashboard is step one, not the finish line.",
+          "narrative": "Why Sourcing Shifts Are Easier Said Than Done When Battling Tariffs -- The framing here is that better visibility -- more dashboards, more tracking -- is the fix for inventory. We disagree. Seeing the inventory signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+          "key_insight": "Seeing the inventory signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+          "cta": "Where is your team still detecting change faster than it can act on it?"
+        },
+        "thought_leadership_article": {
+          "title": "From Visibility to Action: What Inventory Signals Mean for Supply Chain Leaders",
+          "executive_summary": "This article interprets a score 7.95 market signal through TADA's Detect, Decide, Do lens.",
+          "outline": [
+            "What changed in the market",
+            "Why traditional planning cycles are exposed",
+            "The decision gap leaders must close",
+            "How Detect, Decide, Do improves response speed",
+            "Business outcomes to measure"
+          ],
+          "key_arguments": [
+            "Volatility turns static visibility into a lagging indicator.",
+            "AI should recommend decisions and actions, not produce generic commentary.",
+            "Supply chain intelligence must connect directly to execution workflows."
+          ]
+        },
+        "newsletter_topic": {
+          "headline": "Inventory: A Signal Worth Watching",
+          "summary": "New tariff pressure and geopolitical disruption are forcing manufacturers to reassess supplier networks, inventory buffers, and transportation lanes. Leaders are evaluating nearshoring strategies, supplier risk exposure, and faster planning cycles to protect margins and improve r...",
+          "three_key_takeaways": [
+            "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for inventory. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+            "Left unaddressed, this shows up as geopolitical risk, higher operating cost, and slower protection of service levels.",
+            "Trigger a response focused on inventory optimization, executed in minutes rather than routed through another planning cycle."
+          ]
+        },
+        "sales_talking_point": {
+          "customer_problem": "Teams see disruption in dashboards but struggle to coordinate a fast response.",
+          "business_impact": "Left unaddressed, this shows up as geopolitical risk, higher operating cost, and slower protection of service levels.",
+          "recommended_discussion": "Use this signal to discuss how decision intelligence shortens response cycles between planning and execution.",
+          "suggested_discovery_question": "When market conditions change, how long does it take your team to move from detection to an approved action?"
+        },
+        "executive_briefing": {
+          "situation": "Supply Chain Dive reported a regulatory change signal: Why Sourcing Shifts Are Easier Said Than Done When Battling Tariffs.",
+          "risk": "Left unaddressed, this shows up as geopolitical risk, higher operating cost, and slower protection of service levels.",
+          "opportunity": "Trigger a response focused on inventory optimization, executed in minutes rather than routed through another planning cycle.",
+          "recommendation": "Review exposure, define decision thresholds, and automate the response path."
+        },
+        "review_status": "draft"
+      }
+    },
+    {
+      "signal": {
+        "headline": "2026 Enterprise AI Predictions: Fragmentation, Commodification and the Agent Push Facing CIOs",
+        "source": "InformationWeek",
+        "date": "2026-06-15T09:30:00Z",
+        "url": "https://www.informationweek.com/machine-learning-ai/2026-enterprise-ai-predictions-fragmentation-commodification-and-the-agent-push-facing-cios",
+        "signal_type": "Technology Adoption",
+        "summary": "Enterprise AI programs are shifting from analytics pilots toward automation, simulation, and decision intelligence. Supply chain leaders are prioritizing AI systems that detect demand volatility, evaluate alternatives, and recommend action before cost and service impacts escalate...",
+        "evidence": "Enterprise AI programs are shifting from analytics pilots toward automation, simulation, and decision intelligence. Supply chain leaders are prioritizing AI systems that detect demand volatility, evaluate alternatives, and recommend action before cost and service impacts escalate. The focus is moving away from generic dashboards and toward measurable outcomes.",
+        "score": {
+          "supply_chain_relevance": 6.3,
+          "executive_importance": 7.85,
+          "business_impact": 7.85,
+          "technology_relevance": 9.0,
+          "tada_alignment": 7.85,
+          "final_score": 7.56
+        },
+        "keywords": [
+          "action",
+          "ai",
+          "analytics",
+          "automation",
+          "cost",
+          "decision",
+          "decision intelligence",
+          "demand",
+          "detect",
+          "leaders",
+          "service",
+          "simulation"
+        ],
+        "risks": [],
+        "opportunities": [
+          "AI-assisted decision workflows",
+          "Automated response orchestration"
+        ],
+        "is_breaking": false,
+        "is_major_analyst_report": false,
+        "surfaced": true
+      },
+      "business_impact": "Left unaddressed, this shows up as slower response to disruption, higher operating cost, and slower protection of service levels.",
+      "tada_perspective": {
+        "what_happened": "InformationWeek reported a technology adoption signal: 2026 Enterprise AI Predictions: Fragmentation, Commodification and the Agent Push Facing CIOs.",
+        "why_it_matters": "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for demand. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+        "potential_impact": "Left unaddressed, this shows up as slower response to disruption, higher operating cost, and slower protection of service levels.",
+        "traditional_response": "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for demand.",
+        "tada_response": "Seeing the demand signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+        "detect": "Track indicators related to action, ai, analytics, automation.",
+        "decide": "Compute the response options that are actually executable under current cost, inventory, service, and supplier constraints.",
+        "do": "Trigger a response focused on ai-assisted decision workflows, executed in minutes rather than routed through another planning cycle."
+      },
+      "suggested_action": "Trigger a response focused on ai-assisted decision workflows, executed in minutes rather than routed through another planning cycle.",
+      "content_opportunity": {
+        "linkedin_post": {
+          "hook": "Seeing the demand signal in a dashboard is step one, not the finish line.",
+          "narrative": "2026 Enterprise AI Predictions: Fragmentation, Commodification and the Agent Push Facing CIOs -- The framing here is that better visibility -- more dashboards, more tracking -- is the fix for demand. We disagree. Seeing the demand signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+          "key_insight": "Seeing the demand signal in a dashboard is step one, not the finish line. You don't need better visibility, you need to move fast and respond in minutes, not days. That's the gap between seeing the problem and solving it.",
+          "cta": "Where is your team still detecting change faster than it can act on it?"
+        },
+        "thought_leadership_article": {
+          "title": "From Visibility to Action: What Demand Signals Mean for Supply Chain Leaders",
+          "executive_summary": "This article interprets a score 7.56 market signal through TADA's Detect, Decide, Do lens.",
+          "outline": [
+            "What changed in the market",
+            "Why traditional planning cycles are exposed",
+            "The decision gap leaders must close",
+            "How Detect, Decide, Do improves response speed",
+            "Business outcomes to measure"
+          ],
+          "key_arguments": [
+            "Volatility turns static visibility into a lagging indicator.",
+            "AI should recommend decisions and actions, not produce generic commentary.",
+            "Supply chain intelligence must connect directly to execution workflows."
+          ]
+        },
+        "newsletter_topic": {
+          "headline": "Demand: A Signal Worth Watching",
+          "summary": "Enterprise AI programs are shifting from analytics pilots toward automation, simulation, and decision intelligence. Supply chain leaders are prioritizing AI systems that detect demand volatility, evaluate alternatives, and recommend action before cost and service impacts escalate...",
+          "three_key_takeaways": [
+            "The framing here is that better visibility -- more dashboards, more tracking -- is the fix for demand. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+            "Left unaddressed, this shows up as slower response to disruption, higher operating cost, and slower protection of service levels.",
+            "Trigger a response focused on ai-assisted decision workflows, executed in minutes rather than routed through another planning cycle."
+          ]
+        },
+        "sales_talking_point": {
+          "customer_problem": "Teams see disruption in dashboards but struggle to coordinate a fast response.",
+          "business_impact": "Left unaddressed, this shows up as slower response to disruption, higher operating cost, and slower protection of service levels.",
+          "recommended_discussion": "Use this signal to discuss how decision intelligence shortens response cycles between planning and execution.",
+          "suggested_discovery_question": "When market conditions change, how long does it take your team to move from detection to an approved action?"
+        },
+        "executive_briefing": {
+          "situation": "InformationWeek reported a technology adoption signal: 2026 Enterprise AI Predictions: Fragmentation, Commodification and the Agent Push Facing CIOs.",
+          "risk": "Left unaddressed, this shows up as slower response to disruption, higher operating cost, and slower protection of service levels.",
+          "opportunity": "Trigger a response focused on ai-assisted decision workflows, executed in minutes rather than routed through another planning cycle.",
+          "recommendation": "Review exposure, define decision thresholds, and automate the response path."
+        },
+        "review_status": "draft"
+      }
+    },
+    {
+      "signal": {
+        "headline": "Production Scheduling Is Broken, and It Needs to Change",
+        "source": "Industry Week",
+        "date": "2026-06-14T16:00:00Z",
+        "url": "https://www.industryweek.com/operations/article/21125172/production-scheduling-is-broken-and-it-needs-to-change",
+        "signal_type": "Technology Adoption",
+        "summary": "Manufacturing capacity constraints and labor shortages are affecting schedule compliance. Production planning teams are using digital manufacturing tools to detect bottlenecks, decide how to allocate scarce capacity, and do corrective actions faster. The business impact includes ...",
+        "evidence": "Manufacturing capacity constraints and labor shortages are affecting schedule compliance. Production planning teams are using digital manufacturing tools to detect bottlenecks, decide how to allocate scarce capacity, and do corrective actions faster. The business impact includes expedite costs, margin pressure, and delayed customer deliveries.",
+        "score": {
+          "supply_chain_relevance": 8.1,
+          "executive_importance": 6.9,
+          "business_impact": 7.85,
+          "technology_relevance": 5.0,
+          "tada_alignment": 7.85,
+          "final_score": 7.31
+        },
+        "keywords": [
+          "capacity",
+          "compliance",
+          "decide",
+          "detect",
+          "digital",
+          "do",
+          "manufacturing",
+          "margin",
+          "planning",
+          "schedule"
+        ],
+        "risks": [
+          "Labor constraint"
+        ],
+        "opportunities": [],
+        "is_breaking": false,
+        "is_major_analyst_report": false,
+        "surfaced": true
+      },
+      "business_impact": "Left unaddressed, this shows up as labor constraint, higher operating cost, and slower protection of service levels.",
+      "tada_perspective": {
+        "what_happened": "Industry Week reported a technology adoption signal: Production Scheduling Is Broken, and It Needs to Change.",
+        "why_it_matters": "The article treats reporting the capacity disruption -- and knowing it happened -- as the resolution. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+        "potential_impact": "Left unaddressed, this shows up as labor constraint, higher operating cost, and slower protection of service levels.",
+        "traditional_response": "The article treats reporting the capacity disruption -- and knowing it happened -- as the resolution.",
+        "tada_response": "Knowing about capacity isn't the same as acting on it. The gap that costs manufacturers money sits between detecting a signal and executing a response -- and that's a decision-speed problem, not an information problem.",
+        "detect": "Track indicators related to capacity, compliance, decide, detect.",
+        "decide": "Compute the response options that are actually executable under current cost, inventory, service, and supplier constraints.",
+        "do": "Trigger a response focused on faster decision execution, executed in minutes rather than routed through another planning cycle."
+      },
+      "suggested_action": "Trigger a response focused on faster decision execution, executed in minutes rather than routed through another planning cycle.",
+      "content_opportunity": {
+        "linkedin_post": {
+          "hook": "Knowing about capacity isn't the same as acting on it.",
+          "narrative": "Production Scheduling Is Broken, and It Needs to Change -- The article treats reporting the capacity disruption -- and knowing it happened -- as the resolution. We disagree. Knowing about capacity isn't the same as acting on it. The gap that costs manufacturers money sits between detecting a signal and executing a response -- and that's a decision-speed problem, not an information problem.",
+          "key_insight": "Knowing about capacity isn't the same as acting on it. The gap that costs manufacturers money sits between detecting a signal and executing a response -- and that's a decision-speed problem, not an information problem.",
+          "cta": "Where is your team still detecting change faster than it can act on it?"
+        },
+        "thought_leadership_article": {
+          "title": "From Visibility to Action: What Capacity Signals Mean for Supply Chain Leaders",
+          "executive_summary": "This article interprets a score 7.31 market signal through TADA's Detect, Decide, Do lens.",
+          "outline": [
+            "What changed in the market",
+            "Why traditional planning cycles are exposed",
+            "The decision gap leaders must close",
+            "How Detect, Decide, Do improves response speed",
+            "Business outcomes to measure"
+          ],
+          "key_arguments": [
+            "Volatility turns static visibility into a lagging indicator.",
+            "AI should recommend decisions and actions, not produce generic commentary.",
+            "Supply chain intelligence must connect directly to execution workflows."
+          ]
+        },
+        "newsletter_topic": {
+          "headline": "Capacity: A Signal Worth Watching",
+          "summary": "Manufacturing capacity constraints and labor shortages are affecting schedule compliance. Production planning teams are using digital manufacturing tools to detect bottlenecks, decide how to allocate scarce capacity, and do corrective actions faster. The business impact includes ...",
+          "three_key_takeaways": [
+            "The article treats reporting the capacity disruption -- and knowing it happened -- as the resolution. For a $1B+ manufacturer, that's the wrong place to stop -- it doesn't close the gap between seeing a constraint and acting on it.",
+            "Left unaddressed, this shows up as labor constraint, higher operating cost, and slower protection of service levels.",
+            "Trigger a response focused on faster decision execution, executed in minutes rather than routed through another planning cycle."
+          ]
+        },
+        "sales_talking_point": {
+          "customer_problem": "Teams see disruption in dashboards but struggle to coordinate a fast response.",
+          "business_impact": "Left unaddressed, this shows up as labor constraint, higher operating cost, and slower protection of service levels.",
+          "recommended_discussion": "Use this signal to discuss how decision intelligence shortens response cycles between planning and execution.",
+          "suggested_discovery_question": "When market conditions change, how long does it take your team to move from detection to an approved action?"
+        },
+        "executive_briefing": {
+          "situation": "Industry Week reported a technology adoption signal: Production Scheduling Is Broken, and It Needs to Change.",
+          "risk": "Left unaddressed, this shows up as labor constraint, higher operating cost, and slower protection of service levels.",
+          "opportunity": "Trigger a response focused on faster decision execution, executed in minutes rather than routed through another planning cycle.",
+          "recommendation": "Review exposure, define decision thresholds, and automate the response path."
+        },
+        "review_status": "draft"
+      }
+    }
+  ],
+  "emerging_themes": [
+    "action",
+    "ai",
+    "analytics",
+    "automation",
+    "capacity",
+    "compliance",
+    "cost",
+    "decide"
+  ],
+  "top_opportunities": [
+    "Trigger a response focused on inventory optimization, executed in minutes rather than routed through another planning cycle.",
+    "Trigger a response focused on ai-assisted decision workflows, executed in minutes rather than routed through another planning cycle.",
+    "Trigger a response focused on faster decision execution, executed in minutes rather than routed through another planning cycle."
+  ],
+  "top_risks": [
+    "Geopolitical risk",
+    "Labor constraint",
+    "Operational disruption",
+    "Tariff exposure"
+  ],
+  "sales_talking_points": [
+    "When market conditions change, how long does it take your team to move from detection to an approved action?",
+    "When market conditions change, how long does it take your team to move from detection to an approved action?",
+    "When market conditions change, how long does it take your team to move from detection to an approved action?"
+  ],
+  "recommended_content_topics": [
+    "From Visibility to Action: What Inventory Signals Mean for Supply Chain Leaders",
+    "From Visibility to Action: What Demand Signals Mean for Supply Chain Leaders",
+    "From Visibility to Action: What Capacity Signals Mean for Supply Chain Leaders"
+  ]
+}

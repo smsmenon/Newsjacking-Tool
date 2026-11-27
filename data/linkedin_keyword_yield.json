@@ -1,0 +1,218 @@
+{
+  "Carolyn Healey": {
+    "fetched": 600,
+    "qualified": 20,
+    "runs": 6,
+    "tiered": 44
+  },
+  "Daniel Stanton, DBA": {
+    "fetched": 600,
+    "qualified": 1,
+    "runs": 6,
+    "tiered": 9
+  },
+  "Jeff Winter ": {
+    "fetched": 600,
+    "qualified": 5,
+    "runs": 6,
+    "tiered": 34
+  },
+  "Kai Hoberg": {
+    "fetched": 600,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 1
+  },
+  "Knut Alicke": {
+    "fetched": 500,
+    "qualified": 2,
+    "runs": 5,
+    "tiered": 10
+  },
+  "Liz Young": {
+    "fetched": 600,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 1
+  },
+  "Lora Cecere": {
+    "fetched": 500,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 9
+  },
+  "Michael Schank": {
+    "fetched": 596,
+    "qualified": 1,
+    "runs": 6,
+    "tiered": 1
+  },
+  "SEARCH:AI agents supply chain": {
+    "fetched": 57,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 6
+  },
+  "SEARCH:AI supply chain planning": {
+    "fetched": 43,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:ERP data quality": {
+    "fetched": 41,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 1
+  },
+  "SEARCH:S&OP process": {
+    "fetched": 60,
+    "qualified": 1,
+    "runs": 6,
+    "tiered": 6
+  },
+  "SEARCH:critical minerals supply chain": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:demand forecast accuracy": {
+    "fetched": 39,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 3
+  },
+  "SEARCH:export controls supply chain": {
+    "fetched": 43,
+    "qualified": 1,
+    "runs": 5,
+    "tiered": 1
+  },
+  "SEARCH:freight capacity": {
+    "fetched": 50,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 0
+  },
+  "SEARCH:geopolitical risk supply chain": {
+    "fetched": 51,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 1
+  },
+  "SEARCH:inventory visibility": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:landed cost visibility": {
+    "fetched": 33,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:nearshoring manufacturing": {
+    "fetched": 40,
+    "qualified": 0,
+    "runs": 4,
+    "tiered": 0
+  },
+  "SEARCH:port congestion": {
+    "fetched": 49,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 0
+  },
+  "SEARCH:sanctions supply chain": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 1
+  },
+  "SEARCH:shipping chokepoint": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 2
+  },
+  "SEARCH:single source supplier risk": {
+    "fetched": 5,
+    "qualified": 0,
+    "runs": 3,
+    "tiered": 0
+  },
+  "SEARCH:supplier financial health": {
+    "fetched": 50,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 1
+  },
+  "SEARCH:supplier risk management": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:supply chain AI pilot": {
+    "fetched": 12,
+    "qualified": 2,
+    "runs": 5,
+    "tiered": 2
+  },
+  "SEARCH:supply chain decoupling": {
+    "fetched": 29,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  },
+  "SEARCH:supply chain resilience": {
+    "fetched": 49,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 0
+  },
+  "SEARCH:supply chain volatility": {
+    "fetched": 50,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 1
+  },
+  "SEARCH:tariff supply chain": {
+    "fetched": 60,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 3
+  },
+  "SEARCH:trade war supply chain": {
+    "fetched": 11,
+    "qualified": 0,
+    "runs": 3,
+    "tiered": 0
+  },
+  "SEARCH:working capital inventory": {
+    "fetched": 50,
+    "qualified": 0,
+    "runs": 5,
+    "tiered": 1
+  },
+  "Sanjay Brahmawar": {
+    "fetched": 534,
+    "qualified": 1,
+    "runs": 6,
+    "tiered": 3
+  },
+  "Scott Luton": {
+    "fetched": 600,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 19
+  },
+  "Yossi Sheffi": {
+    "fetched": 600,
+    "qualified": 0,
+    "runs": 6,
+    "tiered": 0
+  }
+}

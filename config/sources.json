@@ -1,0 +1,317 @@
+[
+  {
+    "name": "Manufacturing Dive",
+    "category": "Manufacturing",
+    "url": "https://www.manufacturingdive.com/",
+    "rss_url": "https://www.manufacturingdive.com/feeds/news/",
+    "access_method": "rss",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Industry Week",
+    "category": "Manufacturing",
+    "url": "https://www.industryweek.com/",
+    "rss_url": "https://www.industryweek.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D",
+    "access_method": "rss",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "healthy",
+    "note": "Feed advertised in page <link>; scraping gave image alt-text as headlines"
+  },
+  {
+    "name": "Manufacturing.net",
+    "category": "Manufacturing",
+    "url": "https://www.manufacturing.net/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 403 \u2014 blocked"
+  },
+  {
+    "name": "Supply Chain Dive",
+    "category": "Supply Chain",
+    "url": "https://www.supplychaindive.com/",
+    "rss_url": "https://www.supplychaindive.com/feeds/news/",
+    "access_method": "rss",
+    "priority": "critical",
+    "trust_tier": 1,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Supply Chain Management Review",
+    "category": "Supply Chain",
+    "url": "https://www.scmr.com/",
+    "rss_url": "https://www.scmr.com/rss/news",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Supply Chain NOW",
+    "category": "Supply Chain",
+    "url": "https://www.supplychainnow.com/",
+    "rss_url": "https://www.supplychainnow.com/feed",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Supply Chain Digital",
+    "category": "Supply Chain",
+    "url": "https://supplychaindigital.com/articles",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 403 \u2014 blocked"
+  },
+  {
+    "name": "Supply Chain Brain",
+    "category": "Supply Chain",
+    "url": "https://www.supplychainbrain.com/",
+    "rss_url": "https://www.supplychainbrain.com/rss/articles",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy",
+    "note": "Real feed at /rss/articles (30 items, dates + descriptions); scraping the homepage returned nav junk and undated stubs"
+  },
+  {
+    "name": "Inbound Logistics",
+    "category": "Supply Chain",
+    "url": "https://www.inboundlogistics.com/",
+    "rss_url": "",
+    "wp_json_url": "https://www.inboundlogistics.com/wp-json/wp/v2/articles",
+    "access_method": "wp_rest",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy",
+    "note": "WordPress REST, 'articles' post type. Its RSS feed is empty and the homepage mixes in find-solution/planner/whitepaper entries, which is what scraping returned."
+  },
+  {
+    "name": "Supply Chain 24/7",
+    "category": "Supply Chain",
+    "url": "https://www.supplychain247.com/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 403 \u2014 blocked"
+  },
+  {
+    "name": "Logistics Management",
+    "category": "Supply Chain",
+    "url": "https://www.logisticsmgmt.com/topic/latest_news",
+    "rss_url": "https://feeds.feedburner.com/logisticsmgmt/latest",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy",
+    "note": "Feedburner feed carries real dates; scraping pulled a pinned nav 'Top Story' that never ages out"
+  },
+  {
+    "name": "Modern Materials Handling",
+    "category": "Supply Chain",
+    "url": "https://www.mmh.com/topic/latest_news",
+    "rss_url": "https://feeds.feedburner.com/mmh/latest",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy",
+    "note": "Feedburner feed carries real dates; scraping returned subscribe/press-release links"
+  },
+  {
+    "name": "Procurement Magazine",
+    "category": "Procurement",
+    "url": "https://procurementmag.com/articles",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 403 \u2014 blocked"
+  },
+  {
+    "name": "CIPS",
+    "category": "Procurement",
+    "url": "https://www.cips.org/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 404 \u2014 needs scraper"
+  },
+  {
+    "name": "ISM",
+    "category": "Procurement",
+    "url": "https://www.ismworld.org/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed"
+  },
+  {
+    "name": "ASCM",
+    "category": "Professional Organizations",
+    "url": "https://www.ascm.org/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS returns non-RSS content"
+  },
+  {
+    "name": "Gartner",
+    "category": "Analyst Firms",
+    "url": "https://www.gartner.com/",
+    "rss_url": "",
+    "access_method": "licensed_api_or_manual",
+    "priority": "critical",
+    "trust_tier": 1,
+    "health_status": "requires_api_key",
+    "note": "RSS 403 \u2014 needs Gartner subscription"
+  },
+  {
+    "name": "IDC",
+    "category": "Analyst Firms",
+    "url": "https://www.idc.com/",
+    "rss_url": "",
+    "access_method": "licensed_api_or_manual",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "requires_api_key"
+  },
+  {
+    "name": "Forrester",
+    "category": "Analyst Firms",
+    "url": "https://www.forrester.com/",
+    "rss_url": "",
+    "access_method": "licensed_api_or_manual",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "requires_api_key"
+  },
+  {
+    "name": "McKinsey",
+    "category": "Consulting Firms",
+    "url": "https://www.mckinsey.com/",
+    "rss_url": "https://www.mckinsey.com/rss/",
+    "access_method": "rss",
+    "priority": "critical",
+    "trust_tier": 1,
+    "health_status": "healthy"
+  },
+  {
+    "name": "BCG",
+    "category": "Consulting Firms",
+    "url": "https://www.bcg.com/",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS 403 \u2014 blocked"
+  },
+  {
+    "name": "Wall Street Journal",
+    "category": "Business & Economy",
+    "url": "https://www.wsj.com/",
+    "rss_url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+    "access_method": "rss",
+    "priority": "critical",
+    "trust_tier": 1,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Financial Times",
+    "category": "Business & Economy",
+    "url": "https://www.ft.com/",
+    "rss_url": "https://www.ft.com/rss/home",
+    "access_method": "rss",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Fortune",
+    "category": "Business & Economy",
+    "url": "https://fortune.com/",
+    "rss_url": "https://fortune.com/feed/",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Forbes",
+    "category": "Business & Economy",
+    "url": "https://www.forbes.com/",
+    "rss_url": "https://www.forbes.com/innovation/feed/",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "Bloomberg",
+    "category": "Business & Economy",
+    "url": "https://www.bloomberg.com/",
+    "rss_url": "",
+    "access_method": "licensed_api",
+    "priority": "critical",
+    "trust_tier": 1,
+    "health_status": "requires_api_key"
+  },
+  {
+    "name": "JP Morgan",
+    "category": "Business & Economy",
+    "url": "https://www.jpmorgan.com/insights",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "high",
+    "trust_tier": 1,
+    "health_status": "no_rss_scraper_needed"
+  },
+  {
+    "name": "VentureBeat",
+    "category": "Technology & AI",
+    "url": "https://venturebeat.com/",
+    "rss_url": "https://venturebeat.com/feed/",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "InformationWeek",
+    "category": "Technology & AI",
+    "url": "https://www.informationweek.com/",
+    "rss_url": "https://www.informationweek.com/rss.xml",
+    "access_method": "rss",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "healthy"
+  },
+  {
+    "name": "IBM Think Blog",
+    "category": "Technology & AI",
+    "url": "https://www.ibm.com/think",
+    "rss_url": "",
+    "access_method": "scrape",
+    "priority": "standard",
+    "trust_tier": 2,
+    "health_status": "no_rss_scraper_needed",
+    "note": "RSS returns non-RSS content"
+  }
+]

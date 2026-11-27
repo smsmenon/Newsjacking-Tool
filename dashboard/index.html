@@ -1,0 +1,1252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TADA Intelligence Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      /* TADA Brand Colors — from Brand Guidelines v2.0 */
+      --bg:          #2D1B4E;
+      --surface:     #3A2260;
+      --surface2:    #4A2D78;
+      --border:      #5A3A8A;
+      --cyan:        #00D4E8;
+      --cyan-dim:    rgba(0,212,232,0.15);
+      --coral:       #FF5C4A;
+      --coral-dim:   rgba(255,92,74,0.15);
+      --green:       #00C48C;
+      --green-dim:   rgba(0,196,140,0.15);
+      --amber:       #F59E0B;
+      --amber-dim:   rgba(245,158,11,0.12);
+      --purple-light:#9B6DFF;
+      /* aliases for existing component classes */
+      --blue:        #00D4E8;
+      --blue-dim:    rgba(0,212,232,0.15);
+      --red:         #FF5C4A;
+      --red-dim:     rgba(255,92,74,0.15);
+      --text:        #EDE8FF;
+      --muted:       #9B88C4;
+      --muted2:      #C4B4DC;
+      --radius:      10px;
+      --sidebar-w:   220px;
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 1.5; }
+
+    /* ── Layout ── */
+    .shell { display: flex; height: 100vh; overflow: hidden; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; padding: 20px 0;
+      overflow-y: auto;
+    }
+    .brand-block { padding: 0 16px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+    .brand { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; color: var(--cyan); font-family: 'Space Grotesk', sans-serif; }
+    .brand-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-top: 2px; }
+    .nav-group { padding: 0 8px; margin-bottom: 8px; }
+    .nav-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); padding: 0 8px; margin-bottom: 4px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 8px 10px; border-radius: 7px; border: none;
+      background: transparent; color: var(--muted2); cursor: pointer;
+      font-size: 13px; text-align: left; transition: all .15s;
+    }
+    .nav-item:hover { background: var(--blue-dim); color: var(--text); }
+    .nav-item.active { background: var(--blue-dim); color: var(--blue); font-weight: 600; }
+    .nav-item .icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
+    .sidebar-footer { margin-top: auto; padding: 16px; border-top: 1px solid var(--border); }
+    .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 6px; animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1}50%{opacity:.4} }
+
+    /* ── Main ── */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Topbar ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 64px; flex-shrink: 0;
+      border-bottom: 1px solid var(--border); background: var(--surface);
+    }
+    .page-title { font-size: 16px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+    .page-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 7px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 500; transition: all .15s; white-space: nowrap;
+    }
+    .btn-primary { background: var(--cyan); color: #1E0F35; font-weight: 600; }
+    .btn-primary:hover { background: #00bdd0; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #059669; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── Activity Log Bar ── */
+    #activity-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 6px 24px; font-size: 11px; color: var(--muted2);
+      display: flex; align-items: center; gap: 10px; min-height: 30px;
+      flex-shrink: 0;
+    }
+    #activity-bar .log-entry { display: flex; align-items: center; gap: 6px; }
+    .spinner {
+      width: 12px; height: 12px; border: 2px solid var(--border);
+      border-top-color: var(--blue); border-radius: 50%;
+      animation: spin .7s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Scroll area ── */
+    .scroll-area { flex: 1; overflow-y: auto; padding: 24px; }
+    .scroll-area::-webkit-scrollbar { width: 6px; }
+    .scroll-area::-webkit-scrollbar-track { background: transparent; }
+    .scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── KPI Strip ── */
+    .kpi-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+    .kpi {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 18px;
+    }
+    .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 8px; }
+    .kpi-value { font-size: 28px; font-weight: 700; line-height: 1; font-family: 'Space Grotesk', sans-serif; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+    .kpi.blue .kpi-value { color: var(--blue); }
+    .kpi.green .kpi-value { color: var(--green); }
+    .kpi.red .kpi-value { color: var(--red); }
+    .kpi.amber .kpi-value { color: var(--amber); }
+
+    /* ── Section heading ── */
+    .section-head { font-size: 13px; font-weight: 700; color: var(--muted2); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-head .count { background: var(--blue-dim); color: var(--blue); border-radius: 99px; padding: 1px 8px; font-size: 11px; }
+
+    /* ── Signal Cards ── */
+    .signal-list { display: flex; flex-direction: column; gap: 14px; }
+    .signal-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+      position: relative; transition: border-color .2s;
+    }
+    .signal-card:hover { border-color: #374151; }
+    .signal-card.critical { border-left: 3px solid var(--red); }
+    .signal-card.high     { border-left: 3px solid var(--amber); }
+    .signal-card.medium   { border-left: 3px solid var(--blue); }
+
+    .signal-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+    .signal-headline { font-size: 15px; font-weight: 600; line-height: 1.3; font-family: 'Space Grotesk', sans-serif; }
+    .signal-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .score-badge {
+      flex-shrink: 0; font-size: 20px; font-weight: 800;
+      width: 52px; height: 52px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .score-badge.high-score { background: var(--green-dim); color: var(--green); }
+    .score-badge.mid-score  { background: var(--amber-dim); color: var(--amber); }
+    .score-badge.low-score  { background: var(--red-dim);   color: var(--red); }
+
+    .signal-summary { font-size: 13px; color: var(--muted2); line-height: 1.6; margin-bottom: 14px; }
+
+    /* Score bars */
+    .score-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 14px; }
+    .bar-row { display: flex; align-items: center; gap: 8px; }
+    .bar-label { font-size: 11px; color: var(--muted); width: 100px; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width .6s ease; }
+    .bar-num { font-size: 11px; color: var(--muted2); width: 26px; text-align: right; flex-shrink: 0; }
+
+    /* DDD section */
+    .ddd-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .ddd-card { background: var(--surface2); border-radius: 8px; padding: 12px; }
+    .ddd-label { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; font-weight: 700; margin-bottom: 6px; }
+    .ddd-label.detect { color: var(--blue); }
+    .ddd-label.decide { color: var(--purple); }
+    .ddd-label.do-lbl  { color: var(--green); }
+    .ddd-text { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: var(--surface2); border: 1px solid var(--border); color: var(--muted2); border-radius: 99px; padding: 2px 10px; font-size: 11px; }
+    .tag.risk { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+    .tag.opp  { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+    /* Source link row */
+    .source-link-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .source-pill { font-size: 11px; font-weight: 600; color: var(--muted2); }
+    .source-link-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--blue-dim); color: var(--blue);
+      border: 1px solid var(--blue); border-radius: 6px;
+      padding: 4px 10px; font-size: 11px; font-weight: 600;
+      cursor: pointer; white-space: nowrap;
+    }
+    .source-link-btn:hover { background: var(--blue); color: #fff; }
+    .source-url { font-size: 10px; color: var(--muted); word-break: break-all; }
+
+    /* Card footer */
+    .signal-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .urgency { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 3px 10px; border-radius: 99px; }
+    .urgency.critical { background: var(--red-dim); color: var(--red); }
+    .urgency.high     { background: var(--amber-dim); color: var(--amber); }
+    .urgency.medium   { background: var(--blue-dim); color: var(--blue); }
+
+    /* ── Table ── */
+    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th { padding: 11px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .7px; color: var(--muted); background: var(--surface2); border-bottom: 1px solid var(--border); }
+    td { padding: 13px 14px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+
+    /* ── Review ── */
+    .review-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; }
+    .review-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .review-signal { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .review-body { font-size: 13px; color: var(--muted2); line-height: 1.6; margin-bottom: 14px; }
+    .review-actions { display: flex; gap: 8px; }
+    .btn-approve { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); border-radius: 7px; padding: 6px 14px; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .btn-reject  { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); border-radius: 7px; padding: 6px 14px; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .btn-review  { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber); border-radius: 7px; padding: 6px 14px; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .review-log { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+
+    /* ── Weekly ── */
+    .weekly-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px; }
+    .panel-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .panel ul { padding-left: 16px; }
+    .panel li { margin-bottom: 8px; color: var(--muted2); font-size: 13px; }
+
+    /* ── Toast ── */
+    #toast-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 8px; z-index: 1000; }
+    .toast {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 10px;
+      min-width: 260px; max-width: 360px;
+      animation: slide-in .2s ease; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+    .toast.success { border-left: 3px solid var(--green); }
+    .toast.error   { border-left: 3px solid var(--red); }
+    .toast.info    { border-left: 3px solid var(--blue); }
+    .toast .t-icon { font-size: 14px; flex-shrink: 0; }
+    @keyframes slide-in { from { transform: translateX(20px); opacity:0; } to { transform: none; opacity:1; } }
+
+    /* ── Loading overlay ── */
+    .loading-overlay {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 300px; gap: 16px;
+    }
+    .loading-spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
+    .loading-text { color: var(--muted); font-size: 13px; }
+    .loading-steps { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+    .loading-step { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .loading-step.done { color: var(--green); }
+    .loading-step.done::before { content: '✓'; font-weight: 700; }
+    .loading-step.active { color: var(--text); }
+    .loading-step.active::before { content: '›'; color: var(--blue); font-weight: 700; }
+    .loading-step.pending::before { content: '○'; }
+
+    /* ── Error ── */
+    .error-box { background: var(--red-dim); border: 1px solid var(--red); border-radius: var(--radius); padding: 16px 20px; color: var(--red); font-size: 13px; }
+
+    /* ── Data mode badge ── */
+    .data-mode { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; }
+    .data-mode.sample { background: var(--amber-dim); color: var(--amber); }
+    .data-mode.live   { background: var(--green-dim); color: var(--green); }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand">TADA</div>
+      <div class="brand-sub">Intelligence Platform</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Intelligence</div>
+      <button class="nav-item active" data-view="digest">
+        <span class="icon">📡</span> Daily Digest
+      </button>
+      <button class="nav-item" data-view="signals">
+        <span class="icon">⚡</span> Signals
+      </button>
+      <button class="nav-item" data-view="themes">
+        <span class="icon">🏷</span> Themes
+      </button>
+      <button class="nav-item" data-view="weekly">
+        <span class="icon">📊</span> Weekly Report
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Operations</div>
+      <button class="nav-item" data-view="sources">
+        <span class="icon">🗂</span> Sources
+      </button>
+      <button class="nav-item" data-view="linkedin-profiles">
+        <span class="icon">👤</span> LinkedIn Profiles
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <span class="status-dot"></span>
+      <span style="font-size:11px;color:var(--muted)">Server connected</span>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div>
+        <div class="page-title" id="page-title">Daily Digest</div>
+        <div class="page-sub" id="page-sub">Loading intelligence...</div>
+      </div>
+      <div class="topbar-actions">
+        <span id="data-mode-badge"></span>
+        <button class="btn btn-secondary" id="btn-live" disabled>
+          <span id="btn-live-spinner"></span>Fetch RSS
+        </button>
+        <button class="btn btn-secondary" id="runDiscoveryBtn" onclick="runDiscovery()">
+          Run Discovery
+        </button>
+        <button class="btn btn-primary" id="btn-email" onclick="openEmailModal()" disabled>
+          ✉️ Send Digest
+        </button>
+      </div>
+    </header>
+
+    <!-- Email Modal -->
+    <div id="email-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;width:440px;max-width:92vw;">
+        <h3 style="margin:0 0 4px;font-size:17px;font-weight:700;color:var(--text);font-family:'Space Grotesk',sans-serif;">Send Article Digest</h3>
+        <p style="margin:0 0 22px;font-size:12px;color:var(--muted);">Top 3 TADA-relevant articles — clean, no clutter.</p>
+
+        <label style="display:block;margin-bottom:6px;font-size:12px;color:var(--muted2);">Recipient Name</label>
+        <input id="email-name" type="text" placeholder="e.g. Sidelle"
+          style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;margin-bottom:14px;outline:none;font-family:'Inter',sans-serif;" />
+
+        <label style="display:block;margin-bottom:6px;font-size:12px;color:var(--muted2);">Recipient Email</label>
+        <input id="email-to" type="email" placeholder="colleague@tadanow.com"
+          style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;margin-bottom:14px;outline:none;font-family:'Inter',sans-serif;" />
+
+        <label style="display:block;margin-bottom:6px;font-size:12px;color:var(--muted2);">Your Name (Sender)</label>
+        <input id="email-sender" type="text" placeholder="e.g. Raunak"
+          style="width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;margin-bottom:22px;outline:none;font-family:'Inter',sans-serif;" />
+
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <button onclick="closeEmailModal()" style="padding:9px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--muted2);cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;">Cancel</button>
+          <button onclick="sendDigestEmail()" id="email-send-btn" style="padding:9px 18px;background:var(--cyan);border:none;border-radius:7px;color:#1E0F35;cursor:pointer;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;">Send Email</button>
+        </div>
+        <p id="email-status" style="margin:12px 0 0;font-size:12px;text-align:center;min-height:16px;color:var(--muted2);"></p>
+      </div>
+    </div>
+
+    <!-- Scroll area -->
+    <div class="scroll-area" id="scroll-area">
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading intelligence platform…</div>
+        <div class="loading-steps" id="loading-steps">
+          <div class="loading-step active" id="step-health">Checking API health</div>
+          <div class="loading-step pending" id="step-digest">Fetching daily digest</div>
+          <div class="loading-step pending" id="step-sources">Loading sources</div>
+          <div class="loading-step pending" id="step-weekly">Building weekly report</div>
+        </div>
+      </div>
+      <div id="view" style="display:none"></div>
+
+      <!-- Themes panel -->
+      <div id="themesView" style="display:none">
+        <h2 style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:'Space Grotesk',sans-serif;">Theme Management</h2>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Add, edit, or disable themes. The discovery engine scores articles against enabled themes only.</p>
+        <button onclick="document.getElementById('addThemeForm').style.display=document.getElementById('addThemeForm').style.display==='none'?'block':'none'" style="background:var(--cyan);color:#1E0F35;border:none;padding:8px 18px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:700;margin-bottom:16px;">+ Add Theme</button>
+        <div id="addThemeForm" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;">
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:12px;color:var(--muted2);margin-bottom:4px;">Name</label>
+            <input id="newThemeName" type="text" placeholder="e.g. Supply Chain Disruption" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:13px;outline:none;color:var(--text);" />
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:12px;color:var(--muted2);margin-bottom:4px;">Description</label>
+            <textarea id="newThemeDesc" placeholder="What kind of articles should match this theme?" rows="3" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:13px;outline:none;resize:vertical;color:var(--text);"></textarea>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:12px;color:var(--muted2);margin-bottom:4px;">Priority</label>
+            <select id="newThemePriority" style="padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:13px;outline:none;color:var(--text);">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="saveNewTheme()" style="background:var(--cyan);color:#1E0F35;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:700;">Save</button>
+            <button onclick="document.getElementById('addThemeForm').style.display='none'" style="background:var(--surface2);color:var(--muted2);border:1px solid var(--border);padding:7px 16px;border-radius:6px;cursor:pointer;font-size:13px;">Cancel</button>
+          </div>
+        </div>
+        <div id="themesList"></div>
+      </div>
+
+      <!-- Sources management panel -->
+      <div id="sourcesView" style="display:none">
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;">RSS Sources</h2>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--muted2);">ADD NEW SOURCE</div>
+          <div style="display:grid;grid-template-columns:1fr 1.5fr auto;gap:10px;align-items:end;">
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Source Name</label>
+              <input id="src-name" placeholder="e.g. Supply Chain Dive" style="width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;">
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">RSS Feed URL</label>
+              <input id="src-url" placeholder="https://example.com/feed.xml" style="width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;">
+            </div>
+            <button class="btn btn-primary" onclick="addSource()">+ Add Source</button>
+          </div>
+        </div>
+        <div id="sourcesList"></div>
+      </div>
+
+      <!-- LinkedIn Profiles management panel -->
+      <div id="linkedinView" style="display:none">
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;">LinkedIn Profiles</h2>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--muted2);">ADD NEW PROFILE</div>
+          <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr auto;gap:10px;align-items:end;">
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Full Name</label>
+              <input id="li-name" placeholder="e.g. Lora Cecere" style="width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;">
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">LinkedIn URL or Username</label>
+              <input id="li-url" placeholder="https://linkedin.com/in/username or username" style="width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;">
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Role / Title</label>
+              <input id="li-role" placeholder="e.g. Supply Chain Analyst" style="width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;">
+            </div>
+            <button class="btn btn-primary" onclick="addLinkedInProfile()">+ Add Profile</button>
+          </div>
+        </div>
+        <div id="profilesList"></div>
+      </div>
+
+      <!-- Discovery panel -->
+      <div id="discoveryView" style="display:none">
+        <h2 style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:6px;">Discovery Results</h2>
+        <div id="discoveryProgress" style="font-size:13px;color:#6366f1;margin-bottom:16px;min-height:20px;"></div>
+        <div id="discoveryResults"></div>
+        <div id="discoveryStats" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script>
+/* ─── State ─── */
+const state = { view: 'digest', digest: null, sources: [], weekly: null, reviews: [] };
+
+const PAGE_META = {
+  digest:             ['Daily Digest',       'Supply chain signals translated into Detect → Decide → Do.'],
+  signals:            ['Signals',            'Evidence, scoring, and TADA perspective for each surfaced development.'],
+  themes:             ['Themes',             'Manage content themes that guide the discovery engine.'],
+  weekly:             ['Weekly Report',      'Strategic synthesis for leadership, sales, and marketing.'],
+  review:             ['Review Queue',       'All AI-generated intelligence awaits human review before use.'],
+  sources:            ['Sources',            'Manage RSS feed sources for article discovery.'],
+  'linkedin-profiles':['LinkedIn Profiles',  'Manage LinkedIn thought-leader profiles to monitor.'],
+  discovery:          ['Discovery',          'Live article discovery results scored against active themes.'],
+};
+
+/* ─── Toast ─── */
+let toastTimer = {};
+function toast(msg, type = 'info', duration = 4000) {
+  const icons = { success: '✅', error: '❌', info: '💡' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span class="t-icon">${icons[type]}</span><span>${msg}</span>`;
+  const tc = document.getElementById('toast-container');
+  tc.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .3s'; setTimeout(() => el.remove(), 300); }, duration);
+}
+
+/* ─── Activity bar ─── */
+function setActivity(text, spinning = true) { /* activity bar removed */ }
+
+function markStep(id, status) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = `loading-step ${status}`;
+}
+
+/* ─── API base: always talk to the Python server on 8787 ─── */
+const API = (() => {
+  // If we're already on the server's origin, use relative paths.
+  // Otherwise (preview iframe, file://, different port) use absolute.
+  if (window.location.port === '8787') return '';
+  return 'http://127.0.0.1:8787';
+})();
+
+/* ─── API ─── */
+async function api(path, options) {
+  const start = Date.now();
+  const res = await fetch(API + path, options);
+  const ms = Date.now() - start;
+  if (!res.ok) throw new Error(`${path} → ${res.status} (${ms}ms)`);
+  const data = await res.json();
+  return data;
+}
+
+/* ─── Escape ─── */
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+/* ─── Score bar ─── */
+function barColor(pct) {
+  if (pct >= 75) return 'var(--green)';
+  if (pct >= 50) return 'var(--blue)';
+  if (pct >= 30) return 'var(--amber)';
+  return 'var(--red)';
+}
+
+function scoreBar(label, val, max = 10) {
+  const pct = Math.min(100, (val / max) * 100);
+  return `<div class="bar-row">
+    <span class="bar-label">${esc(label)}</span>
+    <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${barColor(pct)}"></div></div>
+    <span class="bar-num">${(+val).toFixed(1)}</span>
+  </div>`;
+}
+
+/* ─── Urgency ─── */
+function urgency(score) {
+  if (score >= 8) return 'critical';
+  if (score >= 6) return 'high';
+  return 'medium';
+}
+
+/* ─── Score badge ─── */
+function scoreBadge(score) {
+  const cls = score >= 8 ? 'high-score' : score >= 6 ? 'mid-score' : 'low-score';
+  return `<div class="score-badge ${cls}">${(+score).toFixed(1)}</div>`;
+}
+
+/* ─── Views ─── */
+function renderDigest() {
+  const items = state.digest?.top_signals || [];
+  if (!items.length) return '<div class="error-box">No signals found in digest.</div>';
+  return items.map(item => {
+    const s = item.signal;
+    const score = s.score.final_score;
+    const urg = urgency(score);
+    const td = item.tada_perspective;
+    const co = item.content_opportunity;
+    return `<div class="signal-card ${urg}">
+      <div class="signal-top">
+        <div>
+          <div class="signal-headline">${esc(s.headline)}</div>
+          <div class="signal-meta">${esc(s.source)} · ${esc(s.signal_type)} · ${new Date(s.date).toLocaleDateString()}</div>
+          <div class="source-link-row">
+            <span class="source-pill">📰 ${esc(s.source)}</span>
+            <button class="source-link-btn" onclick="copyUrl('${s.url}', this)">
+              📋 Copy Article URL
+            </button>
+            <span class="source-url">${esc(s.url)}</span>
+          </div>
+        </div>
+        ${scoreBadge(score)}
+      </div>
+      <div class="signal-summary">${esc(s.summary)}</div>
+      <div class="score-bars">
+        ${scoreBar('Supply Chain', s.score.supply_chain_relevance)}
+        ${scoreBar('Executive', s.score.executive_importance)}
+        ${scoreBar('Business Impact', s.score.business_impact)}
+        ${scoreBar('TADA Alignment', s.score.tada_alignment)}
+      </div>
+      <div class="ddd-grid">
+        <div class="ddd-card">
+          <div class="ddd-label detect">🔍 Detect</div>
+          <div class="ddd-text">${esc(td.detect)}</div>
+        </div>
+        <div class="ddd-card">
+          <div class="ddd-label decide">🧠 Decide</div>
+          <div class="ddd-text">${esc(td.decide)}</div>
+        </div>
+        <div class="ddd-card">
+          <div class="ddd-label do-lbl">⚡ Do</div>
+          <div class="ddd-text">${esc(td.do)}</div>
+        </div>
+      </div>
+      <div class="tags">
+        ${s.risks.map(r => `<span class="tag risk">⚠ ${esc(r)}</span>`).join('')}
+        ${s.opportunities.map(o => `<span class="tag opp">✦ ${esc(o)}</span>`).join('')}
+        ${s.keywords.map(k => `<span class="tag">${esc(k)}</span>`).join('')}
+      </div>
+      <div class="signal-footer">
+        <span class="urgency ${urg}">${urg.toUpperCase()}</span>
+        <span style="font-size:12px;color:var(--muted)">${esc(co.review_status)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderSignals() {
+  const items = state.digest?.top_signals || [];
+  return `<div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Signal</th><th>Type</th><th>Score</th>
+          <th>Why It Matters</th><th>TADA Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${items.map(item => {
+          const s = item.signal;
+          const td = item.tada_perspective;
+          const urg = urgency(s.score.final_score);
+          return `<tr>
+            <td>
+              <strong>${esc(s.headline)}</strong><br>
+              <span style="color:var(--muted);font-size:11px">${esc(s.source)} · ${new Date(s.date).toLocaleDateString()}</span>
+              <div style="margin-top:6px"><span class="urgency ${urg}" style="font-size:10px">${urg.toUpperCase()}</span></div>
+            </td>
+            <td><span class="tag">${esc(s.signal_type)}</span></td>
+            <td>
+              <span style="font-size:18px;font-weight:800;color:${barColor((s.score.final_score/10)*100)}">${(+s.score.final_score).toFixed(1)}</span>
+            </td>
+            <td style="max-width:220px;color:var(--muted2)">${esc(td.why_it_matters)}</td>
+            <td style="max-width:220px;color:var(--muted2)">${esc(td.tada_response)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function renderWeekly() {
+  const r = state.weekly || {};
+  return `
+    <div class="panel">
+      <div class="panel-title">📊 ${esc(r.title || 'Weekly Intelligence Report')}</div>
+      <p style="color:var(--muted2);font-size:13px;line-height:1.6">${esc(r.market_overview || '')}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px">
+      <div class="panel">
+        <div class="panel-title">Strategic Recommendations</div>
+        <ul>${(r.strategic_recommendations || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Metrics</div>
+        <div class="kpi" style="border:none;padding:0;background:transparent">
+          <div class="kpi-label">Surfaced Signals</div>
+          <div class="kpi-value blue">${esc(r.metrics?.surfaced_signals ?? 0)}</div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="kpi-label">Average Score</div>
+          <div class="kpi-value green">${(+(r.metrics?.average_score ?? 0)).toFixed(2)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Leadership Talking Points</div>
+      <ul>${(r.leadership_talking_points || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Sales Insights</div>
+      <ul>${(r.sales_insights || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+    </div>
+  `;
+}
+
+function renderReview() {
+  const items = state.digest?.top_signals || [];
+  return `
+    <div class="section-head">Pending Review <span class="count">${items.length}</span></div>
+    ${items.map((item, i) => {
+      const co = item.content_opportunity;
+      const article = co.thought_leadership_article || {};
+      return `<div class="review-card">
+        <div class="review-title">${esc(article.title || 'Content Opportunity')}</div>
+        <div class="review-signal">Linked signal: ${esc(item.signal.headline)}</div>
+        <div class="review-body">${esc(article.executive_summary || item.signal.summary)}</div>
+        <div class="review-actions">
+          <button class="btn-approve" onclick="recordReview(${i},'approved')">✓ Approve</button>
+          <button class="btn-review" onclick="recordReview(${i},'under_review')">↩ Send to Review</button>
+          <button class="btn-reject" onclick="recordReview(${i},'rejected')">✕ Reject</button>
+        </div>
+      </div>`;
+    }).join('')}
+    <div class="section-head" style="margin-top:24px">Review Log <span class="count">${state.reviews.length}</span></div>
+    <div class="review-log">
+      <table>
+        <thead><tr><th>Status</th><th>Reviewer</th><th>Comments</th><th>Time</th></tr></thead>
+        <tbody>
+          ${state.reviews.length === 0
+            ? `<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:20px">No review events yet.</td></tr>`
+            : state.reviews.map(e => `<tr>
+                <td><span class="urgency ${e.to_status === 'approved' ? 'medium' : e.to_status === 'rejected' ? 'critical' : 'high'}">${esc(e.to_status)}</span></td>
+                <td style="color:var(--muted2)">${esc(e.reviewer)}</td>
+                <td style="color:var(--muted2)">${esc(e.comments)}</td>
+                <td style="color:var(--muted)">${new Date(e.created_at).toLocaleString()}</td>
+              </tr>`).join('')
+          }
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderSources() {
+  const sources = state.sources || [];
+  return `
+    <div class="section-head">Monitored Sources <span class="count">${sources.length}</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Source</th><th>Category</th><th>Access Method</th><th>Priority</th><th>Health</th></tr></thead>
+        <tbody>
+          ${sources.map(s => `<tr>
+            <td>
+              <strong>${esc(s.name)}</strong><br>
+              <span style="color:var(--muted);font-size:11px">${esc(s.url)}</span>
+            </td>
+            <td><span class="tag">${esc(s.category)}</span></td>
+            <td style="color:var(--muted2)">${esc(s.access_method)}</td>
+            <td><span class="tag">${esc(s.priority)}</span></td>
+            <td>
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:${s.health_status === 'healthy' ? 'var(--green)' : 'var(--amber)'}">
+                <span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>
+                ${esc(s.health_status)}
+              </span>
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* ─── Sources Management ─── */
+async function loadSources() {
+  try {
+    const data = await api('/api/sources');
+    state.sources = data.sources || [];
+    renderSourcesList();
+  } catch(e) { toast('Failed to load sources: ' + e.message, 'error'); }
+}
+
+function renderSourcesList() {
+  const el = document.getElementById('sourcesList');
+  if (!el) return;
+  const sources = state.sources || [];
+  if (!sources.length) { el.innerHTML = '<p style="color:var(--muted);font-size:13px;">No sources added yet.</p>'; return; }
+  el.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>RSS URL</th><th>Category</th><th></th></tr></thead>
+        <tbody>
+          ${sources.map((s, i) => `<tr>
+            <td><strong>${esc(s.name)}</strong></td>
+            <td style="color:var(--muted2);font-size:12px;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(s.rss_url || s.url || '')}</td>
+            <td><span class="tag">${esc(s.category || 'Custom')}</span></td>
+            <td><button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;color:var(--red);" onclick="deleteSource(${i})">Remove</button></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+async function addSource() {
+  const name = document.getElementById('src-name').value.trim();
+  const url  = document.getElementById('src-url').value.trim();
+  if (!name || !url) { toast('Name and URL are required', 'error'); return; }
+  try {
+    await api('/api/sources', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, url}) });
+    document.getElementById('src-name').value = '';
+    document.getElementById('src-url').value = '';
+    toast(`✓ "${name}" added`, 'success');
+    await loadSources();
+  } catch(e) { toast('Failed to add source: ' + e.message, 'error'); }
+}
+
+async function deleteSource(idx) {
+  if (!confirm('Remove this source?')) return;
+  try {
+    await api(`/api/sources/${idx}`, { method:'DELETE' });
+    toast('Source removed', 'success');
+    await loadSources();
+  } catch(e) { toast('Failed to remove: ' + e.message, 'error'); }
+}
+
+/* ─── LinkedIn Profiles Management ─── */
+async function loadLinkedInProfiles() {
+  try {
+    const data = await api('/api/linkedin-profiles');
+    state.profiles = data.profiles || [];
+    renderProfilesList();
+  } catch(e) { toast('Failed to load profiles: ' + e.message, 'error'); }
+}
+
+function renderProfilesList() {
+  const el = document.getElementById('profilesList');
+  if (!el) return;
+  const profiles = state.profiles || [];
+  if (!profiles.length) { el.innerHTML = '<p style="color:var(--muted);font-size:13px;">No profiles added yet.</p>'; return; }
+  el.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>Username</th><th>Role</th><th></th></tr></thead>
+        <tbody>
+          ${profiles.map((p, i) => `<tr>
+            <td><strong>${esc(p.name)}</strong></td>
+            <td style="color:var(--muted2);font-size:12px;">@${esc(p.username)}</td>
+            <td style="color:var(--muted2);font-size:12px;">${esc(p.role || '—')}</td>
+            <td><button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;color:var(--red);" onclick="deleteProfile(${i})">Remove</button></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+async function addLinkedInProfile() {
+  const name = document.getElementById('li-name').value.trim();
+  const url  = document.getElementById('li-url').value.trim();
+  const role = document.getElementById('li-role').value.trim();
+  if (!name || !url) { toast('Name and LinkedIn URL/username are required', 'error'); return; }
+  try {
+    await api('/api/linkedin-profiles', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, url, role}) });
+    document.getElementById('li-name').value = '';
+    document.getElementById('li-url').value = '';
+    document.getElementById('li-role').value = '';
+    toast(`✓ "${name}" added`, 'success');
+    await loadLinkedInProfiles();
+  } catch(e) { toast('Failed to add profile: ' + e.message, 'error'); }
+}
+
+async function deleteProfile(idx) {
+  if (!confirm('Remove this profile?')) return;
+  try {
+    await api(`/api/linkedin-profiles/${idx}`, { method:'DELETE' });
+    toast('Profile removed', 'success');
+    await loadLinkedInProfiles();
+  } catch(e) { toast('Failed to remove: ' + e.message, 'error'); }
+}
+
+/* ─── KPI strip ─── */
+function renderKPIs() {
+  const signals = state.digest?.top_signals || [];
+  const avgScore = signals.length
+    ? (signals.reduce((s, i) => s + i.signal.score.final_score, 0) / signals.length).toFixed(2)
+    : '—';
+  const mode = state.digest?.data_mode || 'sample';
+  const modeEl = document.getElementById('data-mode-badge');
+  modeEl.innerHTML = `<span class="data-mode ${mode.includes('live') ? 'live' : 'sample'}">${mode.includes('live') ? '🟢 Live RSS' : '🟡 Sample Data'}</span>`;
+
+  const strip = document.querySelector('.kpi-strip');
+  if (strip) strip.remove();
+  const div = document.createElement('div');
+  div.className = 'kpi-strip';
+  div.innerHTML = `
+    <div class="kpi blue">
+      <div class="kpi-label">Signals Detected</div>
+      <div class="kpi-value">${signals.length}</div>
+      <div class="kpi-sub">from ${state.sources.length} sources</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Avg Relevance Score</div>
+      <div class="kpi-value">${avgScore}</div>
+      <div class="kpi-sub">out of 10.0</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">Emerging Themes</div>
+      <div class="kpi-value">${state.digest?.emerging_themes?.length || 0}</div>
+      <div class="kpi-sub">detected this cycle</div>
+    </div>
+  `;
+  document.getElementById('scroll-area').prepend(div);
+}
+
+/* ─── Master render ─── */
+function render() {
+  const [title, sub] = PAGE_META[state.view] || [state.view, ''];
+  document.getElementById('page-title').textContent = title;
+  document.getElementById('page-sub').textContent = sub;
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
+
+  document.getElementById('loading-overlay').style.display = 'none';
+  const viewEl = document.getElementById('view');
+  const panels = ['themesView','discoveryView','sourcesView','linkedinView'];
+  viewEl.style.display = 'none';
+  panels.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+
+  renderKPIs();
+
+  if (state.view === 'themes') {
+    document.getElementById('themesView').style.display = '';
+    loadThemes();
+    return;
+  }
+  if (state.view === 'discovery') {
+    document.getElementById('discoveryView').style.display = '';
+    return;
+  }
+  if (state.view === 'sources') {
+    document.getElementById('sourcesView').style.display = '';
+    loadSources();
+    return;
+  }
+  if (state.view === 'linkedin-profiles') {
+    document.getElementById('linkedinView').style.display = '';
+    loadLinkedInProfiles();
+    return;
+  }
+
+  viewEl.style.display = '';
+  const renderers = { digest: renderDigest, signals: renderSignals, weekly: renderWeekly, review: renderReview };
+  viewEl.innerHTML = `<div class="section-head" style="margin-bottom:18px">${title} <span class="count">${state.digest?.top_signals?.length ?? 0}</span></div>` + (renderers[state.view] ? renderers[state.view]() : '');
+}
+
+/* ─── Copy URL ─── */
+function copyUrl(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    btn.style.background = 'var(--green)';
+    btn.style.color = '#fff';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
+    toast('URL copied — paste it in your browser', 'success');
+  }).catch(() => {
+    // fallback: select a temp input
+    const inp = document.createElement('input');
+    inp.value = url;
+    document.body.appendChild(inp);
+    inp.select();
+    document.execCommand('copy');
+    inp.remove();
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Article URL'; }, 2000);
+    toast('URL copied — paste it in your browser', 'success');
+  });
+}
+
+/* ─── Review action ─── */
+async function recordReview(index, status) {
+  const item = state.digest.top_signals[index];
+  setActivity(`Posting review event: ${status}…`, true);
+  toast(`Submitting review: ${status}…`, 'info', 2000);
+  try {
+    await api('/api/review-events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        entity_type: 'content_opportunity',
+        entity_id: item.signal.url,
+        from_status: item.content_opportunity.review_status,
+        to_status: status,
+        reviewer: 'analyst@tada.example',
+        comments: `${status} via dashboard`,
+      }),
+    });
+    const evts = await api('/api/review-events');
+    state.reviews = evts.events;
+    toast(`Review recorded: ${status}`, 'success');
+    render();
+  } catch (e) {
+    toast(`Review failed: ${e.message}`, 'error');
+    setActivity(`Error: ${e.message}`, false);
+  }
+}
+
+/* ─── Sweep buttons ─── */
+async function runSweep(live) {
+  const btn = document.getElementById('btn-live');
+  btn.disabled = true;
+  const endpoint = live ? '/api/ingestion/live' : '/api/ingestion/run';
+  const label = live ? '🌐 Fetching live RSS feeds…' : '🔄 Running sample analysis sweep…';
+
+  setActivity(label, true);
+  toast(label, 'info', 3000);
+
+  try {
+    state.digest = await api(endpoint, { method: 'POST' });
+    state.weekly = await api('/api/reports/weekly');
+    render();
+    toast(`✓ Sweep complete — ${state.digest?.top_signals?.length ?? 0} signals detected`, 'success');
+  } catch (e) {
+    toast(`Sweep failed: ${e.message}`, 'error');
+    setActivity(`Error: ${e.message}`, false);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* ─── Boot sequence ─── */
+async function boot() {
+  const steps = ['step-health','step-digest','step-sources','step-weekly','step-review'];
+
+  try {
+    // Step 1: health check
+    setActivity('Checking API health…', true);
+    markStep('step-health', 'active');
+    await api('/api/health');
+    markStep('step-health', 'done');
+    toast('API health check passed', 'success', 2500);
+
+    // Step 2: digest
+    setActivity('Fetching daily digest…', true);
+    markStep('step-digest', 'active');
+    state.digest = await api('/api/digest');
+    markStep('step-digest', 'done');
+    toast(`Digest loaded — ${state.digest?.top_signals?.length ?? 0} signals`, 'success', 2500);
+
+    // Step 3: sources
+    setActivity('Loading intelligence sources…', true);
+    markStep('step-sources', 'active');
+    const srcs = await api('/api/sources');
+    state.sources = srcs.sources || srcs;
+    markStep('step-sources', 'done');
+    toast(`${state.sources.length} sources loaded`, 'success', 2500);
+
+    // Step 4: weekly report
+    setActivity('Building weekly report…', true);
+    markStep('step-weekly', 'active');
+    state.weekly = await api('/api/reports/weekly');
+    markStep('step-weekly', 'done');
+    toast('Weekly report ready', 'success', 2500);
+
+    // Step 5: review events
+    setActivity('Loading review queue…', true);
+    markStep('step-review', 'active');
+    const revts = await api('/api/review-events');
+    state.reviews = revts.events || [];
+    markStep('step-review', 'done');
+
+    // Enable buttons
+    document.getElementById('btn-live').disabled = false;
+    document.getElementById('btn-email').disabled = false;
+
+    toast('TADA Intelligence Platform ready', 'success');
+    render();
+
+  } catch (e) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="error-box">⚠ Failed to load: ${esc(e.message)}</div>`;
+    setActivity(`Error: ${e.message}`, false);
+    toast(`Boot failed: ${e.message}`, 'error', 8000);
+  }
+}
+
+/* ─── Nav ─── */
+document.querySelectorAll('.nav-item').forEach(b => {
+  b.addEventListener('click', () => {
+    if (!state.digest) return;
+    state.view = b.dataset.view;
+    render();
+  });
+});
+document.getElementById('btn-live').addEventListener('click', () => runSweep(true));
+
+boot();
+
+function openEmailModal() {
+  const modal = document.getElementById('email-modal');
+  modal.style.display = 'flex';
+  document.getElementById('email-status').textContent = '';
+  document.getElementById('email-to').focus();
+}
+
+function closeEmailModal() {
+  document.getElementById('email-modal').style.display = 'none';
+}
+
+async function sendDigestEmail() {
+  const to = document.getElementById('email-to').value.trim();
+  const name = document.getElementById('email-name').value.trim() || 'Team';
+  const sender = document.getElementById('email-sender').value.trim() || 'TADA Intelligence';
+  const status = document.getElementById('email-status');
+  const btn = document.getElementById('email-send-btn');
+
+  if (!to || !to.includes('@')) {
+    status.style.color = '#EF4444';
+    status.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  status.style.color = '#9CA3AF';
+  status.textContent = '⏳ Sending email... (up to 30s)';
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 60000); // 60s timeout
+    const res = await fetch(API + '/api/email/digest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to, recipient_name: name, sender_name: sender }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    const data = await res.json();
+    if (data.success) {
+      status.style.color = '#10B981';
+      status.textContent = `✓ Sent to ${data.to}`;
+      toast(`Email sent to ${data.to}`, 'success');
+      setTimeout(closeEmailModal, 1800);
+    } else {
+      status.style.color = '#EF4444';
+      status.textContent = data.error || 'Failed to send. Check SMTP settings in .env';
+    }
+  } catch (e) {
+    status.style.color = '#EF4444';
+    status.textContent = 'Network error — is the server running?';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Email';
+  }
+}
+
+// Close modal on backdrop click
+document.getElementById('email-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEmailModal();
+});
+
+/* ─── Theme Management ─── */
+async function loadThemes() {
+  const res = await fetch(API + '/api/themes');
+  const data = await res.json();
+  renderThemes(data.themes || []);
+}
+
+function renderThemes(themes) {
+  const list = document.getElementById('themesList');
+  if (!themes.length) { list.innerHTML = '<p style="color:#64748b">No themes configured.</p>'; return; }
+  list.innerHTML = themes.map(t => `
+    <div class="theme-card" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div style="font-weight:600;color:#1e293b;margin-bottom:4px;">${esc(t.name)}</div>
+        <div style="font-size:13px;color:#64748b;margin-bottom:6px;">${esc(t.description)}</div>
+        <span style="font-size:11px;background:${t.priority==='high'?'#fee2e2':'#fef9c3'};color:${t.priority==='high'?'#dc2626':'#92400e'};padding:2px 8px;border-radius:999px;font-weight:600;">${t.priority.toUpperCase()}</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;margin-left:16px;">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+          <input type="checkbox" ${t.enabled?'checked':''} onchange="toggleTheme('${t.id}')" style="width:16px;height:16px;">
+          <span style="font-size:12px;color:#64748b;">${t.enabled?'Enabled':'Disabled'}</span>
+        </label>
+        <button onclick="deleteTheme('${t.id}','${String(t.name).replace(/'/g,"\\'")}')" style="background:#fee2e2;color:#dc2626;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function toggleTheme(id) {
+  await fetch(API + '/api/themes/'+id+'/toggle', {method:'POST'});
+  loadThemes();
+}
+
+async function deleteTheme(id, name) {
+  if (!confirm('Delete theme "'+name+'"?')) return;
+  await fetch(API + '/api/themes/'+id, {method:'DELETE'});
+  loadThemes();
+}
+
+async function saveNewTheme() {
+  const name = document.getElementById('newThemeName').value.trim();
+  const desc = document.getElementById('newThemeDesc').value.trim();
+  const priority = document.getElementById('newThemePriority').value;
+  if (!name) { alert('Theme name is required'); return; }
+  await fetch(API + '/api/themes', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, description:desc, priority})});
+  document.getElementById('addThemeForm').style.display='none';
+  document.getElementById('newThemeName').value='';
+  document.getElementById('newThemeDesc').value='';
+  loadThemes();
+}
+
+/* ─── Discovery Run ─── */
+async function runDiscovery() {
+  state.view = 'discovery';
+  render();
+  const btn = document.getElementById('runDiscoveryBtn');
+  const progress = document.getElementById('discoveryProgress');
+  const results = document.getElementById('discoveryResults');
+  const stats = document.getElementById('discoveryStats');
+  btn.disabled = true;
+  btn.textContent = '⏳ Running...';
+  results.innerHTML = '';
+  stats.innerHTML = '';
+
+  const steps = ['⚙️ Fetching articles from RSS & LinkedIn...','⏱️ Filtering by time window...','🎯 Scoring against active themes...','🔍 Deduplicating stories...','✍️ Summarizing top articles...'];
+  let si = 0;
+  progress.textContent = steps[0];
+  const interval = setInterval(() => { si = Math.min(si+1, steps.length-1); progress.textContent = steps[si]; }, 8000);
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 480000); // 8 min — pipeline includes hater bot rewrites
+    const res = await fetch(API + '/api/discovery/run', {method:'POST', signal: controller.signal});
+    clearTimeout(timeout);
+    clearInterval(interval);
+    const data = await res.json();
+    progress.textContent = '';
+
+    const articles = data.top_articles || [];
+    if (!articles.length) {
+      results.innerHTML = '<div style="text-align:center;padding:40px;color:#64748b;"><div style="font-size:48px;margin-bottom:16px;">📭</div><p>No relevant articles found in the last ' + (data.run_metadata?.time_window_hours||24) + ' hours.</p></div>';
+    } else {
+      results.innerHTML = articles.map((a,i) => `
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;">
+          <div style="font-size:10px;color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Article ${i+1} of ${articles.length}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4;font-family:'Space Grotesk',sans-serif;">
+            <a href="${esc(a.url)}" target="_blank" style="color:var(--text);text-decoration:none;">${esc(a.title||a.headline||'Untitled')}</a>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span>${esc(a.source)}</span>
+            <span style="color:var(--border)">|</span>
+            <span>${esc(a.published_at||'Recent')}</span>
+            <span style="color:var(--border)">|</span>
+            <span style="background:var(--cyan-dim);color:var(--cyan);padding:2px 10px;border-radius:999px;font-weight:700;font-size:11px;">${a.relevance_score||0}/10</span>
+            ${a.matched_themes?.length ? `<span style="background:var(--surface2);color:var(--muted2);padding:2px 10px;border-radius:999px;font-size:11px;">${esc(a.matched_themes[0])}</span>` : ''}
+          </div>
+          ${(a.summary_bullets||[]).map(b=>`<div style="font-size:13px;color:var(--muted2);margin-bottom:8px;line-height:1.6;padding-left:12px;border-left:2px solid var(--border);">${esc(b)}</div>`).join('')}
+          ${a.tada_pov ? `
+          <div style="margin-top:16px;padding:14px 16px;background:var(--surface2);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;">
+            <div style="font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">TADA POV</div>
+            <div style="font-size:13px;color:var(--text);line-height:1.7;">${esc(a.tada_pov)}</div>
+          </div>` : ''}
+          ${a.hater_bot ? `<div style="margin-top:10px;font-size:11px;color:var(--muted);"><span style="color:${a.hater_bot.approved?'var(--green)':'var(--coral)'};">● ${esc(a.hater_bot.verdict||'')}</span> ${esc(a.hater_bot.reason||'')}</div>` : ''}
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+            <a href="${esc(a.url)}" target="_blank" style="color:var(--cyan);font-size:13px;font-weight:600;text-decoration:none;">Read article →</a>
+            <button onclick="navigator.clipboard.writeText('${esc(a.url)}').then(()=>toast('URL copied','success'))" style="background:var(--surface2);border:1px solid var(--border);color:var(--muted2);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Copy URL</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const u = data.usage_stats || {};
+    stats.innerHTML = `<div style="font-size:12px;color:#64748b;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+      📊 ${u.articles_fetched||0} articles reviewed &nbsp;|&nbsp; ${u.articles_after_scoring||0} passed relevance filter &nbsp;|&nbsp; Run time: ${u.run_duration_seconds||0}s &nbsp;|&nbsp; Model: ${esc(u.model||'llama3.1 (local)')}
+    </div>`;
+
+  } catch (e) {
+    clearInterval(interval);
+    progress.textContent = '';
+    results.innerHTML = '<div style="color:#dc2626;padding:16px;">Error: ' + esc(e.message||'Unknown error') + '</div>';
+  }
+  btn.disabled = false;
+  btn.textContent = '🔍 Run Discovery';
+}
+</script>
+</body>
+</html>

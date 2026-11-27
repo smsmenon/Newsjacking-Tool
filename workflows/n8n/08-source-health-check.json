@@ -1,0 +1,223 @@
+{
+  "name": "08 - Source Health Check",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "every-6h-trigger",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, name, url, source_type, last_checked, consecutive_failures, is_active FROM content_sources WHERE is_active = true ORDER BY last_checked ASC NULLS FIRST",
+        "additionalFields": {}
+      },
+      "id": "fetch-all-sources",
+      "name": "Fetch All Active Sources",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "TADA-Health-Check/1.0" }
+          ]
+        },
+        "options": {
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          },
+          "redirect": {
+            "redirect": {
+              "followRedirects": true,
+              "maxRedirects": 5
+            }
+          }
+        }
+      },
+      "id": "ping-source",
+      "name": "Ping Source URL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [500, 400],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Evaluate source health based on response\nconst sourceId = $('Fetch All Active Sources').item.json.id;\nconst sourceName = $('Fetch All Active Sources').item.json.name;\nconst sourceUrl = $('Fetch All Active Sources').item.json.url;\nconst sourceType = $('Fetch All Active Sources').item.json.source_type;\nconst consecutiveFailures = $('Fetch All Active Sources').item.json.consecutive_failures || 0;\n\nlet statusCode = null;\nlet responseTime = null;\nlet isHealthy = false;\nlet errorMessage = null;\nlet feedValid = false;\n\nconst response = $json;\n\nif (response.error) {\n  // Request failed\n  isHealthy = false;\n  errorMessage = response.error.message || 'Connection failed';\n} else {\n  statusCode = response.statusCode || 200;\n  responseTime = response.headers && response.headers['x-response-time'] \n    ? parseInt(response.headers['x-response-time']) \n    : null;\n  \n  isHealthy = statusCode >= 200 && statusCode < 400;\n  \n  // Validate RSS feed structure if it's an RSS source\n  if (sourceType === 'rss' && response.body) {\n    feedValid = response.body.includes('<rss') || \n                response.body.includes('<feed') || \n                response.body.includes('<channel');\n    if (!feedValid) {\n      isHealthy = false;\n      errorMessage = 'Invalid RSS feed structure';\n    }\n  }\n}\n\nconst newConsecutiveFailures = isHealthy ? 0 : consecutiveFailures + 1;\n\nreturn [{\n  json: {\n    source_id: sourceId,\n    source_name: sourceName,\n    source_url: sourceUrl,\n    source_type: sourceType,\n    is_healthy: isHealthy,\n    status_code: statusCode,\n    response_time_ms: responseTime,\n    feed_valid: feedValid,\n    error_message: errorMessage,\n    consecutive_failures: newConsecutiveFailures,\n    checked_at: new Date().toISOString(),\n    should_alert: newConsecutiveFailures >= 3\n  }\n}];"
+      },
+      "id": "evaluate-health",
+      "name": "Evaluate Source Health",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE content_sources SET last_checked = '{{ $json.checked_at }}', is_healthy = {{ $json.is_healthy }}, last_status_code = {{ $json.status_code || 'NULL' }}, last_response_time_ms = {{ $json.response_time_ms || 'NULL' }}, consecutive_failures = {{ $json.consecutive_failures }}, last_error = {{ $json.error_message ? `'${$json.error_message.replace(/'/g, \"''\")}' ` : 'NULL' }} WHERE id = {{ $json.source_id }}",
+        "additionalFields": {}
+      },
+      "id": "update-source-health",
+      "name": "Update Source Health Metrics",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [900, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "should-alert",
+              "leftValue": "={{ $json.should_alert }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "check-should-alert",
+      "name": "Should Alert on Source Down?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 400]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_OPS }}",
+        "text": ":warning: *Source Health Alert*\n>Source: *{{ $json.source_name }}* is DOWN\n>URL: {{ $json.source_url }}\n>Consecutive Failures: {{ $json.consecutive_failures }}\n>Error: {{ $json.error_message || 'Unknown error' }}\n>Last Checked: {{ $json.checked_at }}\n>Action needed: Check source configuration in TADA Admin"
+      },
+      "id": "slack-source-down",
+      "name": "Slack: Source Down Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1300, 300],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "source_health_history",
+        "columns": "source_id,is_healthy,status_code,response_time_ms,error_message,checked_at",
+        "additionalFields": {
+          "queryBatching": "independently"
+        }
+      },
+      "id": "log-health-history",
+      "name": "Log Health History",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1300, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as total_sources, SUM(CASE WHEN is_healthy THEN 1 ELSE 0 END) as healthy_sources, SUM(CASE WHEN NOT is_healthy THEN 1 ELSE 0 END) as unhealthy_sources, ROUND(AVG(last_response_time_ms)) as avg_response_time_ms FROM content_sources WHERE is_active = true",
+        "additionalFields": {}
+      },
+      "id": "compute-health-summary",
+      "name": "Compute Health Summary",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1500, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "health_check_runs",
+        "columns": "run_at,total_sources,healthy_sources,unhealthy_sources,avg_response_time_ms",
+        "additionalFields": {}
+      },
+      "id": "log-run-summary",
+      "name": "Log Health Check Run",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1700, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": { "main": [[{ "node": "Fetch All Active Sources", "type": "main", "index": 0 }]] },
+    "Fetch All Active Sources": { "main": [[{ "node": "Ping Source URL", "type": "main", "index": 0 }]] },
+    "Ping Source URL": { "main": [[{ "node": "Evaluate Source Health", "type": "main", "index": 0 }]] },
+    "Evaluate Source Health": { "main": [[{ "node": "Update Source Health Metrics", "type": "main", "index": 0 }]] },
+    "Update Source Health Metrics": { "main": [[{ "node": "Should Alert on Source Down?", "type": "main", "index": 0 }]] },
+    "Should Alert on Source Down?": {
+      "main": [
+        [{ "node": "Slack: Source Down Alert", "type": "main", "index": 0 }],
+        [{ "node": "Log Health History", "type": "main", "index": 0 }]
+      ]
+    },
+    "Slack: Source Down Alert": { "main": [[{ "node": "Log Health History", "type": "main", "index": 0 }]] },
+    "Log Health History": { "main": [[{ "node": "Compute Health Summary", "type": "main", "index": 0 }]] },
+    "Compute Health Summary": { "main": [[{ "node": "Log Health Check Run", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-monitoring", "name": "source-monitoring" },
+    { "id": "tag-ops", "name": "operations" }
+  ],
+  "id": "wf-08-source-health-check",
+  "active": true
+}

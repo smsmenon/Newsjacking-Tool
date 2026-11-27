@@ -1,0 +1,27 @@
+# Secrets — never commit. In CI these come from GitHub Secrets instead.
+.env
+.env.*
+!.env.example
+
+# Scratch output from manual runs
+scratch_*
+email_preview.html
+logs/
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Note: data/*.json IS committed on purpose — the sent-URL, competitor-seen and
+# LinkedIn-urn caches are the job's memory between runs, and GitHub runners are wiped
+# after every run. Without them the digest would resend the same articles daily.

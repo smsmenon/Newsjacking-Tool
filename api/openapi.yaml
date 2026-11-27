@@ -1,0 +1,2632 @@
+openapi: 3.1.0
+info:
+  title: TADA Content Intelligence Platform API
+  description: |
+    Backend API for the TADA Intelligence Platform — serving content signals, trends,
+    insights, recommendations, knowledge graph, review workflows, and analytics.
+
+    ## Authentication
+    All endpoints (except `/health` and webhooks) require a valid Clerk JWT token
+    passed as `Authorization: Bearer <token>`.
+
+    ## Rate Limiting
+    - Default: 100 requests/minute per authenticated user
+    - Search endpoints: 30 requests/minute
+    - Webhook endpoints: 500 requests/minute (n8n service account)
+
+    ## Search Types
+    - `keyword` — PostgreSQL full-text search (ts_vector/ts_query)
+    - `semantic` — pgvector cosine similarity search
+    - `hybrid` — Reciprocal Rank Fusion combining both (default)
+  version: 1.0.0
+  contact:
+    name: TADA Engineering
+    email: eng@tada.ai
+  license:
+    name: Proprietary
+
+servers:
+  - url: https://api.tada.ai
+    description: Production
+  - url: https://staging-api.tada.ai
+    description: Staging
+  - url: http://localhost:8000
+    description: Local development
+
+security:
+  - clerkJWT: []
+
+components:
+  securitySchemes:
+    clerkJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Clerk-issued JWT. Validate with Clerk JWKS endpoint.
+
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    pageSizeParam:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 100
+    sortByParam:
+      name: sort_by
+      in: query
+      schema:
+        type: string
+        default: created_at
+    sortOrderParam:
+      name: sort_order
+      in: query
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: desc
+
+  schemas:
+    # ─── Shared ───────────────────────────────────────────────────────────────
+    PaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+      required: [page, page_size, total, total_pages]
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
+        request_id:
+          type: string
+      required: [error]
+
+    # ─── Content / Articles ───────────────────────────────────────────────────
+    ContentItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        source:
+          type: string
+          description: Source domain or feed name
+        topic:
+          type: string
+        summary:
+          type: string
+        relevance_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        sentiment_score:
+          type: number
+          format: float
+          minimum: -1
+          maximum: 1
+        status:
+          type: string
+          enum: [new, processing, reviewed, archived]
+        published_at:
+          type: string
+          format: date-time
+        collected_at:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+        author:
+          type: string
+          nullable: true
+        word_count:
+          type: integer
+          nullable: true
+      required: [id, title, url, source, topic, relevance_score, status, collected_at]
+
+    ContentDetail:
+      allOf:
+        - $ref: '#/components/schemas/ContentItem'
+        - type: object
+          properties:
+            full_content:
+              type: string
+              description: Full article text (markdown)
+            entities:
+              type: array
+              items:
+                $ref: '#/components/schemas/EntityRef'
+            signals:
+              type: array
+              items:
+                $ref: '#/components/schemas/SignalRef'
+            embedding_model:
+              type: string
+              nullable: true
+
+    ContentListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentItem'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 500
+        search_type:
+          type: string
+          enum: [keyword, semantic, hybrid]
+          default: hybrid
+        filters:
+          type: object
+          properties:
+            source:
+              type: array
+              items:
+                type: string
+            topic:
+              type: array
+              items:
+                type: string
+            date_from:
+              type: string
+              format: date
+            date_to:
+              type: string
+              format: date
+            min_score:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+            status:
+              type: array
+              items:
+                type: string
+        top_k:
+          type: integer
+          default: 20
+          minimum: 1
+          maximum: 100
+        rrf_k:
+          type: integer
+          default: 60
+          description: RRF constant k (default 60 per standard RRF paper)
+      required: [query]
+
+    SearchResult:
+      allOf:
+        - $ref: '#/components/schemas/ContentItem'
+        - type: object
+          properties:
+            search_score:
+              type: number
+              format: float
+            keyword_rank:
+              type: integer
+              nullable: true
+            semantic_rank:
+              type: integer
+              nullable: true
+            matched_excerpt:
+              type: string
+              nullable: true
+
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        query:
+          type: string
+        search_type:
+          type: string
+        total:
+          type: integer
+        took_ms:
+          type: integer
+      required: [results, query, search_type, total, took_ms]
+
+    # ─── Signals ──────────────────────────────────────────────────────────────
+    Signal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        signal_type:
+          type: string
+          enum: [trend_emergence, competitor_move, regulation, technology_shift, market_signal, sentiment_shift]
+        strength:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        status:
+          type: string
+          enum: [pending_review, approved, rejected, archived]
+        detected_at:
+          type: string
+          format: date-time
+        topic:
+          type: string
+        source_count:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, title, signal_type, strength, confidence, status, detected_at]
+
+    SignalRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        signal_type:
+          type: string
+      required: [id, title, signal_type]
+
+    SignalDetail:
+      allOf:
+        - $ref: '#/components/schemas/Signal'
+        - type: object
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContentItem'
+            insights:
+              type: array
+              items:
+                $ref: '#/components/schemas/InsightRef'
+            timeline:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  strength:
+                    type: number
+                  source_count:
+                    type: integer
+            review_history:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReviewAction'
+
+    SignalListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Signal'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    ReviewRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [approve, reject, request_changes]
+        notes:
+          type: string
+          maxLength: 2000
+        reason:
+          type: string
+          maxLength: 500
+      required: [action]
+
+    ReviewAction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        action:
+          type: string
+        reviewer_id:
+          type: string
+        reviewer_name:
+          type: string
+        notes:
+          type: string
+          nullable: true
+        reason:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+      required: [id, action, reviewer_id, created_at]
+
+    # ─── Trends ───────────────────────────────────────────────────────────────
+    Trend:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        topic:
+          type: string
+        momentum:
+          type: string
+          enum: [accelerating, stable, decelerating, emerging, declining]
+        status:
+          type: string
+          enum: [active, archived, watching]
+        strength:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        velocity:
+          type: number
+          format: float
+          description: Rate of change (positive = growing, negative = declining)
+        first_detected_at:
+          type: string
+          format: date-time
+        last_updated_at:
+          type: string
+          format: date-time
+        signal_count:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, name, topic, momentum, status, strength, first_detected_at]
+
+    TrendDetail:
+      allOf:
+        - $ref: '#/components/schemas/Trend'
+        - type: object
+          properties:
+            signals:
+              type: array
+              items:
+                $ref: '#/components/schemas/SignalRef'
+            timeline:
+              type: array
+              items:
+                $ref: '#/components/schemas/TrendTimelinePoint'
+            related_trends:
+              type: array
+              items:
+                $ref: '#/components/schemas/Trend'
+
+    TrendTimelinePoint:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        strength:
+          type: number
+          format: float
+        signal_count:
+          type: integer
+        notable_events:
+          type: array
+          items:
+            type: string
+      required: [date, strength, signal_count]
+
+    TrendListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trend'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    # ─── Insights ─────────────────────────────────────────────────────────────
+    Insight:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        summary:
+          type: string
+        insight_type:
+          type: string
+          enum: [market_opportunity, competitive_threat, content_gap, audience_shift, technology_adoption]
+        priority:
+          type: string
+          enum: [critical, high, medium, low]
+        status:
+          type: string
+          enum: [pending_review, approved, rejected, actioned]
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        generated_at:
+          type: string
+          format: date-time
+        topic:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, title, summary, insight_type, priority, status, confidence, generated_at]
+
+    InsightRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        insight_type:
+          type: string
+      required: [id, title, insight_type]
+
+    InsightDetail:
+      allOf:
+        - $ref: '#/components/schemas/Insight'
+        - type: object
+          properties:
+            full_analysis:
+              type: string
+              description: Full insight analysis in markdown
+            tada_perspective:
+              type: string
+              description: TADA-specific strategic perspective
+            supporting_signals:
+              type: array
+              items:
+                $ref: '#/components/schemas/SignalRef'
+            supporting_content:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContentItem'
+            recommendations:
+              type: array
+              items:
+                $ref: '#/components/schemas/RecommendationRef'
+            review_history:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReviewAction'
+
+    InsightListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Insight'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    # ─── Recommendations ──────────────────────────────────────────────────────
+    Recommendation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        action_type:
+          type: string
+          enum: [create_content, update_content, competitor_response, campaign, partnership, research]
+        priority:
+          type: string
+          enum: [critical, high, medium, low]
+        status:
+          type: string
+          enum: [pending, in_progress, completed, dismissed]
+        team:
+          type: string
+          enum: [content, marketing, product, executive, research]
+        effort_estimate:
+          type: string
+          enum: [low, medium, high]
+          nullable: true
+        impact_estimate:
+          type: string
+          enum: [low, medium, high]
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        insight_id:
+          type: string
+          format: uuid
+          nullable: true
+      required: [id, title, action_type, priority, status, team, created_at]
+
+    RecommendationRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        action_type:
+          type: string
+      required: [id, title, action_type]
+
+    RecommendationUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [pending, in_progress, completed, dismissed]
+        notes:
+          type: string
+          maxLength: 1000
+        due_date:
+          type: string
+          format: date
+          nullable: true
+
+    RecommendationListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    # ─── Content Ideas ────────────────────────────────────────────────────────
+    ContentIdea:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        content_type:
+          type: string
+          enum: [blog_post, white_paper, case_study, video, podcast, infographic, social, email, webinar, report]
+        status:
+          type: string
+          enum: [idea, approved, in_production, published, archived]
+        priority:
+          type: string
+          enum: [high, medium, low]
+        target_audience:
+          type: string
+          nullable: true
+        topic:
+          type: string
+        estimated_effort_days:
+          type: integer
+          nullable: true
+        scheduled_date:
+          type: string
+          format: date
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+        insight_id:
+          type: string
+          format: uuid
+          nullable: true
+      required: [id, title, content_type, status, priority, topic, created_at]
+
+    ContentIdeasListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentIdea'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    CalendarEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        ideas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentIdea'
+      required: [date, ideas]
+
+    ContentCalendarResponse:
+      type: object
+      properties:
+        period:
+          type: string
+          enum: [weekly, monthly, quarterly]
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarEntry'
+        total_items:
+          type: integer
+      required: [period, start_date, end_date, entries, total_items]
+
+    # ─── Competitors ──────────────────────────────────────────────────────────
+    Competitor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        domain:
+          type: string
+          format: uri
+        description:
+          type: string
+          nullable: true
+        tier:
+          type: string
+          enum: [primary, secondary, emerging]
+        tracking_status:
+          type: string
+          enum: [active, paused, archived]
+        last_event_at:
+          type: string
+          format: date-time
+          nullable: true
+        event_count_30d:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+      required: [id, name, domain, tier, tracking_status, created_at]
+
+    CompetitorEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        competitor_id:
+          type: string
+          format: uuid
+        event_type:
+          type: string
+          enum: [product_launch, pricing_change, partnership, funding, content_publish, hiring, acquisition, marketing_campaign]
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        significance:
+          type: string
+          enum: [high, medium, low]
+        source_url:
+          type: string
+          format: uri
+          nullable: true
+        detected_at:
+          type: string
+          format: date-time
+      required: [id, competitor_id, event_type, title, significance, detected_at]
+
+    CompetitorListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competitor'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    CompetitorEventsResponse:
+      type: object
+      properties:
+        competitor:
+          $ref: '#/components/schemas/Competitor'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompetitorEvent'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [competitor, events, meta]
+
+    # ─── Executive ────────────────────────────────────────────────────────────
+    ExecutiveBriefing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: date
+        headline:
+          type: string
+        summary:
+          type: string
+        key_signals:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalRef'
+          maxItems: 5
+        key_insights:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightRef'
+          maxItems: 5
+        action_items:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              owner:
+                type: string
+              due_date:
+                type: string
+                format: date
+                nullable: true
+              priority:
+                type: string
+                enum: [critical, high, medium, low]
+        competitor_activity:
+          type: string
+          nullable: true
+        market_context:
+          type: string
+          nullable: true
+        generated_at:
+          type: string
+          format: date-time
+      required: [id, date, headline, summary, generated_at]
+
+    ExecutiveDashboard:
+      type: object
+      properties:
+        period:
+          type: string
+        signals_total:
+          type: integer
+        signals_new_24h:
+          type: integer
+        insights_pending_review:
+          type: integer
+        top_topics:
+          type: array
+          items:
+            type: object
+            properties:
+              topic:
+                type: string
+              count:
+                type: integer
+              trend:
+                type: string
+                enum: [up, down, stable]
+        content_published_30d:
+          type: integer
+        competitor_events_7d:
+          type: integer
+        review_queue_size:
+          type: integer
+        health_score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Overall platform health (0-1)
+      required: [period, signals_total, signals_new_24h, insights_pending_review]
+
+    # ─── Knowledge Graph ──────────────────────────────────────────────────────
+    Entity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        entity_type:
+          type: string
+          enum: [person, organization, technology, concept, product, event, location]
+        description:
+          type: string
+          nullable: true
+        mention_count:
+          type: integer
+        relevance_score:
+          type: number
+          format: float
+        first_seen_at:
+          type: string
+          format: date-time
+        last_seen_at:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, name, entity_type, mention_count, first_seen_at]
+
+    EntityRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        entity_type:
+          type: string
+      required: [id, name, entity_type]
+
+    Relationship:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source_entity:
+          $ref: '#/components/schemas/EntityRef'
+        target_entity:
+          $ref: '#/components/schemas/EntityRef'
+        relationship_type:
+          type: string
+          enum: [competes_with, partners_with, acquires, uses, mentions, related_to, part_of]
+        strength:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+        evidence_count:
+          type: integer
+      required: [id, source_entity, target_entity, relationship_type, strength]
+
+    GraphSearchResponse:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entity'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+        query:
+          type: string
+        took_ms:
+          type: integer
+      required: [entities, relationships, query, took_ms]
+
+    # ─── Review Queue ─────────────────────────────────────────────────────────
+    ReviewQueueItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        item_type:
+          type: string
+          enum: [signal, insight, content, trend]
+        item_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        priority:
+          type: string
+          enum: [critical, high, medium, low]
+        submitted_at:
+          type: string
+          format: date-time
+        age_hours:
+          type: integer
+        preview:
+          type: string
+          nullable: true
+      required: [id, item_type, item_id, title, priority, submitted_at, age_hours]
+
+    ReviewQueueResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReviewQueueItem'
+        total:
+          type: integer
+        by_type:
+          type: object
+          additionalProperties:
+            type: integer
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, total, meta]
+
+    # ─── Sources ──────────────────────────────────────────────────────────────
+    Source:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        source_type:
+          type: string
+          enum: [rss_feed, website, api, social, newsletter, podcast]
+        topic_tags:
+          type: array
+          items:
+            type: string
+        health_status:
+          type: string
+          enum: [healthy, degraded, failed, paused]
+        last_fetched_at:
+          type: string
+          format: date-time
+          nullable: true
+        articles_7d:
+          type: integer
+        fetch_frequency_minutes:
+          type: integer
+        active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+      required: [id, name, url, source_type, health_status, active, created_at]
+
+    SourceDiscoverRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        name:
+          type: string
+          nullable: true
+        topic_tags:
+          type: array
+          items:
+            type: string
+        notes:
+          type: string
+          nullable: true
+      required: [url]
+
+    SourceListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    # ─── Analytics ────────────────────────────────────────────────────────────
+    ROIMetrics:
+      type: object
+      properties:
+        period:
+          type: string
+        content_pieces_influenced:
+          type: integer
+        signals_actioned:
+          type: integer
+        time_saved_hours:
+          type: number
+          format: float
+        insights_generated:
+          type: integer
+        recommendations_completed:
+          type: integer
+        review_turnaround_hours_avg:
+          type: number
+          format: float
+        top_performing_topics:
+          type: array
+          items:
+            type: object
+            properties:
+              topic:
+                type: string
+              signals:
+                type: integer
+              content_produced:
+                type: integer
+      required: [period, content_pieces_influenced, signals_actioned, insights_generated]
+
+    SignalsOverTime:
+      type: object
+      properties:
+        period:
+          type: string
+          enum: [7d, 30d, 90d, 1y]
+        granularity:
+          type: string
+          enum: [daily, weekly, monthly]
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              total:
+                type: integer
+              by_type:
+                type: object
+                additionalProperties:
+                  type: integer
+      required: [period, granularity, data]
+
+    TopTopics:
+      type: object
+      properties:
+        period:
+          type: string
+        topics:
+          type: array
+          items:
+            type: object
+            properties:
+              topic:
+                type: string
+              signal_count:
+                type: integer
+              content_count:
+                type: integer
+              trend:
+                type: string
+                enum: [up, down, stable]
+              momentum:
+                type: number
+                format: float
+      required: [period, topics]
+
+    # ─── Alerts ───────────────────────────────────────────────────────────────
+    Alert:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        alert_type:
+          type: string
+          enum: [breaking_signal, competitor_move, trend_spike, review_overdue, system_health]
+        severity:
+          type: string
+          enum: [critical, warning, info]
+        status:
+          type: string
+          enum: [active, acknowledged, resolved]
+        channels_sent:
+          type: array
+          items:
+            type: string
+            enum: [slack, email, teams]
+        created_at:
+          type: string
+          format: date-time
+        acknowledged_at:
+          type: string
+          format: date-time
+          nullable: true
+        acknowledged_by:
+          type: string
+          nullable: true
+        related_item_id:
+          type: string
+          format: uuid
+          nullable: true
+        related_item_type:
+          type: string
+          nullable: true
+      required: [id, title, alert_type, severity, status, created_at]
+
+    AlertListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [items, meta]
+
+    # ─── Webhooks ─────────────────────────────────────────────────────────────
+    WebhookContentCollected:
+      type: object
+      properties:
+        source_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        title:
+          type: string
+        content:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        author:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+      required: [source_id, url, title, content]
+
+    WebhookSignalDetected:
+      type: object
+      properties:
+        signal_type:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        strength:
+          type: number
+          format: float
+        source_content_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        langgraph_run_id:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+      required: [signal_type, title, description, strength, source_content_ids]
+
+    WebhookAlertTrigger:
+      type: object
+      properties:
+        alert_type:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        severity:
+          type: string
+          enum: [critical, warning, info]
+        channels:
+          type: array
+          items:
+            type: string
+            enum: [slack, email, teams]
+        related_item_id:
+          type: string
+          format: uuid
+          nullable: true
+        related_item_type:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+      required: [alert_type, title, description, severity]
+
+    WebhookResponse:
+      type: object
+      properties:
+        received:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+      required: [received, id]
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid JWT token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+paths:
+  # ─── Health ────────────────────────────────────────────────────────────────
+  /health:
+    get:
+      operationId: health_check
+      summary: Health check
+      security: []
+      tags: [System]
+      responses:
+        '200':
+          description: Service healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  version:
+                    type: string
+                  db:
+                    type: string
+                    enum: [ok, degraded, error]
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  # ─── Content ───────────────────────────────────────────────────────────────
+  /api/v1/content:
+    get:
+      operationId: list_content
+      summary: List content items
+      tags: [Content]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/sortOrderParam'
+        - name: source
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: topic
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [new, processing, reviewed, archived]
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: min_score
+          in: query
+          schema:
+            type: number
+            format: float
+            minimum: 0
+            maximum: 1
+      responses:
+        '200':
+          description: Content list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /api/v1/content/{id}:
+    get:
+      operationId: get_content
+      summary: Get content item with full text
+      tags: [Content]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Content detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/content/search:
+    post:
+      operationId: search_content
+      summary: Hybrid search over content
+      tags: [Content, Search]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  # ─── Signals ───────────────────────────────────────────────────────────────
+  /api/v1/signals:
+    get:
+      operationId: list_signals
+      summary: List signals
+      tags: [Signals]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/sortOrderParam'
+        - name: signal_type
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: topic
+          in: query
+          schema:
+            type: string
+        - name: min_strength
+          in: query
+          schema:
+            type: number
+            format: float
+        - name: min_confidence
+          in: query
+          schema:
+            type: number
+            format: float
+      responses:
+        '200':
+          description: Signals list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/signals/{id}:
+    get:
+      operationId: get_signal
+      summary: Get signal with sources and insights
+      tags: [Signals]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Signal detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/signals/{id}/review:
+    post:
+      operationId: review_signal
+      summary: Submit review action on signal
+      tags: [Signals, Review]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequest'
+      responses:
+        '200':
+          description: Review recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signal'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Trends ────────────────────────────────────────────────────────────────
+  /api/v1/trends:
+    get:
+      operationId: list_trends
+      summary: List trends
+      tags: [Trends]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: momentum
+          in: query
+          schema:
+            type: string
+            enum: [accelerating, stable, decelerating, emerging, declining]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, archived, watching]
+        - name: topic
+          in: query
+          schema:
+            type: string
+        - name: min_strength
+          in: query
+          schema:
+            type: number
+            format: float
+      responses:
+        '200':
+          description: Trends list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/trends/{id}:
+    get:
+      operationId: get_trend
+      summary: Get trend with timeline data
+      tags: [Trends]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Trend detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/trends/{id}/timeline:
+    get:
+      operationId: get_trend_timeline
+      summary: Get trend timeline data points
+      tags: [Trends]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 1y]
+            default: 30d
+        - name: granularity
+          in: query
+          schema:
+            type: string
+            enum: [daily, weekly, monthly]
+            default: daily
+      responses:
+        '200':
+          description: Timeline data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trend_id:
+                    type: string
+                    format: uuid
+                  period:
+                    type: string
+                  granularity:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrendTimelinePoint'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Insights ──────────────────────────────────────────────────────────────
+  /api/v1/insights:
+    get:
+      operationId: list_insights
+      summary: List insights
+      tags: [Insights]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: insight_type
+          in: query
+          schema:
+            type: string
+        - name: priority
+          in: query
+          schema:
+            type: string
+            enum: [critical, high, medium, low]
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: topic
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Insights list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/insights/{id}:
+    get:
+      operationId: get_insight
+      summary: Get full insight with TADA perspective
+      tags: [Insights]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Insight detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/insights/{id}/review:
+    post:
+      operationId: review_insight
+      summary: Submit review action on insight
+      tags: [Insights, Review]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequest'
+      responses:
+        '200':
+          description: Review recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Insight'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Recommendations ───────────────────────────────────────────────────────
+  /api/v1/recommendations:
+    get:
+      operationId: list_recommendations
+      summary: List recommendations
+      tags: [Recommendations]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: team
+          in: query
+          schema:
+            type: string
+            enum: [content, marketing, product, executive, research]
+        - name: priority
+          in: query
+          schema:
+            type: string
+            enum: [critical, high, medium, low]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, in_progress, completed, dismissed]
+      responses:
+        '200':
+          description: Recommendations list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/recommendations/{id}:
+    patch:
+      operationId: update_recommendation
+      summary: Update recommendation status
+      tags: [Recommendations]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationUpdate'
+      responses:
+        '200':
+          description: Updated recommendation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Content Ideas ─────────────────────────────────────────────────────────
+  /api/v1/content-ideas:
+    get:
+      operationId: list_content_ideas
+      summary: List content ideas
+      tags: [ContentIdeas]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: content_type
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: topic
+          in: query
+          schema:
+            type: string
+        - name: priority
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Content ideas list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentIdeasListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/content-calendar:
+    get:
+      operationId: get_content_calendar
+      summary: Get content calendar
+      tags: [ContentIdeas]
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [weekly, monthly, quarterly]
+            default: monthly
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Content calendar
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentCalendarResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Competitors ───────────────────────────────────────────────────────────
+  /api/v1/competitors:
+    get:
+      operationId: list_competitors
+      summary: List competitors
+      tags: [Competitors]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: tier
+          in: query
+          schema:
+            type: string
+            enum: [primary, secondary, emerging]
+        - name: tracking_status
+          in: query
+          schema:
+            type: string
+            enum: [active, paused, archived]
+      responses:
+        '200':
+          description: Competitors list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitorListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/competitors/{id}/events:
+    get:
+      operationId: get_competitor_events
+      summary: Get competitor events timeline
+      tags: [Competitors]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: event_type
+          in: query
+          schema:
+            type: string
+        - name: significance
+          in: query
+          schema:
+            type: string
+            enum: [high, medium, low]
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Competitor events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitorEventsResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Executive ─────────────────────────────────────────────────────────────
+  /api/v1/executive/briefing/latest:
+    get:
+      operationId: get_latest_briefing
+      summary: Get latest executive briefing
+      tags: [Executive]
+      responses:
+        '200':
+          description: Latest briefing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutiveBriefing'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/executive/briefing/{date}:
+    get:
+      operationId: get_briefing_by_date
+      summary: Get executive briefing by date
+      tags: [Executive]
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Briefing for date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutiveBriefing'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/executive/dashboard:
+    get:
+      operationId: get_executive_dashboard
+      summary: Get executive dashboard summary stats
+      tags: [Executive]
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d]
+            default: 30d
+      responses:
+        '200':
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutiveDashboard'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Knowledge Graph ───────────────────────────────────────────────────────
+  /api/v1/graph/entities:
+    get:
+      operationId: list_entities
+      summary: List knowledge graph entities
+      tags: [KnowledgeGraph]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: entity_type
+          in: query
+          schema:
+            type: string
+        - name: min_mentions
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Entities list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Entity'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/graph/relationships:
+    get:
+      operationId: get_relationships
+      summary: Get knowledge graph relationship map
+      tags: [KnowledgeGraph]
+      parameters:
+        - name: entity_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter relationships for a specific entity
+        - name: relationship_type
+          in: query
+          schema:
+            type: string
+        - name: min_strength
+          in: query
+          schema:
+            type: number
+            format: float
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+      responses:
+        '200':
+          description: Relationship map
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  relationships:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Relationship'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/graph/search:
+    get:
+      operationId: search_graph
+      summary: Search knowledge graph
+      tags: [KnowledgeGraph]
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: entity_types
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: include_relationships
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: depth
+          in: query
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+            maximum: 3
+          description: Relationship traversal depth
+      responses:
+        '200':
+          description: Graph search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphSearchResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Review System ─────────────────────────────────────────────────────────
+  /api/v1/review/queue:
+    get:
+      operationId: get_review_queue
+      summary: Get items awaiting review
+      tags: [Review]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: item_type
+          in: query
+          schema:
+            type: string
+            enum: [signal, insight, content, trend]
+        - name: priority
+          in: query
+          schema:
+            type: string
+            enum: [critical, high, medium, low]
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [priority, age, submitted_at]
+            default: priority
+      responses:
+        '200':
+          description: Review queue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewQueueResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/review/{id}/approve:
+    post:
+      operationId: approve_review_item
+      summary: Approve review queue item
+      tags: [Review]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                  maxLength: 2000
+      responses:
+        '200':
+          description: Item approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewAction'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/review/{id}/reject:
+    post:
+      operationId: reject_review_item
+      summary: Reject review queue item
+      tags: [Review]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  maxLength: 500
+                notes:
+                  type: string
+                  maxLength: 2000
+              required: [reason]
+      responses:
+        '200':
+          description: Item rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewAction'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/review/{id}/request-changes:
+    post:
+      operationId: request_changes_review_item
+      summary: Request changes on review queue item
+      tags: [Review]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                  maxLength: 2000
+              required: [notes]
+      responses:
+        '200':
+          description: Changes requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewAction'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Sources ───────────────────────────────────────────────────────────────
+  /api/v1/sources:
+    get:
+      operationId: list_sources
+      summary: List content sources with health status
+      tags: [Sources]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: health_status
+          in: query
+          schema:
+            type: string
+            enum: [healthy, degraded, failed, paused]
+        - name: source_type
+          in: query
+          schema:
+            type: string
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Sources list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/sources/discover:
+    post:
+      operationId: suggest_source
+      summary: Submit new source suggestion
+      tags: [Sources]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceDiscoverRequest'
+      responses:
+        '202':
+          description: Source suggestion accepted for review
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  status:
+                    type: string
+                    example: pending_review
+                  message:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Analytics ─────────────────────────────────────────────────────────────
+  /api/v1/analytics/roi:
+    get:
+      operationId: get_roi_metrics
+      summary: Get ROI metrics dashboard
+      tags: [Analytics]
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 1y]
+            default: 30d
+      responses:
+        '200':
+          description: ROI metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ROIMetrics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/analytics/signals-over-time:
+    get:
+      operationId: get_signals_over_time
+      summary: Get signal volume chart data
+      tags: [Analytics]
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 1y]
+            default: 30d
+        - name: granularity
+          in: query
+          schema:
+            type: string
+            enum: [daily, weekly, monthly]
+            default: daily
+        - name: signal_type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Signals over time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalsOverTime'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/analytics/top-topics:
+    get:
+      operationId: get_top_topics
+      summary: Get top topics by period
+      tags: [Analytics]
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d]
+            default: 30d
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        '200':
+          description: Top topics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopTopics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Alerts ────────────────────────────────────────────────────────────────
+  /api/v1/alerts:
+    get:
+      operationId: list_alerts
+      summary: List recent alerts
+      tags: [Alerts]
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - name: severity
+          in: query
+          schema:
+            type: string
+            enum: [critical, warning, info]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, acknowledged, resolved]
+        - name: alert_type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Alerts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/alerts/{id}/acknowledge:
+    post:
+      operationId: acknowledge_alert
+      summary: Acknowledge an alert
+      tags: [Alerts]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Alert acknowledged
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Alert'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ─── Webhooks (n8n) ────────────────────────────────────────────────────────
+  /api/v1/webhooks/content-collected:
+    post:
+      operationId: webhook_content_collected
+      summary: n8n webhook — new content collected
+      tags: [Webhooks]
+      security:
+        - clerkJWT: []
+      description: Called by n8n when a content collection workflow completes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookContentCollected'
+      responses:
+        '200':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/v1/webhooks/signal-detected:
+    post:
+      operationId: webhook_signal_detected
+      summary: n8n webhook — signal detected by LangGraph agent
+      tags: [Webhooks]
+      security:
+        - clerkJWT: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSignalDetected'
+      responses:
+        '200':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/v1/webhooks/alert-trigger:
+    post:
+      operationId: webhook_alert_trigger
+      summary: n8n webhook — trigger outbound alert
+      tags: [Webhooks]
+      security:
+        - clerkJWT: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookAlertTrigger'
+      responses:
+        '200':
+          description: Alert sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+tags:
+  - name: System
+    description: Health and system endpoints
+  - name: Content
+    description: Article and content management
+  - name: Search
+    description: Hybrid search operations
+  - name: Signals
+    description: Intelligence signal tracking
+  - name: Trends
+    description: Trend detection and monitoring
+  - name: Insights
+    description: AI-generated insights
+  - name: Recommendations
+    description: Actionable recommendations
+  - name: ContentIdeas
+    description: Content ideation and calendar
+  - name: Competitors
+    description: Competitor monitoring
+  - name: Executive
+    description: Executive briefings and dashboard
+  - name: KnowledgeGraph
+    description: Entity and relationship graph
+  - name: Review
+    description: Human review workflows
+  - name: Sources
+    description: Content source management
+  - name: Analytics
+    description: Platform analytics and ROI
+  - name: Alerts
+    description: Alert management
+  - name: Webhooks
+    description: n8n integration webhooks

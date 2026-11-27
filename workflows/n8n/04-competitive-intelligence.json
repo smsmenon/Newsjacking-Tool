@@ -1,0 +1,305 @@
+{
+  "name": "04 - Competitive Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "daily-9am-trigger",
+      "name": "Daily at 9 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT id, name, website_url, press_release_rss_url, google_news_query, last_checked FROM competitors WHERE is_active = true ORDER BY name",
+        "additionalFields": {}
+      },
+      "id": "fetch-competitors",
+      "name": "Fetch Active Competitors",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.website_url }}",
+        "responseFormat": "string",
+        "options": {
+          "timeout": 20000,
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "scrape-competitor-website",
+      "name": "Scrape Competitor Website",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 200],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.press_release_rss_url }}",
+        "responseFormat": "string",
+        "options": { "timeout": 15000 }
+      },
+      "id": "fetch-press-releases",
+      "name": "Fetch Competitor Press Releases",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 400],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "={{ $json.google_news_query || $json.name }}" },
+            { "name": "hl", "value": "en-US" },
+            { "name": "gl", "value": "US" },
+            { "name": "ceid", "value": "US:en" }
+          ]
+        },
+        "responseFormat": "string",
+        "options": { "timeout": 15000 }
+      },
+      "id": "google-news-search",
+      "name": "Search Google News for Competitor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 600],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all competitor data sources and detect changes\nconst items = $input.all();\nconst competitorEvents = [];\n\nfor (const item of items) {\n  try {\n    const data = item.json;\n    const competitorId = data.competitor_id || 'unknown';\n    const competitorName = data.competitor_name || 'Unknown';\n    \n    // Extract events from press release RSS\n    if (data.press_release_feed) {\n      const feedContent = data.press_release_feed;\n      const itemMatches = feedContent.matchAll(/<item>([\\s\\S]*?)<\\/item>/g);\n      \n      for (const match of itemMatches) {\n        const itemXml = match[1];\n        const titleMatch = itemXml.match(/<title>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/title>/);\n        const linkMatch = itemXml.match(/<link>([\\s\\S]*?)<\\/link>/);\n        const descMatch = itemXml.match(/<description>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/description>/);\n        const pubMatch = itemXml.match(/<pubDate>([\\s\\S]*?)<\\/pubDate>/);\n        \n        const title = titleMatch ? titleMatch[1].trim() : '';\n        const url = linkMatch ? linkMatch[1].trim() : '';\n        const description = descMatch ? descMatch[1].replace(/<[^>]+>/g, '').trim().substring(0, 500) : '';\n        const pubDate = pubMatch ? pubMatch[1].trim() : new Date().toISOString();\n        \n        // Detect event type based on keywords\n        let eventType = 'general_news';\n        const titleLower = title.toLowerCase();\n        const descLower = description.toLowerCase();\n        \n        if (titleLower.includes('acqui') || descLower.includes('acqui')) eventType = 'acquisition';\n        else if (titleLower.includes('partner') || descLower.includes('partner')) eventType = 'partnership';\n        else if (titleLower.includes('launch') || titleLower.includes('product') || titleLower.includes('release')) eventType = 'product_launch';\n        else if (titleLower.includes('funding') || titleLower.includes('investment') || titleLower.includes('series')) eventType = 'funding';\n        else if (titleLower.includes('ceo') || titleLower.includes('appoint') || titleLower.includes('executive')) eventType = 'leadership_change';\n        else if (titleLower.includes('earnings') || titleLower.includes('revenue') || titleLower.includes('financial')) eventType = 'financial_results';\n        \n        if (title && url) {\n          competitorEvents.push({\n            json: {\n              competitor_id: competitorId,\n              competitor_name: competitorName,\n              event_type: eventType,\n              title,\n              description,\n              source_url: url,\n              source_type: 'press_release',\n              published_at: pubDate,\n              detected_at: new Date().toISOString(),\n              severity: eventType === 'acquisition' || eventType === 'funding' ? 'high' : 'medium'\n            }\n          });\n        }\n      }\n    }\n    \n    // Extract from Google News results\n    if (data.google_news_feed) {\n      const feedContent = data.google_news_feed;\n      const itemMatches = feedContent.matchAll(/<item>([\\s\\S]*?)<\\/item>/g);\n      let newsCount = 0;\n      \n      for (const match of itemMatches) {\n        if (newsCount >= 5) break; // Limit to top 5 news items\n        const itemXml = match[1];\n        const titleMatch = itemXml.match(/<title>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/title>/);\n        const linkMatch = itemXml.match(/<link>([\\s\\S]*?)<\\/link>/);\n        const pubMatch = itemXml.match(/<pubDate>([\\s\\S]*?)<\\/pubDate>/);\n        \n        const title = titleMatch ? titleMatch[1].trim() : '';\n        const url = linkMatch ? linkMatch[1].trim() : '';\n        const pubDate = pubMatch ? pubMatch[1].trim() : new Date().toISOString();\n        \n        if (title && url) {\n          competitorEvents.push({\n            json: {\n              competitor_id: competitorId,\n              competitor_name: competitorName,\n              event_type: 'media_mention',\n              title,\n              description: '',\n              source_url: url,\n              source_type: 'google_news',\n              published_at: pubDate,\n              detected_at: new Date().toISOString(),\n              severity: 'low'\n            }\n          });\n          newsCount++;\n        }\n      }\n    }\n  } catch (err) {\n    console.log(`Error extracting competitor events: ${err.message}`);\n  }\n}\n\nreturn competitorEvents.length > 0 \n  ? competitorEvents \n  : [{ json: { status: 'no_events', count: 0 } }];"
+      },
+      "id": "extract-events",
+      "name": "Extract Competitor Events",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-events",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "no_events",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ]
+        }
+      },
+      "id": "has-events-check",
+      "name": "Has New Events?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [920, 400]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "competitor_events",
+        "columns": "competitor_id,competitor_name,event_type,title,description,source_url,source_type,published_at,detected_at,severity",
+        "additionalFields": {
+          "queryBatching": "independently",
+          "onConflict": "ignore"
+        }
+      },
+      "id": "store-events",
+      "name": "Store Competitor Events",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1120, 300],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if there are high-severity events to trigger intel report\nconst items = $input.all();\nconst highSeverityEvents = items.filter(item => \n  item.json.severity === 'high' || item.json.severity === 'critical'\n);\n\nif (highSeverityEvents.length === 0) {\n  return [{ json: { status: 'no_critical_events', generate_report: false } }];\n}\n\nreturn [{\n  json: {\n    generate_report: true,\n    event_count: highSeverityEvents.length,\n    events: highSeverityEvents.map(e => e.json),\n    report_trigger: 'high_severity_competitor_events',\n    triggered_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "check-report-needed",
+      "name": "Check if Report Needed",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "should-report",
+              "leftValue": "={{ $json.generate_report }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "should-generate-report",
+      "name": "Generate Report?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1520, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/agents/competitive-intel/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-Key", "value": "={{ $env.TADA_API_KEY }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": { "timeout": 120000 }
+      },
+      "id": "call-intel-agent",
+      "name": "Call Competitive Intel Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1720, 200],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "review_items",
+        "columns": "item_type,title,content,status,created_by,created_at,metadata",
+        "additionalFields": {}
+      },
+      "id": "create-review-item",
+      "name": "Create Review Item",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1920, 200],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_INTEL }}",
+        "text": ":mag: *Competitive Intelligence Alert*\n>New competitor activity detected: {{ $json.event_count }} high-priority events\n>A competitive intelligence report has been generated and is pending review.\n>Triggered by: {{ $json.events[0].competitor_name || 'Multiple competitors' }}\n>Review at: {{ $env.TADA_DASHBOARD_URL }}/review-queue"
+      },
+      "id": "slack-intel-alert",
+      "name": "Slack: Intel Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [2120, 200],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE competitors SET last_checked = NOW() WHERE is_active = true",
+        "additionalFields": {}
+      },
+      "id": "update-last-checked",
+      "name": "Update Competitor Last Checked",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1120, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily at 9 AM": { "main": [[{ "node": "Fetch Active Competitors", "type": "main", "index": 0 }]] },
+    "Fetch Active Competitors": {
+      "main": [
+        [
+          { "node": "Scrape Competitor Website", "type": "main", "index": 0 },
+          { "node": "Fetch Competitor Press Releases", "type": "main", "index": 0 },
+          { "node": "Search Google News for Competitor", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Scrape Competitor Website": { "main": [[{ "node": "Extract Competitor Events", "type": "main", "index": 0 }]] },
+    "Fetch Competitor Press Releases": { "main": [[{ "node": "Extract Competitor Events", "type": "main", "index": 0 }]] },
+    "Search Google News for Competitor": { "main": [[{ "node": "Extract Competitor Events", "type": "main", "index": 0 }]] },
+    "Extract Competitor Events": { "main": [[{ "node": "Has New Events?", "type": "main", "index": 0 }]] },
+    "Has New Events?": {
+      "main": [
+        [{ "node": "Store Competitor Events", "type": "main", "index": 0 }],
+        [{ "node": "Update Competitor Last Checked", "type": "main", "index": 0 }]
+      ]
+    },
+    "Store Competitor Events": {
+      "main": [
+        [
+          { "node": "Check if Report Needed", "type": "main", "index": 0 },
+          { "node": "Update Competitor Last Checked", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Check if Report Needed": { "main": [[{ "node": "Generate Report?", "type": "main", "index": 0 }]] },
+    "Generate Report?": {
+      "main": [
+        [{ "node": "Call Competitive Intel Agent", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Call Competitive Intel Agent": { "main": [[{ "node": "Create Review Item", "type": "main", "index": 0 }]] },
+    "Create Review Item": { "main": [[{ "node": "Slack: Intel Alert", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-competitive", "name": "competitive-intelligence" },
+    { "id": "tag-ai", "name": "ai-agent" }
+  ],
+  "id": "wf-04-competitive-intelligence",
+  "active": true
+}

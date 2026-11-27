@@ -1,0 +1,72 @@
+[
+  {
+    "id": "theme_001",
+    "name": "AI in Supply Chain",
+    "description": "AI adoption in supply chain planning, execution, and decision-making — where it works, where it fails, and what CSCOs are actually deploying",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_002",
+    "name": "ERP System Fragmentation",
+    "description": "SAP, Oracle, Microsoft ERP gaps, data quality failures, integration breakdowns, and the limits of legacy systems in modern operations",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_003",
+    "name": "Supply Chain Volatility",
+    "description": "Tariffs, geopolitical disruption, supplier risk, demand uncertainty — operational decisions being made under pressure",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_007",
+    "name": "Supply Chain Resilience",
+    "description": "Risk management, nearshoring, supply chain redesign, multi-sourcing strategies for volatility and disruption",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_008",
+    "name": "Demand Planning Failures",
+    "description": "Forecast errors, demand signal gaps, S&OP breakdowns, and the operational consequences of planning that doesn't match reality",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_009",
+    "name": "Inventory Blindness",
+    "description": "Inventory visibility failures, dead stock, stockouts, working capital trapped in the wrong places — and the systems that can't fix it",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_010",
+    "name": "Supplier Risk Exposure",
+    "description": "Single-source dependencies, supplier financial health, concentration risk, and procurement decisions that backfire under disruption",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_011",
+    "name": "Logistics Breakdowns",
+    "description": "Port congestion, carrier capacity failures, last-mile execution gaps, freight cost volatility, and 3PL performance misses",
+    "enabled": true,
+    "priority": "high"
+  },
+  {
+    "id": "theme_012",
+    "name": "Cost Pressure Without Visibility",
+    "description": "Margin erosion, hidden cost drivers, procurement inefficiencies, and supply chain decisions made without reliable data",
+    "enabled": true,
+    "priority": "medium"
+  },
+  {
+    "id": "theme_013",
+    "name": "Geopolitical Disruption",
+    "description": "Trade policy shifts, sanctions, tariffs, China+1 strategies, and how manufacturing and sourcing decisions are being restructured",
+    "enabled": true,
+    "priority": "high"
+  }
+]

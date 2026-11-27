@@ -1,0 +1,269 @@
+{
+  "name": "10 - ROI Metrics Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 0 * * *"
+            }
+          ]
+        }
+      },
+      "id": "midnight-trigger",
+      "name": "Daily at Midnight",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as articles_collected FROM raw_content WHERE DATE(collected_at) = CURRENT_DATE - INTERVAL '1 day'",
+        "additionalFields": {}
+      },
+      "id": "count-articles",
+      "name": "Count Articles Collected Yesterday",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 200],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as signals_detected FROM signals WHERE DATE(detected_at) = CURRENT_DATE - INTERVAL '1 day'",
+        "additionalFields": {}
+      },
+      "id": "count-signals",
+      "name": "Count Signals Detected Yesterday",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 350],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as content_ideas_generated FROM content_ideas WHERE DATE(created_at) = CURRENT_DATE - INTERVAL '1 day'",
+        "additionalFields": {}
+      },
+      "id": "count-content-ideas",
+      "name": "Count Content Ideas Generated Yesterday",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as competitor_events FROM competitor_events WHERE DATE(detected_at) = CURRENT_DATE - INTERVAL '1 day'",
+        "additionalFields": {}
+      },
+      "id": "count-competitor-events",
+      "name": "Count Competitor Events Yesterday",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 650],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as pain_points_detected FROM pain_points WHERE DATE(detected_at) = CURRENT_DATE - INTERVAL '1 day'",
+        "additionalFields": {}
+      },
+      "id": "count-pain-points",
+      "name": "Count Pain Points Yesterday",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [300, 800],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate ROI metrics for yesterday\n// Formula: \n//   Research hours saved = articles * 0.5h + signals * 2h + content_ideas * 1.5h + competitor_events * 3h\n//   Value delivered = research_hours * $150/hr (analyst rate)\n\nconst metricDate = new Date();\nmetricDate.setDate(metricDate.getDate() - 1);\nconst dateStr = metricDate.toISOString().split('T')[0];\n\nconst articlesCollected = parseInt($('Count Articles Collected Yesterday').first().json.articles_collected) || 0;\nconst signalsDetected = parseInt($('Count Signals Detected Yesterday').first().json.signals_detected) || 0;\nconst contentIdeasGenerated = parseInt($('Count Content Ideas Generated Yesterday').first().json.content_ideas_generated) || 0;\nconst competitorEvents = parseInt($('Count Competitor Events Yesterday').first().json.competitor_events) || 0;\nconst painPointsDetected = parseInt($('Count Pain Points Yesterday').first().json.pain_points_detected) || 0;\n\n// ROI Calculation\nconst ARTICLE_HOURS = 0.5;      // 30 min per article manually reviewed\nconst SIGNAL_HOURS = 2.0;       // 2 hours to manually identify each signal\nconst CONTENT_IDEA_HOURS = 1.5; // 1.5 hours to develop content idea from scratch\nconst COMPETITOR_EVENT_HOURS = 3.0; // 3 hours for competitor research per event\nconst PAIN_POINT_HOURS = 1.0;   // 1 hour for pain point research\nconst ANALYST_HOURLY_RATE = 150; // $150/hr analyst cost\n\nconst researchHoursSaved = (\n  articlesCollected * ARTICLE_HOURS +\n  signalsDetected * SIGNAL_HOURS +\n  contentIdeasGenerated * CONTENT_IDEA_HOURS +\n  competitorEvents * COMPETITOR_EVENT_HOURS +\n  painPointsDetected * PAIN_POINT_HOURS\n);\n\nconst estimatedValueUSD = Math.round(researchHoursSaved * ANALYST_HOURLY_RATE);\n\nreturn [{\n  json: {\n    metric_date: dateStr,\n    articles_collected: articlesCollected,\n    signals_detected: signalsDetected,\n    content_ideas_generated: contentIdeasGenerated,\n    competitor_events: competitorEvents,\n    pain_points_detected: painPointsDetected,\n    research_hours_saved: Math.round(researchHoursSaved * 10) / 10,\n    estimated_value_usd: estimatedValueUSD,\n    formula_details: {\n      article_hours: `${articlesCollected} × ${ARTICLE_HOURS}h = ${articlesCollected * ARTICLE_HOURS}h`,\n      signal_hours: `${signalsDetected} × ${SIGNAL_HOURS}h = ${signalsDetected * SIGNAL_HOURS}h`,\n      content_idea_hours: `${contentIdeasGenerated} × ${CONTENT_IDEA_HOURS}h = ${contentIdeasGenerated * CONTENT_IDEA_HOURS}h`,\n      competitor_event_hours: `${competitorEvents} × ${COMPETITOR_EVENT_HOURS}h = ${competitorEvents * COMPETITOR_EVENT_HOURS}h`,\n      pain_point_hours: `${painPointsDetected} × ${PAIN_POINT_HOURS}h = ${painPointsDetected * PAIN_POINT_HOURS}h`,\n      analyst_rate: `$${ANALYST_HOURLY_RATE}/hr`\n    },\n    calculated_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "calculate-roi",
+      "name": "Calculate ROI Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [560, 500]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "roi_metrics",
+        "columns": "metric_date,articles_collected,signals_detected,content_ideas_generated,competitor_events,pain_points_detected,research_hours_saved,estimated_value_usd,formula_details,calculated_at",
+        "additionalFields": {
+          "onConflict": "update"
+        }
+      },
+      "id": "store-roi-metrics",
+      "name": "Store ROI Metrics",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [780, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT SUM(articles_collected) as total_articles, SUM(signals_detected) as total_signals, SUM(content_ideas_generated) as total_content_ideas, SUM(research_hours_saved) as total_hours_saved, SUM(estimated_value_usd) as total_value_usd, COUNT(*) as days_running FROM roi_metrics WHERE metric_date >= CURRENT_DATE - INTERVAL '7 days'",
+        "additionalFields": {}
+      },
+      "id": "compute-weekly-trend",
+      "name": "Compute Weekly Trend",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [980, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO roi_weekly_trends (week_start, total_articles, total_signals, total_content_ideas, total_hours_saved, total_value_usd, days_running, computed_at) SELECT DATE_TRUNC('week', CURRENT_DATE), $1, $2, $3, $4, $5, $6, NOW() ON CONFLICT (week_start) DO UPDATE SET total_articles = EXCLUDED.total_articles, total_signals = EXCLUDED.total_signals, total_content_ideas = EXCLUDED.total_content_ideas, total_hours_saved = EXCLUDED.total_hours_saved, total_value_usd = EXCLUDED.total_value_usd, days_running = EXCLUDED.days_running, computed_at = NOW()",
+        "additionalFields": {}
+      },
+      "id": "update-weekly-trend",
+      "name": "Update Weekly Trend Table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1180, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if today is Monday for weekly summary\nconst today = new Date();\nconst isMonday = today.getDay() === 1;\nconst weeklyMetrics = $('Compute Weekly Trend').first().json;\nconst todayMetrics = $('Calculate ROI Metrics').first().json;\n\nreturn [{\n  json: {\n    is_monday: isMonday,\n    today_metrics: todayMetrics,\n    weekly_metrics: weeklyMetrics\n  }\n}];"
+      },
+      "id": "check-weekly-summary",
+      "name": "Check for Weekly Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1380, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "is-monday-check",
+              "leftValue": "={{ $json.is_monday }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "is-monday-check",
+      "name": "Is Monday? (Send Weekly Summary)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1580, 500]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_LEADERSHIP }}",
+        "blocks": "={{ JSON.stringify([\n  {\n    type: 'header',\n    text: { type: 'plain_text', text: '📈 TADA Platform - Weekly ROI Summary', emoji: true }\n  },\n  {\n    type: 'section',\n    text: {\n      type: 'mrkdwn',\n      text: `*Week ending:* ${new Date().toLocaleDateString()}\\n\\nHere's what TADA delivered this week:`\n    }\n  },\n  {\n    type: 'section',\n    fields: [\n      { type: 'mrkdwn', text: `*📰 Articles Processed:*\\n${$json.weekly_metrics.total_articles || 0}` },\n      { type: 'mrkdwn', text: `*⚡ Signals Detected:*\\n${$json.weekly_metrics.total_signals || 0}` },\n      { type: 'mrkdwn', text: `*💡 Content Ideas:*\\n${$json.weekly_metrics.total_content_ideas || 0}` },\n      { type: 'mrkdwn', text: `*⏱️ Research Hours Saved:*\\n${Math.round($json.weekly_metrics.total_hours_saved || 0)}h` },\n      { type: 'mrkdwn', text: `*💰 Estimated Value:*\\n$${($json.weekly_metrics.total_value_usd || 0).toLocaleString()}` },\n      { type: 'mrkdwn', text: `*📅 Days Covered:*\\n${$json.weekly_metrics.days_running || 0}` }\n    ]\n  },\n  {\n    type: 'actions',\n    elements: [\n      {\n        type: 'button',\n        text: { type: 'plain_text', text: 'View Full Dashboard', emoji: true },\n        style: 'primary',\n        url: `${process.env.TADA_DASHBOARD_URL}/roi-metrics`\n      }\n    ]\n  }\n]) }}",
+        "text": "Weekly ROI summary from TADA Intelligence Platform"
+      },
+      "id": "slack-weekly-roi",
+      "name": "Slack: Weekly ROI Summary to Leadership",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1780, 400],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily at Midnight": {
+      "main": [
+        [
+          { "node": "Count Articles Collected Yesterday", "type": "main", "index": 0 },
+          { "node": "Count Signals Detected Yesterday", "type": "main", "index": 0 },
+          { "node": "Count Content Ideas Generated Yesterday", "type": "main", "index": 0 },
+          { "node": "Count Competitor Events Yesterday", "type": "main", "index": 0 },
+          { "node": "Count Pain Points Yesterday", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Count Articles Collected Yesterday": { "main": [[{ "node": "Calculate ROI Metrics", "type": "main", "index": 0 }]] },
+    "Count Signals Detected Yesterday": { "main": [[{ "node": "Calculate ROI Metrics", "type": "main", "index": 0 }]] },
+    "Count Content Ideas Generated Yesterday": { "main": [[{ "node": "Calculate ROI Metrics", "type": "main", "index": 0 }]] },
+    "Count Competitor Events Yesterday": { "main": [[{ "node": "Calculate ROI Metrics", "type": "main", "index": 0 }]] },
+    "Count Pain Points Yesterday": { "main": [[{ "node": "Calculate ROI Metrics", "type": "main", "index": 0 }]] },
+    "Calculate ROI Metrics": { "main": [[{ "node": "Store ROI Metrics", "type": "main", "index": 0 }]] },
+    "Store ROI Metrics": { "main": [[{ "node": "Compute Weekly Trend", "type": "main", "index": 0 }]] },
+    "Compute Weekly Trend": { "main": [[{ "node": "Update Weekly Trend Table", "type": "main", "index": 0 }]] },
+    "Update Weekly Trend Table": { "main": [[{ "node": "Check for Weekly Summary", "type": "main", "index": 0 }]] },
+    "Check for Weekly Summary": { "main": [[{ "node": "Is Monday? (Send Weekly Summary)", "type": "main", "index": 0 }]] },
+    "Is Monday? (Send Weekly Summary)": {
+      "main": [
+        [{ "node": "Slack: Weekly ROI Summary to Leadership", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "errorWorkflow": "06-alert-system",
+    "timezone": "America/New_York"
+  },
+  "tags": [
+    { "id": "tag-roi", "name": "roi-tracking" },
+    { "id": "tag-ops", "name": "operations" }
+  ],
+  "id": "wf-10-roi-metrics-tracker",
+  "active": true
+}

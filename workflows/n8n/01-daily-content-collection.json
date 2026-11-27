@@ -1,0 +1,422 @@
+{
+  "name": "01 - Daily Content Collection",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "id": "cron-trigger",
+      "name": "Every 2 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://www.supplychaindive.com/feeds/news/",
+        "responseFormat": "string",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "rss-supply-chain-dive",
+      "name": "RSS: Supply Chain Dive",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 100],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.manufacturingdive.com/feeds/news/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-manufacturing-dive",
+      "name": "RSS: Manufacturing Dive",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 200],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.logisticsmgmt.com/rss/topic/news",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-logistics-mgmt",
+      "name": "RSS: Logistics Management",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 300],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.dcvelocity.com/rss/articles/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-dc-velocity",
+      "name": "RSS: DC Velocity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 400],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://spendmatters.com/feed/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-spend-matters",
+      "name": "RSS: Spend Matters",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 500],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.scmworld.com/feed/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-scm-world",
+      "name": "RSS: SCM World",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 600],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.inboundlogistics.com/rss/articles/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-inbound-logistics",
+      "name": "RSS: Inbound Logistics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 700],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.freightwaves.com/news/feed",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-freight-waves",
+      "name": "RSS: FreightWaves",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 800],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.industryweek.com/rss/all",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-industry-week",
+      "name": "RSS: IndustryWeek",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 900],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.thomasnet.com/insights/feed/",
+        "responseFormat": "string",
+        "options": { "timeout": 10000 }
+      },
+      "id": "rss-thomas-net",
+      "name": "RSS: ThomasNet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [340, 1000],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse all RSS feeds and merge into unified article list\nconst items = [];\n\nfor (const input of $input.all()) {\n  try {\n    const feedData = input.json.data;\n    const sourceName = input.json.source || 'Unknown';\n    \n    // Simple XML parsing for RSS items\n    const itemMatches = feedData.matchAll(/<item>([\\s\\S]*?)<\\/item>/g);\n    \n    for (const match of itemMatches) {\n      const itemXml = match[1];\n      \n      const titleMatch = itemXml.match(/<title><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/title>/) || \n                         itemXml.match(/<title>([\\s\\S]*?)<\\/title>/);\n      const linkMatch = itemXml.match(/<link>([\\s\\S]*?)<\\/link>/);\n      const descMatch = itemXml.match(/<description><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/description>/) ||\n                        itemXml.match(/<description>([\\s\\S]*?)<\\/description>/);\n      const pubDateMatch = itemXml.match(/<pubDate>([\\s\\S]*?)<\\/pubDate>/);\n      const guidMatch = itemXml.match(/<guid[^>]*>([\\s\\S]*?)<\\/guid>/);\n      \n      const title = titleMatch ? titleMatch[1].trim() : '';\n      const url = linkMatch ? linkMatch[1].trim() : '';\n      const description = descMatch ? descMatch[1].replace(/<[^>]+>/g, '').trim().substring(0, 500) : '';\n      const pubDate = pubDateMatch ? pubDateMatch[1].trim() : new Date().toISOString();\n      const guid = guidMatch ? guidMatch[1].trim() : url;\n      \n      if (title && url) {\n        // Generate content hash for deduplication\n        const hashInput = `${url}${title}`;\n        let hash = 0;\n        for (let i = 0; i < hashInput.length; i++) {\n          const char = hashInput.charCodeAt(i);\n          hash = ((hash << 5) - hash) + char;\n          hash = hash & hash;\n        }\n        const contentHash = Math.abs(hash).toString(16);\n        \n        items.push({\n          json: {\n            title,\n            url,\n            description,\n            pub_date: pubDate,\n            source_name: sourceName,\n            content_hash: contentHash,\n            guid,\n            raw_content: description,\n            collected_at: new Date().toISOString()\n          }\n        });\n      }\n    }\n  } catch (err) {\n    // Skip malformed feeds\n    console.log(`Error parsing feed: ${err.message}`);\n  }\n}\n\nreturn items;"
+      },
+      "id": "parse-rss-feeds",
+      "name": "Parse RSS Feeds",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, 500]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT content_hash FROM raw_content WHERE content_hash = ANY(ARRAY[{{ $json.content_hashes }}]::text[]) AND collected_at > NOW() - INTERVAL '7 days'",
+        "additionalFields": {}
+      },
+      "id": "check-duplicates",
+      "name": "Check Existing Hashes (Batch)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [820, 500],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract hashes and prepare batch dedup query\nconst allItems = $input.all();\nconst hashes = allItems.map(item => item.json.content_hash);\n\n// Return single item with all hashes for batch check\nreturn [{\n  json: {\n    content_hashes: hashes.join(\"','\"),\n    items: allItems.map(i => i.json),\n    total_fetched: allItems.length\n  }\n}];"
+      },
+      "id": "prepare-batch-dedup",
+      "name": "Prepare Batch Dedup",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter out items that already exist in DB\nconst existing = $input.all()[0].json;\nconst existingHashes = new Set(\n  (existing.rows || []).map(r => r.content_hash)\n);\n\n// Get original items from previous node\nconst allItems = $('Prepare Batch Dedup').first().json.items || [];\n\nconst newItems = allItems.filter(item => !existingHashes.has(item.content_hash));\n\nif (newItems.length === 0) {\n  return [{ json: { status: 'no_new_content', count: 0 } }];\n}\n\nreturn newItems.map(item => ({ json: item }));"
+      },
+      "id": "filter-duplicates",
+      "name": "Filter New Content Only",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [920, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-new-content",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "no_new_content",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "has-new-content-check",
+      "name": "Has New Content?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1060, 500]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "raw_content",
+        "columns": "title,url,description,pub_date,source_name,content_hash,raw_content,collected_at,status",
+        "additionalFields": {
+          "queryBatching": "independently"
+        }
+      },
+      "id": "store-raw-content",
+      "name": "Store to raw_content Table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1220, 400],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.TADA_API_BASE_URL }}/api/v1/webhooks/content-collected",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.TADA_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "source",
+              "value": "n8n-rss-collector"
+            },
+            {
+              "name": "count",
+              "value": "={{ $runIndex + 1 }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}"
+            },
+            {
+              "name": "workflow_id",
+              "value": "01-daily-content-collection"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "webhook-notify",
+      "name": "POST /webhooks/content-collected",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1420, 400],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_ALERTS }}",
+        "text": ":white_check_mark: *Content Collection Complete*\n>Collected: {{ $json.count }} new articles\n>Time: {{ new Date().toLocaleString() }}\n>Workflow: 01-daily-content-collection"
+      },
+      "id": "slack-success",
+      "name": "Slack: Collection Success",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1600, 300],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "channel": "={{ $env.SLACK_CHANNEL_ERRORS }}",
+        "text": ":x: *Content Collection Error*\n>Workflow: 01-daily-content-collection\n>Error: {{ $json.error.message || 'Unknown error' }}\n>Time: {{ new Date().toLocaleString() }}\n>Please check n8n execution logs."
+      },
+      "id": "slack-error",
+      "name": "Slack: Error Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1420, 700],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "slack-tada",
+          "name": "TADA Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "workflow_errors",
+        "columns": "workflow_id,error_message,error_details,occurred_at",
+        "additionalFields": {}
+      },
+      "id": "log-error",
+      "name": "Log Error to DB",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.4,
+      "position": [1220, 700],
+      "credentials": {
+        "postgres": {
+          "id": "postgres-tada",
+          "name": "TADA PostgreSQL"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every 2 Hours": {
+      "main": [
+        [
+          { "node": "RSS: Supply Chain Dive", "type": "main", "index": 0 },
+          { "node": "RSS: Manufacturing Dive", "type": "main", "index": 0 },
+          { "node": "RSS: Logistics Management", "type": "main", "index": 0 },
+          { "node": "RSS: DC Velocity", "type": "main", "index": 0 },
+          { "node": "RSS: Spend Matters", "type": "main", "index": 0 },
+          { "node": "RSS: SCM World", "type": "main", "index": 0 },
+          { "node": "RSS: Inbound Logistics", "type": "main", "index": 0 },
+          { "node": "RSS: FreightWaves", "type": "main", "index": 0 },
+          { "node": "RSS: IndustryWeek", "type": "main", "index": 0 },
+          { "node": "RSS: ThomasNet", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "RSS: Supply Chain Dive": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: Manufacturing Dive": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: Logistics Management": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: DC Velocity": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: Spend Matters": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: SCM World": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: Inbound Logistics": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: FreightWaves": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: IndustryWeek": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "RSS: ThomasNet": { "main": [[{ "node": "Parse RSS Feeds", "type": "main", "index": 0 }]] },
+    "Parse RSS Feeds": { "main": [[{ "node": "Prepare Batch Dedup", "type": "main", "index": 0 }]] },
+    "Prepare Batch Dedup": { "main": [[{ "node": "Check Existing Hashes (Batch)", "type": "main", "index": 0 }]] },
+    "Check Existing Hashes (Batch)": { "main": [[{ "node": "Filter New Content Only", "type": "main", "index": 0 }]] },
+    "Filter New Content Only": { "main": [[{ "node": "Has New Content?", "type": "main", "index": 0 }]] },
+    "Has New Content?": {
+      "main": [
+        [{ "node": "Store to raw_content Table", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Store to raw_content Table": { "main": [[{ "node": "POST /webhooks/content-collected", "type": "main", "index": 0 }]] },
+    "POST /webhooks/content-collected": { "main": [[{ "node": "Slack: Collection Success", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "06-alert-system",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "last",
+    "saveExecutionProgress": true,
+    "timezone": "America/New_York"
+  },
+  "staticData": null,
+  "tags": [
+    { "id": "tag-content", "name": "content-collection" },
+    { "id": "tag-rss", "name": "rss" },
+    { "id": "tag-core", "name": "core-pipeline" }
+  ],
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "tada-platform"
+  },
+  "id": "wf-01-daily-content-collection",
+  "active": true
+}
