@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .competitor_watch import run_competitor_watch
+from .competitor_watch import record_seen as record_competitors_seen, run_competitor_watch
 from .discovery_pipeline import load_sent_urls, record_sent_urls, run_discovery_pipeline
 from .run_log import write_run_log
 from .discovery_emailer import format_month_day_year
@@ -263,11 +263,13 @@ def run_newsjacking(root: Path, to_email: str, hours_window: int | None = None) 
 
     # Competitor tracking reuses the articles the website pipeline already fetched, so the
     # trade-press half of it costs no extra requests.
+    competitor_seen_pending: list[str] = []
     try:
         competitor_items = run_competitor_watch(
             root,
             trade_articles=website_result.get("all_candidates") or website_articles,
             hours_window=24,
+            seen_sink=competitor_seen_pending,
         )
         competitor_items = [c for c in competitor_items if c.get("url") not in already_sent]
     except Exception as exc:
@@ -293,6 +295,7 @@ def run_newsjacking(root: Path, to_email: str, hours_window: int | None = None) 
 
     # Only remember what actually went out — a failed send must not suppress tomorrow's run.
     if send_result.get("success"):
+        record_competitors_seen(root, competitor_seen_pending)
         record_sent_urls(
             root,
             [a.get("url") for a in website_articles]

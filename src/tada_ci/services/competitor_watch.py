@@ -389,8 +389,16 @@ OVERLAP: [true/false — true if they claim something TADA also claims]"""
 
 
 def run_competitor_watch(root: Path, trade_articles: list[dict] | None = None,
-                         hours_window: int = 24) -> list[dict]:
-    """Collect, classify, cap. Returns the items for the digest's competitor section."""
+                         hours_window: int = 24,
+                         seen_sink: list[str] | None = None) -> list[dict]:
+    """Collect, classify, cap. Returns the items for the digest's competitor section.
+
+    Pass `seen_sink` to defer recording: the candidate URLs are appended to it instead of
+    written to the seen-cache, so the caller can record them only once the digest has
+    actually gone out. Recording them here regardless meant a dry run — or a send that
+    failed — silently consumed that day's competitor news: never mailed, but never offered
+    again either.
+    """
     from .contrarian_pipeline import _load_reference_docs
 
     competitors = {c["name"]: c for c in load_competitors(root)}
@@ -398,9 +406,16 @@ def run_competitor_watch(root: Path, trade_articles: list[dict] | None = None,
 
     candidates = collect_candidates(root, trade_articles, hours_window)
     seen = load_seen(root)
-    record_seen(root, [c["url"] for c in candidates])
+    candidate_urls = [c["url"] for c in candidates]
+    if seen_sink is None:
+        record_seen(root, candidate_urls)
+    else:
+        seen_sink.extend(candidate_urls)
 
     if not seen:
+        # Nothing is reported on a first run, so nothing is lost by recording the baseline
+        # even when the caller is deferring. Without this the next run is a first run again.
+        record_seen(root, candidate_urls)
         # First run: every newsroom's back catalogue looks new. Record it as the baseline
         # and report nothing, rather than mailing months of history as today's news.
         log.info("competitor_watch: first run — recorded %d URL(s) as baseline, reporting none",
