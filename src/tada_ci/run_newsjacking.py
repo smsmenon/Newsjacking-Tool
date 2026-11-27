@@ -44,7 +44,10 @@ def main() -> int:
     print(f"Website: {result['website_usage_stats']}")
     print(f"LinkedIn: {result['linkedin_summary']}")
 
-    return 0 if result["send_result"].get("success") else 1
+    # A dry run (SEND_EMAIL=false) reports success=False because nothing was sent. That is
+    # the requested outcome, not a failure — only a genuine send attempt that failed is.
+    send = result["send_result"]
+    return 0 if (send.get("success") or send.get("skipped")) else 1
 
 
 if __name__ == "__main__":
