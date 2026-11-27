@@ -2,13 +2,17 @@ name: Newsjacking Articles
 
 on:
   schedule:
-    # Target: 08:00 America/Chicago, every day. GitHub cron is UTC-only and has no concept
-    # of daylight saving, so one fixed time drifts by an hour for half the year. Instead we
-    # fire at both candidate hours — 13:00 UTC (= 08:00 CDT, summer) and 14:00 UTC
-    # (= 08:00 CST, winter) — and the run step drops whichever one isn't 08:00 locally.
+    # Target: 08:00 America/Chicago, Monday to Friday. Monday's digest covers Friday through
+    # Monday morning (see _WINDOW_BY_WEEKDAY in time_filter.py); the rest cover 24h.
+    #
+    # GitHub cron is UTC-only and has no concept of daylight saving, so one fixed time drifts
+    # by an hour for half the year. Instead we fire at both candidate hours — 13:00 UTC
+    # (= 08:00 CDT, summer) and 14:00 UTC (= 08:00 CST, winter) — and the run step drops
+    # whichever one isn't 08:00 locally. Both land on the same calendar day in Chicago, so
+    # "1-5" means Monday-Friday there too.
     # GitHub's scheduler is best-effort and can lag under load, so treat it as approximate.
-    - cron: "0 13 * * *"
-    - cron: "0 14 * * *"
+    - cron: "0 13 * * 1-5"
+    - cron: "0 14 * * 1-5"
   workflow_dispatch:
     # Lets the run be triggered by hand from the GitHub website or mobile app — the point
     # being that it needs no laptop at all.

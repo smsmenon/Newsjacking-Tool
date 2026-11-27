@@ -6,3 +6,7 @@ trafilatura>=2.0.0
 # plain urllib at the transport layer regardless of headers — Supply Chain Digital,
 # Procurement Magazine, Inbound Logistics and McKinsey all answered it 403 and this 200.
 scrapling[fetchers]>=0.5
+
+# Windows ships no system timezone database, so zoneinfo cannot resolve America/Chicago
+# without this. Already satisfied on the Linux runner; needed for a local run.
+tzdata; sys_platform == "win32"

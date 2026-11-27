@@ -2,20 +2,30 @@ from __future__ import annotations
 import logging
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
+from zoneinfo import ZoneInfo
 
 log = logging.getLogger(__name__)
 
 
-# The job runs every morning, so a 24h window hands off cleanly from one run to the next.
-# (It previously ran weekdays only, and Monday used 72h to cover Friday's reporting plus the
-# weekend. Daily runs cover those themselves, so that exception is gone — keeping it would
-# re-trawl what Saturday and Sunday already sent.)
+# The job runs each weekday at 08:00 America/Chicago, so a 24h window hands off cleanly from
+# one run to the next. Monday is the exception: the previous run was Friday morning, leaving
+# Friday's own reporting plus the weekend uncovered. 72h puts Monday's cutoff exactly on
+# Friday's run time — no gap, and nothing Friday already sent gets re-reported.
+#
+# The weekday is read in Chicago, not UTC, because that is what the schedule is anchored to.
+# They agree at the scheduled hour, but not for a manual run late in the evening: 02:00 UTC
+# Monday is still Sunday in Chicago, and should not claim Monday's 72h window.
+_SCHEDULE_TZ = ZoneInfo("America/Chicago")
+_WINDOW_BY_WEEKDAY = {0: 72}  # Monday → back to Friday's run
 _DEFAULT_WINDOW_HOURS = 24
 
 
 def get_window_hours(hours: int | None = None) -> int:
-    """Effective lookback in hours: an explicit value, else the daily default."""
-    return _DEFAULT_WINDOW_HOURS if hours is None else hours
+    """Effective lookback in hours: an explicit value, else today's default."""
+    if hours is not None:
+        return hours
+    weekday = datetime.now(_SCHEDULE_TZ).weekday()
+    return _WINDOW_BY_WEEKDAY.get(weekday, _DEFAULT_WINDOW_HOURS)
 
 
 def get_cutoff_datetime(hours: int | None = None) -> datetime:
